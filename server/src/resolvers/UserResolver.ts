@@ -3,7 +3,7 @@ import { User } from '../entity/User';
 import { hash, compare } from 'bcryptjs';
 import { MyContext } from '../typeDefs/MyContext';
 import { createAccessToken, createRefreshToken } from '../helpers/refreshTokens';
-import { isAuth } from '../middleware/isAuth';
+import { isAuthContext } from '../middleware/isAuthContext';
 import { getConnection } from 'typeorm';
 import { sendRefreshToken } from '../helpers/sendTokens';
 
@@ -37,11 +37,22 @@ export class UserResolver {
         return true;
     }
 
+    @Mutation(() => Boolean)
+    async banUserFromCreatingRefreshToken(@Arg('email') email: string) {
+        const user = await User.findOne({ where: { email } });
+        if (!user) {
+            throw new Error('could not find user');
+        }
+        user!.tokenVersion = 0;
+        User.save(user);
+        return true;
+    }
+
     // middleware function can be created inside params or passed in
     // no parameters need to be passed in because if we just pass in function name every param from UseMiddleware is passed in
     // this includes resolver information like res,req,payload and next function
     @Query(() => String)
-    @UseMiddleware(isAuth)
+    @UseMiddleware(isAuthContext)
     bye(@Ctx() { payload }: MyContext) {
         console.log(payload);
         return `your user id is :${payload?.userId}`;
@@ -60,7 +71,6 @@ export class UserResolver {
     async login(@Arg('email') email: string, @Arg('password') password: string, @Ctx() { res }: MyContext): Promise<LoginResponse> {
         // Get user
         const user = await User.findOne({ where: { email } });
-
         // Check if user exists
         if (!user) {
             throw new Error('could not find user');
@@ -69,6 +79,12 @@ export class UserResolver {
         const valid = await compare(password, user.password);
         if (!valid) {
             throw new Error('password wrong');
+        }
+
+        // check if token version on user is 0.
+        // This tell us if user is banned
+        if (user.tokenVersion === 0) {
+            throw new Error('You are banned');
         }
 
         // UPDATE ID NAME
