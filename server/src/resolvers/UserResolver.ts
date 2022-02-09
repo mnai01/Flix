@@ -1,4 +1,4 @@
-import { Arg, Ctx, Field, Mutation, ObjectType, Query, Resolver, UseMiddleware, Int } from 'type-graphql';
+import { Arg, Args, Ctx, Field, Mutation, ObjectType, Query, Resolver, UseMiddleware, Int } from 'type-graphql';
 import { User } from '../entity/User';
 import { hash, compare } from 'bcryptjs';
 import { MyContext } from '../typeDefs/MyContext';
@@ -6,6 +6,8 @@ import { createAccessToken, createRefreshToken } from '../helpers/refreshTokens'
 import { isAuthContext } from '../middleware/isAuthContext';
 import { getConnection } from 'typeorm';
 import { sendRefreshToken } from '../helpers/sendTokens';
+import { Discover, Genre, DiscoverParams } from '../typeDefs/TMDB';
+import axios from 'axios';
 
 // With TypeGraphQL we don’t need to explicitly write the schema.
 // Instead, we define our resolvers with TypeScript classes and decorators,
@@ -28,6 +30,73 @@ export class UserResolver {
         return `'hi'`;
     }
 
+    // middleware function can be created inside params or passed in
+    // no parameters need to be passed in because if we just pass in function name every param from UseMiddleware is passed in
+    // this includes resolver information like res,req,payload and next function
+    @Query(() => String)
+    @UseMiddleware(isAuthContext)
+    bye(@Ctx() { payload }: MyContext) {
+        console.log(payload);
+        return `your user id is :${payload?.userId}`;
+    }
+
+    @Query(() => [User])
+    users() {
+        return User.find();
+    }
+
+    @Query(() => [Genre])
+    @UseMiddleware(isAuthContext)
+    async genres() {
+        const genres = await axios(`https://api.themoviedb.org/3/genre/movie/list?api_key=${process.env.API_KEY_TMDB}&language=en-US`);
+        console.log(genres.data);
+        return genres.data.genres;
+    }
+
+    @Query(() => Discover)
+    @UseMiddleware(isAuthContext)
+    async discoverMovies(
+        @Args()
+        {
+            region,
+            sort_by,
+            certification_country,
+            certification,
+            certificationLte,
+            certificationGte,
+            include_adult,
+            include_video,
+            page,
+            primary_release_year,
+            primary_release_dateGte,
+            primary_release_dateLte,
+            year,
+            with_genres,
+        }: DiscoverParams,
+    ) {
+        console.log('running');
+        const movies = await axios(`https://api.themoviedb.org/3/discover/movie?api_key=${process.env.API_KEY_TMDB}`, {
+            params: {
+                region,
+                sort_by,
+                certification_country,
+                certification,
+                certificationLte,
+                certificationGte,
+                include_adult,
+                include_video,
+                page,
+                primary_release_year,
+                primary_release_dateGte,
+                primary_release_dateLte,
+                year,
+                with_genres,
+            },
+        });
+        console.log(movies);
+        return movies.data;
+    }
+
     // Ability to revoke token for user
     // dont actually expose this,
     // instead make a function someone can call or like a forgot password or something that you can call internal if someone gets hacked
@@ -46,21 +115,6 @@ export class UserResolver {
         user!.tokenVersion = 0;
         User.save(user);
         return true;
-    }
-
-    // middleware function can be created inside params or passed in
-    // no parameters need to be passed in because if we just pass in function name every param from UseMiddleware is passed in
-    // this includes resolver information like res,req,payload and next function
-    @Query(() => String)
-    @UseMiddleware(isAuthContext)
-    bye(@Ctx() { payload }: MyContext) {
-        console.log(payload);
-        return `your user id is :${payload?.userId}`;
-    }
-
-    @Query(() => [User])
-    users() {
-        return User.find();
     }
 
     // Mutation that is a function which returns type LoginResponse
@@ -99,6 +153,7 @@ export class UserResolver {
     @Mutation(() => Boolean)
     async register(@Arg('email') email: string, @Arg('password') password: string) {
         try {
+            // ADD SECRET HEY
             // Hash password
             const hashedPassword = await hash(password, 12);
 

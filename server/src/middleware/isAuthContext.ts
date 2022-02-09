@@ -1,4 +1,3 @@
-/* eslint-disable no-undef */
 import { MiddlewareFn } from 'type-graphql';
 import { MyContext } from 'src/typeDefs/MyContext';
 import { verify } from 'jsonwebtoken';
@@ -6,10 +5,8 @@ import { verify } from 'jsonwebtoken';
 // We expect the user to send a header called authorization of the format where it says bearer in front following a spaae then a token
 // EX. bearer isdfj9302hf398h2
 export const isAuthContext: MiddlewareFn<MyContext> = ({ context }, next) => {
-    console.log(context.req.headers, 'AUTH');
     // Read header Authorization
     const authorization = context.req.headers['authorization'];
-    console.log(authorization, 'auth');
 
     if (!authorization) {
         throw new Error('Not Authenticated');
