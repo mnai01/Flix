@@ -8,15 +8,19 @@ import cors from 'cors';
 import { createConnection } from 'typeorm';
 import express from 'express';
 import authRouter from './routes/auth';
+import moivesRouter from './routes/movies';
 
 (async () => {
     const app = express();
-    // run middleware
+    // Init Middleware
     // this should happen before any other routes are created
     app.use(cors({ origin: ['https://studio.apollographql.com', 'http://localhost:3000'], credentials: true }));
     app.use(cookieParser());
+    // It parses incoming requests with JSON payloads and is based on body-parser.
+    app.use(express.json());
+
     app.get('/', (_req, res) => res.send('hello'));
-    app.use('/api/movies', (_req, res) => res.send('hello'));
+    app.use('/api/movies', moivesRouter);
     app.use('/api/auth', authRouter);
 
     await createConnection();
