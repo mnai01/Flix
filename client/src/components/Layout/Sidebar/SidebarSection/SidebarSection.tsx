@@ -10,7 +10,7 @@ interface SidebarSectionProps {
 const SidebarSection: React.FC<SidebarSectionProps> = ({ title, items }) => {
     return (
         <>
-            <Heading as='h5' size='sm'>
+            <Heading as='h5' size='xs'>
                 {title}
             </Heading>
             {items.map((i: MenuItemProps) => (

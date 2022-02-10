@@ -4,7 +4,7 @@ import { MediaListItem } from '../';
 const MediaList = () => {
     return (
         <Flex wrap={'wrap'}>
-            {Array(8)
+            {Array(36)
                 .fill(0)
                 .map((_, i) => (
                     <Box key={i} p={1.5}>
