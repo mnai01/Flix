@@ -1,4 +1,4 @@
-import { Button, ButtonProps, Text, useColorMode } from '@chakra-ui/react';
+import { Button, ButtonProps, useColorMode } from '@chakra-ui/react';
 import { Link } from 'react-router-dom';
 
 interface NavButtonProps extends ButtonProps {

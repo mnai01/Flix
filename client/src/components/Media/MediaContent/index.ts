@@ -1,1 +1,1 @@
-export { default as MediaContent } from "./MediaContent";
+export { default as MediaContent } from './MediaContent';
