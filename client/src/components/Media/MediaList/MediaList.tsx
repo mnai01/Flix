@@ -1,5 +1,5 @@
 import { Box, Flex } from '@chakra-ui/react';
-import { MediaListItem } from '../';
+import { MediaCard } from '../';
 
 const MediaList = () => {
     return (
@@ -8,7 +8,7 @@ const MediaList = () => {
                 .fill(0)
                 .map((_, i) => (
                     <Box key={i} p={1.5}>
-                        <MediaListItem />
+                        <MediaCard />
                     </Box>
                 ))}
         </Flex>

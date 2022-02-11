@@ -1,6 +1,7 @@
 import { Flex } from '@chakra-ui/react';
 import { FaDesktop, FaFilm, FaHome } from 'react-icons/fa';
 import SidebarSection from './SidebarSection';
+import AutoSuggestion from '../../AutoComplete';
 import ModeSwitch from '../../ModeSwitch';
 
 export interface MenuItemProps {
@@ -51,7 +52,8 @@ const CategoryMenu: MenuItemProps[] = [
 
 const Sidebar = () => {
     return (
-        <Flex direction='column' width='13%' height='100%' justify='space-around' p={1}>
+        <Flex direction='column' width='240px' height='100%' justify='space-around' p={1}>
+            <AutoSuggestion />
             <SidebarSection title={'Navigation'} items={NavigationMenu} />
             <SidebarSection title={'Categories'} items={CategoryMenu} />
             <ModeSwitch />

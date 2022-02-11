@@ -1,4 +1,4 @@
-export { MediaList } from "./MediaList";
-export { MediaListHeader } from "./MediaListHeader";
-export { MediaListItem } from "./MediaListItem";
-export { MediaContent } from "./MediaContent";
+export { MediaList } from './MediaList';
+export { MediaListHeader } from './MediaListHeader';
+export { MediaCard } from './MediaCard';
+export { MediaContent } from './MediaContent';
