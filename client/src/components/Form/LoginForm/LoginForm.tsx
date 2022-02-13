@@ -1,32 +1,33 @@
-import { useLazyQuery, useMutation } from '@apollo/client';
+import { useMutation } from '@apollo/client';
 import { Box, Button, Center, useToast, VStack } from '@chakra-ui/react';
 import React from 'react';
-import { FormProvider, useForm } from 'react-hook-form';
+import { FormProvider, SubmitHandler, useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
-import { Bye } from '../../../apollo/generated/Bye';
 import { Login, LoginVariables } from '../../../apollo/generated/Login';
 import { LOGIN } from '../../../apollo/mutations';
-import { BYE } from '../../../apollo/queries';
 import { useAuth } from '../../Providers/AuthProvider';
 import ChakraInput from '../ChakraInput';
 
+interface FormSubmitValues {
+    email: string;
+    password: string;
+}
+
 const LoginForm: React.FC = () => {
     const toast = useToast();
-    const methods = useForm();
-    const { setTokenHandler, checkAuth } = useAuth();
+    const methods = useForm<FormSubmitValues>();
+    const { setAuthHanlder } = useAuth();
     const navigate = useNavigate();
 
-    const [Login, { loading, error, data }] = useMutation<Login, LoginVariables>(LOGIN, {
+    const [Login, { loading }] = useMutation<Login, LoginVariables>(LOGIN, {
         onCompleted: ({ login }) => {
             if (login.accessToken) {
-                console.log(login.accessToken);
-                setTokenHandler(login.accessToken);
-                checkAuth();
+                setAuthHanlder({ ok: true, accessToken: login.accessToken });
                 navigate('/', { replace: true });
             }
         },
-        onError: (e) => {
-            setTokenHandler('');
+        onError: () => {
+            setAuthHanlder();
             toast({
                 title: 'Error',
                 description: 'There is an error',
@@ -37,20 +38,8 @@ const LoginForm: React.FC = () => {
         },
     });
 
-    const [test] = useLazyQuery<Bye>(BYE, {
-        onCompleted: (data) => {
-            // Login
-            console.log(data);
-        },
-        onError: (e) => {
-            console.log(e);
-        },
-    });
-
-    const onSubmit = async (data: any) => {
+    const onSubmit: SubmitHandler<FormSubmitValues> = async (data: FormSubmitValues) => {
         Login({ variables: { email: data.email, password: data.password } });
-        console.log('ON SUBMIT: ', data);
-        test();
     };
 
     return (

@@ -7,8 +7,7 @@ interface authContextProps {
     accessToken: string;
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     isAuth: isAuthProps;
-    setTokenHandler: (data: string) => void;
-    checkAuth: () => void;
+    setAuthHanlder: (data?: fetchReturn) => void;
 }
 interface fetchReturn {
     ok: boolean;
@@ -18,46 +17,47 @@ interface fetchReturn {
 interface isAuthProps {
     auth: boolean;
     loading: boolean;
+    accessToken: string;
 }
 
 const authContextInitialState: authContextProps = {
     accessToken: '',
-    setTokenHandler: (data: string) => {},
-    isAuth: { auth: false, loading: true },
-    checkAuth: () => {},
+    setAuthHanlder: (data?: fetchReturn) => {},
+    isAuth: { auth: false, loading: true, accessToken: '' },
 };
 
 const AuthContext = createContext<authContextProps>(authContextInitialState);
 
 const AuthProvider: React.FC = ({ children }) => {
     // Just access token, doesnt check for auth
-    const [token, setToken] = useState<string>('');
 
     // check is refresh token is auth
-    const [isAuth, setAuth] = useState({ auth: false, loading: true });
+    const [isAuth, setAuth] = useState({ auth: false, loading: true, accessToken: '' });
 
-    const setTokenHandler = (token: string) => {
-        setToken(token);
-    };
-
-    // Check auth on page load
-    const checkAuth = async () => {
-        console.log('start');
-
-        try {
-            const data: fetchReturn = await (await fetch('http://localhost:4000/api/auth/refresh_token', { method: 'POST', credentials: 'include' })).json();
-            setAuth({ auth: data.ok, loading: false });
-        } catch (err) {
-            console.log('Error');
-            setAuth({ auth: false, loading: false });
+    const setAuthHanlder = (data?: fetchReturn) => {
+        console.log('setAuthHanlder', data);
+        if (data) {
+            setAuth({ auth: data.ok, loading: false, accessToken: data.accessToken });
+        } else {
+            console.log('setToken EMPTY');
+            setAuth({ auth: false, loading: false, accessToken: 'data.accessToken' });
         }
     };
 
     useEffect(() => {
-        checkAuth();
+        // Check auth on page load
+        const checkAuth = async () => {
+            const data: fetchReturn = await (await fetch('http://localhost:4000/api/auth/refresh_token', { method: 'POST', credentials: 'include' })).json();
+            setAuthHanlder(data);
+            console.log('refresh token successful, setting access token');
+        };
+        checkAuth().catch((err) => {
+            console.log('refresh token ERROR');
+            setAuthHanlder();
+        });
     }, []);
 
-    return <AuthContext.Provider value={{ accessToken: token, isAuth, setTokenHandler, checkAuth }}>{children}</AuthContext.Provider>;
+    return <AuthContext.Provider value={{ accessToken: isAuth.accessToken, isAuth, setAuthHanlder }}>{children}</AuthContext.Provider>;
 };
 
 const useAuth = (): authContextProps => {

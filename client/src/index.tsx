@@ -3,20 +3,21 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import AuthorizedApolloProvider from './components/Providers/AuthorizedApolloProvider';
 import { AuthProvider } from './components/Providers/AuthProvider';
+import { AutoSuggestionProvider } from './components/Providers/AutoSuggestionProvider';
 import './index.css';
 import { RootRouter } from './pages';
 import { config, customTheme } from './theme';
 
 ReactDOM.render(
-    <React.StrictMode>
+    <AuthProvider>
         <ColorModeScript initialColorMode={config.initialColorMode} />
-        <AuthProvider>
+        <ChakraProvider theme={customTheme}>
             <AuthorizedApolloProvider>
-                <ChakraProvider theme={customTheme}>
+                <AutoSuggestionProvider>
                     <RootRouter />
-                </ChakraProvider>
+                </AutoSuggestionProvider>
             </AuthorizedApolloProvider>
-        </AuthProvider>
-    </React.StrictMode>,
+        </ChakraProvider>
+    </AuthProvider>,
     document.getElementById('root')
 );

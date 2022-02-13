@@ -1,12 +1,28 @@
-import { Skeleton } from '@chakra-ui/react';
+import { Box, Image } from '@chakra-ui/react';
 import { useNavigate } from 'react-router-dom';
+import { SearchVideos_SearchVideos } from '../../../apollo/generated/SearchVideos';
+interface MediaProps {
+    media: SearchVideos_SearchVideos;
+}
 
-const MediaCard = () => {
+const MediaCard: React.FC<MediaProps> = ({ media }) => {
+    const { id, poster_path } = media;
     const navigate = useNavigate();
+
     return (
-        <div onClick={() => navigate(`/movie/1`)}>
-            <Skeleton width='185px' height='278px' />
-        </div>
+        <>
+            {media && (
+                <Box onClick={() => navigate(`/movie/1`)}>
+                    <h1>{id}</h1>
+                    <Image
+                        src={`https://image.tmdb.org/t/p/w154/${poster_path}`}
+                        fallbackSrc='https://via.placeholder.com/150'
+                        htmlWidth='185px'
+                        htmlHeight='278px'
+                    />
+                </Box>
+            )}
+        </>
     );
 };
 

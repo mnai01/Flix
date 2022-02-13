@@ -1,7 +1,7 @@
 import { Flex } from '@chakra-ui/react';
 import { FaDesktop, FaFilm, FaHome } from 'react-icons/fa';
 import SidebarSection from './SidebarSection';
-import AutoSuggestion from '../../AutoComplete';
+import AutoSuggestion from '../../AutoSuggestion';
 import ModeSwitch from '../../ModeSwitch';
 
 export interface MenuItemProps {

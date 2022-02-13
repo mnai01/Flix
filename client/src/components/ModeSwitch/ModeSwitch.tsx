@@ -8,7 +8,7 @@ const ModeSwitch = () => {
             <Text fontSize='sm' as='b'>
                 Toggle {colorMode === 'dark' ? 'light' : 'dark'}
             </Text>
-            <Switch size='md' onChange={toggleColorMode} />
+            <Switch size='md' onChange={toggleColorMode} defaultChecked />
         </Flex>
     );
 };

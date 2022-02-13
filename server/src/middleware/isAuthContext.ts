@@ -9,7 +9,7 @@ export const isAuthContext: MiddlewareFn<MyContext> = ({ context }, next) => {
     const authorization = context.req.headers['authorization'];
 
     if (!authorization) {
-        throw new Error('Not Authenticated');
+        throw new Error('No Authenticated token sent');
     }
 
     try {
@@ -23,7 +23,7 @@ export const isAuthContext: MiddlewareFn<MyContext> = ({ context }, next) => {
         context.payload = payload as any;
     } catch (err) {
         console.log(err);
-        throw new Error('Not Authenticated');
+        throw new Error('Not Authenticated1');
     }
 
     // Returns the resolver and goes to the next middleware
