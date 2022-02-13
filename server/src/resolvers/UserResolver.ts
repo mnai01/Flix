@@ -6,7 +6,7 @@ import { createAccessToken, createRefreshToken } from '../helpers/refreshTokens'
 import { isAuthContext } from '../middleware/isAuthContext';
 import { getConnection } from 'typeorm';
 import { sendRefreshToken } from '../helpers/sendTokens';
-import { Discover, Genre, DiscoverParams } from '../typeDefs/TMDB';
+import { DiscoverMovie, Genre, DiscoverMovieParams, SearchParams, SearchResults } from '../typeDefs/TMDB';
 import axios from 'axios';
 
 // With TypeGraphQL we don’t need to explicitly write the schema.
@@ -53,7 +53,7 @@ export class UserResolver {
         return genres.data.genres;
     }
 
-    @Query(() => Discover)
+    @Query(() => DiscoverMovie)
     @UseMiddleware(isAuthContext)
     async discoverMovies(
         @Args()
@@ -72,7 +72,7 @@ export class UserResolver {
             primary_release_dateLte,
             year,
             with_genres,
-        }: DiscoverParams,
+        }: DiscoverMovieParams,
     ) {
         console.log('running');
         const movies = await axios(`https://api.themoviedb.org/3/discover/movie?api_key=${process.env.API_KEY_TMDB}`, {
@@ -95,6 +95,22 @@ export class UserResolver {
         });
         console.log(movies);
         return movies.data;
+    }
+
+    @Query(() => [SearchResults])
+    @UseMiddleware(isAuthContext)
+    async SearchVideos(
+        @Args()
+        { region, query, include_adult }: SearchParams,
+    ) {
+        const videos = await axios(`https://api.themoviedb.org/3/search/multi?api_key=${process.env.API_KEY_TMDB}`, {
+            params: {
+                region,
+                query,
+                include_adult,
+            },
+        });
+        return videos.data.results.filter((i: SearchResults) => i.media_type !== 'person' && i.poster_path !== null);
     }
 
     // Ability to revoke token for user

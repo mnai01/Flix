@@ -288,7 +288,7 @@ registerEnumType(SortBy, {
 });
 
 @ArgsType()
-export class DiscoverParams {
+export class DiscoverMovieParams {
     @Field(() => Country, { nullable: true })
     'region': Country = Country['UnitedStates'];
     @Field(() => SortBy, { nullable: true })
@@ -320,7 +320,29 @@ export class DiscoverParams {
 }
 
 @ObjectType()
-export class DiscoverResults {
+export class SearchResults {
+    @Field({ nullable: true })
+    poster_path: string;
+    @Field(() => Int, { nullable: false })
+    id: number;
+    @Field({ nullable: false })
+    media_type: string;
+    @Field({ nullable: true })
+    vote_average: string;
+    @Field(() => Float, { nullable: true })
+    popularity: number;
+    @Field(() => Int, { nullable: true })
+    vote_count: number;
+    @Field({ nullable: true })
+    title: string;
+    @Field({ nullable: true })
+    name: string;
+    @Field(() => [Int], { nullable: true })
+    genre_ids: number[];
+}
+
+@ObjectType()
+export class DiscoverMovieResults {
     @Field({ nullable: true })
     poster_path: string;
     @Field({ nullable: true })
@@ -331,7 +353,7 @@ export class DiscoverResults {
     release_date: string;
     @Field(() => [Int], { nullable: true })
     genre_ids: number[];
-    @Field(() => Int, { nullable: true })
+    @Field(() => Int, { nullable: false })
     id: number;
     @Field({ nullable: true })
     original_title: string;
@@ -352,12 +374,35 @@ export class DiscoverResults {
 }
 
 @ObjectType()
-export class Discover {
+export class DiscoverMovie {
     // it can infer string but not number so we need to specify
     @Field(() => Int)
     page: number;
-    @Field(() => [DiscoverResults])
-    results: DiscoverResults[];
+    @Field(() => [DiscoverMovieResults])
+    results: DiscoverMovieResults[];
+    @Field(() => Int)
+    total_results: number;
+    @Field(() => Int)
+    total_pages: number;
+}
+
+@ArgsType()
+export class SearchParams {
+    @Field({ nullable: false })
+    'query': string;
+    @Field({ nullable: true })
+    'include_adult': boolean = false;
+    @Field(() => Country, { nullable: true })
+    'region': Country = Country['UnitedStates'];
+}
+
+@ObjectType()
+export class Search {
+    // it can infer string but not number so we need to specify
+    @Field(() => Int)
+    page: number;
+    @Field(() => [SearchResults])
+    results: SearchResults[];
     @Field(() => Int)
     total_results: number;
     @Field(() => Int)
