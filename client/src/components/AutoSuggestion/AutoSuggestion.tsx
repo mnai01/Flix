@@ -5,7 +5,7 @@ import { useAutoSuggestion } from '../Providers/AutoSuggestionProvider';
 const AutoSuggestion = () => {
     const { pathname } = useLocation();
     const navigate = useNavigate();
-    const { setValue } = useAutoSuggestion();
+    const { autoSuggestResults } = useAutoSuggestion();
 
     return (
         <Box p={4}>
@@ -14,7 +14,7 @@ const AutoSuggestion = () => {
                 placeholder='Search'
                 onChange={(e) => {
                     if (pathname !== '/search') navigate('/search');
-                    setValue(e.target.value);
+                    autoSuggestResults({ variables: { query: e.target.value } });
                 }}
             />
         </Box>

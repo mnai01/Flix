@@ -1,5 +1,5 @@
-import { ApolloError, useQuery } from '@apollo/client';
-import { createContext, useContext, useState } from 'react';
+import { ApolloError, LazyQueryResult, useLazyQuery } from '@apollo/client';
+import { createContext, useContext } from 'react';
 import { SearchVideos, SearchVideosVariables } from '../../../apollo/generated/SearchVideos';
 import { SearchVideosQuery } from '../../../apollo/queries';
 
@@ -7,21 +7,18 @@ interface AutoSuggestionContextProps {
     error?: ApolloError;
     loading: boolean;
     data?: SearchVideos;
-    // eslint-disable-next-line no-unused-vars
-    setValue: (data: string) => void;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    autoSuggestResults: (options?: any) => Promise<LazyQueryResult<SearchVideos, SearchVideosVariables>>;
 }
 
 const AutoSuggestionContext = createContext<AutoSuggestionContextProps | undefined>(undefined);
 
 const AutoSuggestionProvider: React.FC = ({ children }) => {
-    const [value, setValue] = useState<string>('');
-
-    const { loading, error, data } = useQuery<SearchVideos, SearchVideosVariables>(SearchVideosQuery, {
+    const [autoSuggestResults, { loading, error, data }] = useLazyQuery<SearchVideos, SearchVideosVariables>(SearchVideosQuery, {
         fetchPolicy: 'network-only',
-        variables: { query: value },
-        skip: !value,
     });
-    return <AutoSuggestionContext.Provider value={{ error, loading, data, setValue }}>{children}</AutoSuggestionContext.Provider>;
+
+    return <AutoSuggestionContext.Provider value={{ error, loading, data, autoSuggestResults }}>{children}</AutoSuggestionContext.Provider>;
 };
 const useAutoSuggestion = (): AutoSuggestionContextProps => {
     const context = useContext(AutoSuggestionContext);
