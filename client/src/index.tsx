@@ -3,7 +3,6 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import AuthorizedApolloProvider from './components/Providers/AuthorizedApolloProvider';
 import { AuthProvider } from './components/Providers/AuthProvider';
-import { AutoSuggestionProvider } from './components/Providers/AutoSuggestionProvider';
 import './index.css';
 import { RootRouter } from './pages';
 import { config, customTheme } from './theme';
@@ -13,9 +12,7 @@ ReactDOM.render(
         <ColorModeScript initialColorMode={config.initialColorMode} />
         <ChakraProvider theme={customTheme}>
             <AuthorizedApolloProvider>
-                <AutoSuggestionProvider>
-                    <RootRouter />
-                </AutoSuggestionProvider>
+                <RootRouter />
             </AuthorizedApolloProvider>
         </ChakraProvider>
     </AuthProvider>,

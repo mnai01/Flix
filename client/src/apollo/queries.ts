@@ -22,3 +22,24 @@ export const SearchVideosQuery = gql`
         }
     }
 `;
+
+export const GET_GENRES = gql`
+    query Genres {
+        genres {
+            id
+            name
+        }
+    }
+`;
+
+export const GET_MOVIES_BY_GENRE = gql`
+    query DiscoverMovies($withGenres: String) {
+        discoverMovies(with_genres: $withGenres) {
+            results {
+                poster_path
+                id
+                title
+            }
+        }
+    }
+`;

@@ -4,8 +4,8 @@ import { ArgsType, Field, Float, Int, ObjectType, registerEnumType } from 'type-
 @ObjectType()
 export class Genre {
     // it can infer string but not number so we need to specify
-    @Field(() => Int)
-    id: number;
+    @Field()
+    id: string;
     @Field()
     name: string;
 }

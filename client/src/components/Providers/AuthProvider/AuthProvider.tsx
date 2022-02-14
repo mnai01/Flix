@@ -35,11 +35,9 @@ const AuthProvider: React.FC = ({ children }) => {
     const [isAuth, setAuth] = useState({ auth: false, loading: true, accessToken: '' });
 
     const setAuthHanlder = (data?: fetchReturn) => {
-        console.log('setAuthHanlder', data);
         if (data) {
             setAuth({ auth: data.ok, loading: false, accessToken: data.accessToken });
         } else {
-            console.log('setToken EMPTY');
             setAuth({ auth: false, loading: false, accessToken: 'data.accessToken' });
         }
     };
@@ -49,10 +47,8 @@ const AuthProvider: React.FC = ({ children }) => {
         const checkAuth = async () => {
             const data: fetchReturn = await (await fetch('http://localhost:4000/api/auth/refresh_token', { method: 'POST', credentials: 'include' })).json();
             setAuthHanlder(data);
-            console.log('refresh token successful, setting access token');
         };
         checkAuth().catch((err) => {
-            console.log('refresh token ERROR');
             setAuthHanlder();
         });
     }, []);

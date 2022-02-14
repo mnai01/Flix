@@ -3,7 +3,8 @@ import { MediaCard } from '../';
 import { SearchVideos_SearchVideos } from '../../../apollo/generated/SearchVideos';
 
 interface MediaListProps {
-    medias?: SearchVideos_SearchVideos[];
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    medias?: any[];
     loading?: boolean;
 }
 

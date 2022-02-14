@@ -1,4 +1,6 @@
+import { useQuery } from '@apollo/client';
 import { Flex } from '@chakra-ui/react';
+import { GET_MOVIES_BY_GENRE } from '../apollo/queries';
 import { MediaList, MediaListHeader } from '../components/Media';
 import { useAutoSuggestion } from '../components/Providers/AutoSuggestionProvider';
 

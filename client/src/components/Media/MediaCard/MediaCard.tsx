@@ -15,6 +15,7 @@ const MediaCard: React.FC<MediaProps> = ({ media }) => {
                 <Box onClick={() => navigate(`/movie/1`)}>
                     <h1>{id}</h1>
                     <Image
+                        borderRadius='md'
                         src={`https://image.tmdb.org/t/p/w154/${poster_path}`}
                         fallbackSrc='https://via.placeholder.com/150'
                         htmlWidth='185px'
