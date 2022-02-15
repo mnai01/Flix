@@ -9,6 +9,7 @@ export class Genre {
     @Field()
     name: string;
 }
+
 export enum Country {
     Afghanistan = 'AF',
     AlandIslands = 'AX',
@@ -317,28 +318,14 @@ export class DiscoverMovieParams {
     'year': string;
     @Field({ nullable: true })
     'with_genres': string;
-}
-
-@ObjectType()
-export class SearchResults {
-    @Field({ nullable: true })
-    poster_path: string;
-    @Field(() => Int, { nullable: false })
-    id: number;
-    @Field({ nullable: false })
-    media_type: string;
-    @Field({ nullable: true })
-    vote_average: string;
-    @Field(() => Float, { nullable: true })
-    popularity: number;
-    @Field(() => Int, { nullable: true })
-    vote_count: number;
-    @Field({ nullable: true })
-    title: string;
-    @Field({ nullable: true })
-    name: string;
     @Field(() => [Int], { nullable: true })
-    genre_ids: number[];
+    // 'Premiere';
+    // 'Theatrical'(limited);
+    // 'Theatrical';
+    // 'Digital';
+    // 'Physical';
+    // 'TV';
+    'with_release_type': number[] = [4, 5, 6];
 }
 
 @ObjectType()
@@ -372,7 +359,6 @@ export class DiscoverMovieResults {
     @Field({ nullable: true })
     vote_average: string;
 }
-
 @ObjectType()
 export class DiscoverMovie {
     // it can infer string but not number so we need to specify
@@ -385,7 +371,6 @@ export class DiscoverMovie {
     @Field(() => Int)
     total_pages: number;
 }
-
 @ArgsType()
 export class SearchParams {
     @Field({ nullable: false })
@@ -395,7 +380,27 @@ export class SearchParams {
     @Field(() => Country, { nullable: true })
     'region': Country = Country['UnitedStates'];
 }
-
+@ObjectType()
+export class SearchResults {
+    @Field({ nullable: true })
+    poster_path: string;
+    @Field(() => Int, { nullable: false })
+    id: number;
+    @Field({ nullable: false })
+    media_type: string;
+    @Field({ nullable: true })
+    vote_average: string;
+    @Field(() => Float, { nullable: true })
+    popularity: number;
+    @Field(() => Int, { nullable: true })
+    vote_count: number;
+    @Field({ nullable: true })
+    title: string;
+    @Field({ nullable: true })
+    name: string;
+    @Field(() => [Int], { nullable: true })
+    genre_ids: number[];
+}
 @ObjectType()
 export class Search {
     // it can infer string but not number so we need to specify

@@ -72,6 +72,7 @@ export class UserResolver {
             primary_release_dateLte,
             year,
             with_genres,
+            with_release_type,
         }: DiscoverMovieParams,
     ) {
         console.log('running');
@@ -91,6 +92,7 @@ export class UserResolver {
                 primary_release_dateLte,
                 year,
                 with_genres,
+                with_release_type: with_release_type.join('|'),
             },
         });
         console.log(movies);
