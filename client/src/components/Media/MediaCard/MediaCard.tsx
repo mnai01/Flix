@@ -12,7 +12,7 @@ const MediaCard: React.FC<MediaProps> = ({ media }) => {
     return (
         <>
             {media && (
-                <Box onClick={() => navigate(`/movie/1`)}>
+                <Box onClick={() => navigate(`/movie/1`)} width='185px' height='278px'>
                     <h1>{id}</h1>
                     <Image
                         borderRadius='md'

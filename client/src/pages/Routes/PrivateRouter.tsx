@@ -14,17 +14,15 @@ const PageRoutes = () => {
             <GenreProvider>
                 <Flex>
                     <Sidebar />
-                    <PageWrapper>
-                        <Routes>
-                            <Route path='*' element={<NotFound />} />
-                            <Route path='/' element={<HomePage />} />
-                            <Route path='/movies' element={<MoviesPage />} />
-                            <Route path='/tv' element={<TVsPage />} />
-                            <Route path='/search' element={<SearchPage />} />
-                            <Route path='/category/:genre' element={<MediaListPage />} />
-                            <Route path='/movie/:id' element={<MovieContent />} />
-                        </Routes>
-                    </PageWrapper>
+                    <Routes>
+                        <Route path='*' element={<NotFound />} />
+                        <Route path='/' element={<HomePage />} />
+                        <Route path='/movies' element={<MoviesPage />} />
+                        <Route path='/tv' element={<TVsPage />} />
+                        <Route path='/search' element={<SearchPage />} />
+                        <Route path='/category/:genre' element={<MediaListPage />} />
+                        <Route path='/movie/:id' element={<MovieContent />} />
+                    </Routes>
                 </Flex>
             </GenreProvider>
         </AutoSuggestionProvider>

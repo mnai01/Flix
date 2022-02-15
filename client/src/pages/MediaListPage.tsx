@@ -14,10 +14,11 @@ const MediaListPage = () => {
         variables: { withGenres: genre?.id },
     });
     return (
-        <Flex direction='column'>
-            <MediaListHeader />
-            {/*  this should be some sort of header */}
-            <h2>{genre && genre.name}</h2>
+        // An initial setting on flex items is min-width: auto. This means that a flex item, by default, cannot be smaller than the size of its content.
+        // Therefore, text-overflow: ellipsis cannot work because a flex item will simply expand, rather than permit an overflow. (Scroll bars will not render either, for the same reason.)
+        // To override this behavior, use min-width: 0 or overflow: hidden.
+        <Flex direction='column' style={{ overflow: 'hidden', minWidth: 0 }}>
+            <MediaListHeader title={genre && genre.name} />
             <MediaList medias={data?.discoverMovies.results} loading={loading} />
         </Flex>
     );

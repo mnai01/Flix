@@ -1,8 +1,11 @@
 import { Flex } from '@chakra-ui/react';
 import { FaDesktop, FaFilm, FaHome } from 'react-icons/fa';
 import SidebarSection from './SidebarSection';
+import { Genres_genres } from '../../../apollo/generated/Genres';
+import { uncapitalize } from '../../../utils/helper/FirstCharacterHelper';
 import AutoSuggestion from '../../AutoSuggestion';
 import ModeSwitch from '../../ModeSwitch';
+import { useGenres } from '../../Providers/GenreProvider';
 
 export interface MenuItemProps {
     path: string;
@@ -32,30 +35,18 @@ const NavigationMenu: MenuItemProps[] = [
     },
 ];
 
-const CategoryMenu: MenuItemProps[] = [
-    {
-        path: '/category/action',
-        label: 'Action',
-        isFullWidth: true,
-    },
-    {
-        path: '/category/horror',
-        label: 'Horror',
-        isFullWidth: true,
-    },
-    {
-        path: '/category/adventure',
-        label: 'Adventure',
-        isFullWidth: true,
-    },
-];
-
 const Sidebar = () => {
+    const { data } = useGenres();
+
+    const genreArr: MenuItemProps[] | undefined = data?.genres.map((i: Genres_genres) => {
+        return { path: `/category/${uncapitalize(i.name)}`, label: i.name, isFullWidth: true };
+    });
+
     return (
-        <Flex direction='column' width='240px' height='100%' justify='space-around' p={1}>
+        <Flex direction='column' flexBasis={'240px'} flexGrow={0} flexShrink={0} height='100%' justify='space-around' p={1}>
             <AutoSuggestion />
             <SidebarSection title={'Navigation'} items={NavigationMenu} />
-            <SidebarSection title={'Categories'} items={CategoryMenu} />
+            <SidebarSection title={'Categories'} items={genreArr} />
             <ModeSwitch />
         </Flex>
     );

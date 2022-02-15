@@ -6,19 +6,18 @@ interface MediaListProps {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     medias?: any[];
     loading?: boolean;
+    horizontal?: boolean;
 }
 
-const MediaList: React.FC<MediaListProps> = ({ medias, loading }) => {
+const MediaList: React.FC<MediaListProps> = ({ medias, loading, horizontal = true }) => {
     return (
-        <Flex wrap={'wrap'}>
+        <Flex wrap={horizontal ? 'nowrap' : 'wrap'} overflowX={'scroll'}>
             {loading ? (
                 Array(36)
                     .fill(0)
                     .map((_, i) => (
                         <Box key={i} p={1.5}>
-                            <Box>
-                                <Skeleton width='185px' height='278px' />
-                            </Box>
+                            <Skeleton width='185px' height='278px' />
                         </Box>
                     ))
             ) : medias && medias.length > 0 ? (
