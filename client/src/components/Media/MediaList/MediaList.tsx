@@ -11,13 +11,13 @@ interface MediaListProps {
 
 const MediaList: React.FC<MediaListProps> = ({ medias, loading, horizontal = true }) => {
     return (
-        <Flex wrap={horizontal ? 'nowrap' : 'wrap'} overflowX={'scroll'}>
+        <Flex wrap={horizontal ? 'nowrap' : 'wrap'} overflowX={horizontal ? 'scroll' : 'auto'}>
             {loading ? (
                 Array(36)
                     .fill(0)
                     .map((_, i) => (
                         <Box key={i} p={1.5}>
-                            <Skeleton width='185px' height='278px' />
+                            <Skeleton width="185px" height="278px" />
                         </Box>
                     ))
             ) : medias && medias.length > 0 ? (
