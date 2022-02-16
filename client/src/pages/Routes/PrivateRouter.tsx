@@ -15,13 +15,13 @@ const PageRoutes = () => {
                 <Flex>
                     <Sidebar />
                     <Routes>
-                        <Route path='*' element={<NotFound />} />
-                        <Route path='/' element={<HomePage />} />
-                        <Route path='/movies' element={<MoviesPage />} />
-                        <Route path='/tv' element={<TVsPage />} />
-                        <Route path='/search' element={<SearchPage />} />
-                        <Route path='/category/:genre' element={<MediaListPage />} />
-                        <Route path='/movie/:id' element={<MovieContent />} />
+                        <Route path="*" element={<NotFound />} />
+                        <Route path="/" element={<HomePage />} />
+                        <Route path="/movies" element={<MoviesPage />} />
+                        <Route path="/tv" element={<TVsPage />} />
+                        <Route path="/search" element={<SearchPage />} />
+                        <Route path="/category/:genre" element={<MediaListPage />} />
+                        <Route path="/movie/:id" element={<MovieContent />} />
                     </Routes>
                 </Flex>
             </GenreProvider>

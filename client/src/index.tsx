@@ -6,7 +6,6 @@ import { AuthProvider } from './components/Providers/AuthProvider';
 import './index.css';
 import { RootRouter } from './pages';
 import { config, customTheme } from './theme';
-
 ReactDOM.render(
     <AuthProvider>
         <ColorModeScript initialColorMode={config.initialColorMode} />
@@ -16,5 +15,5 @@ ReactDOM.render(
             </AuthorizedApolloProvider>
         </ChakraProvider>
     </AuthProvider>,
-    document.getElementById('root')
+    document.getElementById('root'),
 );
