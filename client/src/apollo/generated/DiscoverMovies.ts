@@ -7,20 +7,20 @@
 // GraphQL query operation: DiscoverMovies
 // ====================================================
 
-export interface DiscoverMovies_discoverMovies_results {
+export interface DiscoverMovies_DiscoverMovies_results {
   __typename: "DiscoverMovieResults";
   poster_path: string | null;
   id: number;
   title: string | null;
 }
 
-export interface DiscoverMovies_discoverMovies {
+export interface DiscoverMovies_DiscoverMovies {
   __typename: "DiscoverMovie";
-  results: DiscoverMovies_discoverMovies_results[];
+  results: DiscoverMovies_DiscoverMovies_results[];
 }
 
 export interface DiscoverMovies {
-  discoverMovies: DiscoverMovies_discoverMovies;
+  DiscoverMovies: DiscoverMovies_DiscoverMovies;
 }
 
 export interface DiscoverMoviesVariables {

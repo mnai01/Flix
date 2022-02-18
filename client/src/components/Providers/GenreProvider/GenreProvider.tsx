@@ -1,6 +1,6 @@
 import { ApolloError, useQuery } from '@apollo/client';
 import { createContext, useContext } from 'react';
-import { Genres, Genres_genres } from '../../../apollo/generated/Genres';
+import { Genres } from '../../../apollo/generated/Genres';
 import { GET_GENRES } from '../../../apollo/queries';
 
 interface GenreContextProps {
@@ -12,7 +12,7 @@ interface GenreContextProps {
 const GenreContext = createContext<GenreContextProps | undefined>(undefined);
 
 const GenreProvider: React.FC = ({ children }) => {
-    const { loading, error, data } = useQuery<Genres, Genres_genres>(GET_GENRES, {
+    const { loading, error, data } = useQuery<Genres>(GET_GENRES, {
         fetchPolicy: 'network-only',
     });
 

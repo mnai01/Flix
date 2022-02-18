@@ -1,10 +1,9 @@
 import { Flex } from '@chakra-ui/react';
 import { Route, Routes } from 'react-router';
-import PageWrapper from '../../components/Layout/PageWrapper';
 import Sidebar from '../../components/Layout/Sidebar';
 import { AutoSuggestionProvider } from '../../components/Providers/AutoSuggestionProvider';
 import { GenreProvider } from '../../components/Providers/GenreProvider';
-import { HomePage, MediaListPage, MovieContent, NotFound, SearchPage } from '../index';
+import { CatagoryMediaPage, HomePage, MovieContent, NotFound, SearchPage } from '../index';
 import MoviesPage from '../MoviesPage';
 import TVsPage from '../TVsPage';
 
@@ -20,8 +19,10 @@ const PageRoutes = () => {
                         <Route path="/movies" element={<MoviesPage />} />
                         <Route path="/tv" element={<TVsPage />} />
                         <Route path="/search" element={<SearchPage />} />
-                        <Route path="/category/:genre" element={<MediaListPage />} />
+                        <Route path="/movies/category/:genre" element={<CatagoryMediaPage />} />
+                        <Route path="/tv/category/:genre" element={<CatagoryMediaPage />} />
                         <Route path="/movie/:id" element={<MovieContent />} />
+                        <Route path="/tv/:id" element={<MovieContent />} />
                     </Routes>
                 </Flex>
             </GenreProvider>
