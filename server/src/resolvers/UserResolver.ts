@@ -6,7 +6,23 @@ import { createAccessToken, createRefreshToken } from '../helpers/refreshTokens'
 import { isAuthContext } from '../middleware/isAuthContext';
 import { getConnection } from 'typeorm';
 import { sendRefreshToken } from '../helpers/sendTokens';
-import { DiscoverMovie, Genre, DiscoverMovieParams, SearchParams, SearchResults } from '../typeDefs/TMDB';
+import {
+    DiscoverMovie,
+    GenreResult,
+    DiscoverMovieParams,
+    SearchParams,
+    SearchResults,
+    Search,
+    VidsrcMovies,
+    FindMediaByIMDB,
+    FindMediaByIMDBParams,
+    VidsrcTV,
+    VidsrcLastesVideosParams,
+    DiscoverTV,
+    DiscoverTVParams,
+    FindMovieByTMDB,
+    FindMovieByTMDBParams,
+} from '../typeDefs/TMDB';
 import axios from 'axios';
 
 // With TypeGraphQL we don’t need to explicitly write the schema.
@@ -25,18 +41,12 @@ class LoginResponse {
 
 @Resolver()
 export class UserResolver {
-    @Query(() => String)
-    hello() {
-        return `'hi'`;
-    }
-
     // middleware function can be created inside params or passed in
     // no parameters need to be passed in because if we just pass in function name every param from UseMiddleware is passed in
     // this includes resolver information like res,req,payload and next function
     @Query(() => String)
     @UseMiddleware(isAuthContext)
     bye(@Ctx() { payload }: MyContext) {
-        console.log(payload);
         return `your user id is :${payload?.userId}`;
     }
 
@@ -45,17 +55,23 @@ export class UserResolver {
         return User.find();
     }
 
-    @Query(() => [Genre])
+    @Query(() => GenreResult)
     @UseMiddleware(isAuthContext)
-    async genres() {
-        const genres = await axios(`https://api.themoviedb.org/3/genre/movie/list?api_key=${process.env.API_KEY_TMDB}&language=en-US`);
-        console.log(genres.data);
-        return genres.data.genres;
+    async Genres() {
+        const tvGenres = axios(`https://api.themoviedb.org/3/genre/tv/list?api_key=${process.env.API_KEY_TMDB}&language=en-US`);
+        const movieGenres = axios(`https://api.themoviedb.org/3/genre/movie/list?api_key=${process.env.API_KEY_TMDB}&language=en-US`);
+        const allPromise = Promise.all([tvGenres, movieGenres]);
+        try {
+            const values = await allPromise;
+            return { tv: values[0].data.genres, movies: values[1].data.genres };
+        } catch (err) {
+            throw new Error(err);
+        }
     }
 
     @Query(() => DiscoverMovie)
     @UseMiddleware(isAuthContext)
-    async discoverMovies(
+    async DiscoverMovies(
         @Args()
         {
             region,
@@ -75,8 +91,7 @@ export class UserResolver {
             with_release_type,
         }: DiscoverMovieParams,
     ) {
-        console.log('running');
-        const movies = await axios(`https://api.themoviedb.org/3/discover/movie?api_key=${process.env.API_KEY_TMDB}`, {
+        const { data } = await axios(`https://api.themoviedb.org/3/discover/movie?api_key=${process.env.API_KEY_TMDB}`, {
             params: {
                 region,
                 sort_by,
@@ -95,24 +110,83 @@ export class UserResolver {
                 with_release_type: with_release_type.join('|'),
             },
         });
-        console.log(movies);
-        return movies.data;
+        return data;
     }
 
-    @Query(() => [SearchResults])
+    @Query(() => DiscoverTV)
+    @UseMiddleware(isAuthContext)
+    async DiscoverTV(
+        @Args()
+        { sort_by, page, with_genres }: DiscoverTVParams,
+    ) {
+        const { data } = await axios(`https://api.themoviedb.org/3/discover/tv?api_key=${process.env.API_KEY_TMDB}`, {
+            params: {
+                sort_by,
+                page,
+                with_genres,
+            },
+        });
+        return data;
+    }
+
+    @Query(() => Search)
     @UseMiddleware(isAuthContext)
     async SearchVideos(
         @Args()
         { region, query, include_adult }: SearchParams,
     ) {
-        const videos = await axios(`https://api.themoviedb.org/3/search/multi?api_key=${process.env.API_KEY_TMDB}`, {
+        const { data } = await axios(`https://api.themoviedb.org/3/search/multi?api_key=${process.env.API_KEY_TMDB}`, {
             params: {
                 region,
                 query,
                 include_adult,
             },
         });
-        return videos.data.results.filter((i: SearchResults) => i.media_type !== 'person' && i.poster_path !== null);
+        return { ...data, results: data.results.filter((i: SearchResults) => i.media_type !== 'person' && i.poster_path !== null) };
+    }
+
+    @Query(() => VidsrcMovies)
+    @UseMiddleware(isAuthContext)
+    async GetLatestMovies(
+        @Args()
+        { page }: VidsrcLastesVideosParams,
+    ) {
+        const { data } = await axios(`https://vidsrc.me/movies/latest/page-${page}.json`);
+        return data;
+    }
+
+    @Query(() => VidsrcTV)
+    @UseMiddleware(isAuthContext)
+    async GetLatestTV(
+        @Args()
+        { page }: VidsrcLastesVideosParams,
+    ) {
+        const { data } = await axios(`https://vidsrc.me/episodes/latest/page-${page}.json`);
+        return data;
+    }
+
+    @Query(() => FindMediaByIMDB)
+    @UseMiddleware(isAuthContext)
+    async FindByIMDB_ID(
+        @Args()
+        { imdb_id }: FindMediaByIMDBParams,
+    ) {
+        const { data } = await axios(`https://api.themoviedb.org/3/find/${imdb_id}?api_key=${process.env.API_KEY_TMDB}`, {
+            params: {
+                external_source: 'imdb_id',
+            },
+        });
+        return data;
+    }
+
+    @Query(() => FindMovieByTMDB)
+    @UseMiddleware(isAuthContext)
+    async FindByMovieTMDB(
+        @Args()
+        { movie_id }: FindMovieByTMDBParams,
+    ) {
+        const { data } = await axios(`https://api.themoviedb.org/3/movie/${movie_id}?api_key=${process.env.API_KEY_TMDB}`);
+        return data;
     }
 
     // Ability to revoke token for user
