@@ -117,13 +117,15 @@ export class UserResolver {
     @UseMiddleware(isAuthContext)
     async DiscoverTV(
         @Args()
-        { sort_by, page, with_genres }: DiscoverTVParams,
+        { sort_by, page, with_genres, watch_region, with_status }: DiscoverTVParams,
     ) {
         const { data } = await axios(`https://api.themoviedb.org/3/discover/tv?api_key=${process.env.API_KEY_TMDB}`, {
             params: {
                 sort_by,
                 page,
                 with_genres,
+                watch_region,
+                with_status,
             },
         });
         return data;

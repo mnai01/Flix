@@ -406,6 +406,10 @@ export class DiscoverTVParams {
     'page': number;
     @Field({ nullable: true })
     'with_genres': string;
+    @Field(() => String, { nullable: true })
+    'watch_region': string = 'USA';
+    @Field(() => [String], { nullable: true })
+    'with_status': string[] = ['2', '5'];
 }
 @ObjectType()
 export class DiscoverTV {
@@ -641,7 +645,7 @@ export class FindMovieByTMDB {
     original_title: string;
     @Field()
     overview: string;
-    @Field(() => Int)
+    @Field(() => Float)
     popularity: number;
     @Field(() => String, { nullable: true })
     poster_path?: string;
@@ -663,7 +667,7 @@ export class FindMovieByTMDB {
     @Field()
     title: string;
     video: boolean;
-    @Field(() => Int)
+    @Field(() => Float)
     vote_average: number;
     @Field(() => Int)
     vote_count: number;

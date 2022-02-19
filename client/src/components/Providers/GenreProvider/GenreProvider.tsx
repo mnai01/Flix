@@ -2,6 +2,7 @@ import { ApolloError, useQuery } from '@apollo/client';
 import { createContext, useContext } from 'react';
 import { Genres } from '../../../apollo/generated/Genres';
 import { GET_GENRES } from '../../../apollo/queries';
+import { removeGenres } from '../../../utils/helper/ParseGenres';
 
 interface GenreContextProps {
     error?: ApolloError;
@@ -16,7 +17,7 @@ const GenreProvider: React.FC = ({ children }) => {
         fetchPolicy: 'network-only',
     });
 
-    return <GenreContext.Provider value={{ error, loading, data }}>{children}</GenreContext.Provider>;
+    return <GenreContext.Provider value={{ error, loading, data: removeGenres(['Soap'], data) as Genres }}>{children}</GenreContext.Provider>;
 };
 const useGenres = (): GenreContextProps => {
     const context = useContext(GenreContext);
