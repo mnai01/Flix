@@ -1,7 +1,8 @@
 import { ApolloError, useQuery } from '@apollo/client';
 import { createContext, useContext } from 'react';
-import { Genres, Genres_genres } from '../../../apollo/generated/Genres';
+import { Genres } from '../../../apollo/generated/Genres';
 import { GET_GENRES } from '../../../apollo/queries';
+import { removeGenres } from '../../../utils/helper/ParseGenres';
 
 interface GenreContextProps {
     error?: ApolloError;
@@ -12,11 +13,11 @@ interface GenreContextProps {
 const GenreContext = createContext<GenreContextProps | undefined>(undefined);
 
 const GenreProvider: React.FC = ({ children }) => {
-    const { loading, error, data } = useQuery<Genres, Genres_genres>(GET_GENRES, {
+    const { loading, error, data } = useQuery<Genres>(GET_GENRES, {
         fetchPolicy: 'network-only',
     });
 
-    return <GenreContext.Provider value={{ error, loading, data }}>{children}</GenreContext.Provider>;
+    return <GenreContext.Provider value={{ error, loading, data: removeGenres(['Soap'], data) as Genres }}>{children}</GenreContext.Provider>;
 };
 const useGenres = (): GenreContextProps => {
     const context = useContext(GenreContext);
