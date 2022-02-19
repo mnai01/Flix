@@ -1,44 +1,59 @@
 import { gql } from '@apollo/client';
 
-export const HELLO = gql`
-    query Hello {
-        hello
-    }
-`;
-
 export const BYE = gql`
     query Bye {
         bye
     }
 `;
 
-export const SearchVideosQuery = gql`
-    query SearchVideos($query: String!, $includeAdult: Boolean, $region: Country) {
-        SearchVideos(query: $query, include_adult: $includeAdult, region: $region) {
-            name
-            title
-            id
-            poster_path
+export const SEARCH_VIDEOS_QUERY = gql`
+    query SearchVideos($query: String!) {
+        SearchVideos(query: $query) {
+            page
+            results {
+                name
+                title
+                id
+                poster_path
+            }
         }
     }
 `;
 
 export const GET_GENRES = gql`
     query Genres {
-        genres {
-            id
-            name
+        Genres {
+            tv {
+                name
+                id
+            }
+            movies {
+                name
+                id
+            }
         }
     }
 `;
 
 export const GET_MOVIES_BY_GENRE = gql`
     query DiscoverMovies($withGenres: String) {
-        discoverMovies(with_genres: $withGenres) {
+        DiscoverMovies(with_genres: $withGenres) {
             results {
                 poster_path
                 id
                 title
+            }
+        }
+    }
+`;
+
+export const GET_TV_BY_GENRE = gql`
+    query DiscoverTV($withGenres: String) {
+        DiscoverTV(with_genres: $withGenres) {
+            results {
+                id
+                name
+                poster_path
             }
         }
     }

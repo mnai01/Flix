@@ -1,4 +1,4 @@
-import { Box, Heading, Skeleton } from '@chakra-ui/react';
+import { Box, Heading } from '@chakra-ui/react';
 
 interface MediaListHeaderProps {
     title?: string;
@@ -7,13 +7,9 @@ interface MediaListHeaderProps {
 const MediaListHeader: React.FC<MediaListHeaderProps> = ({ title }) => {
     return (
         <Box mx={'6px'} my={'10px'}>
-            {title ? (
-                <Heading variant={'h3'} size={'sm'}>
-                    {title}
-                </Heading>
-            ) : (
-                <Skeleton width={'100px'} height={'25px'} />
-            )}
+            <Heading variant={'h3'} size={'sm'}>
+                {title ? title : 'Search'}
+            </Heading>
         </Box>
     );
 };

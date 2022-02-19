@@ -7,12 +7,24 @@
 // GraphQL query operation: Genres
 // ====================================================
 
-export interface Genres_genres {
+export interface Genres_Genres_tv {
   __typename: "Genre";
-  id: string;
   name: string;
+  id: string;
+}
+
+export interface Genres_Genres_movies {
+  __typename: "Genre";
+  name: string;
+  id: string;
+}
+
+export interface Genres_Genres {
+  __typename: "GenreResult";
+  tv: Genres_Genres_tv[];
+  movies: Genres_Genres_movies[];
 }
 
 export interface Genres {
-  genres: Genres_genres[];
+  Genres: Genres_Genres;
 }

@@ -1,6 +1,13 @@
 /* eslint-disable no-unused-vars */
 import { ArgsType, Field, Float, Int, ObjectType, registerEnumType } from 'type-graphql';
 
+@ArgsType()
+export class GenreParams {
+    // it can infer string but not number so we need to specify
+    @Field(() => String, { nullable: false })
+    type: 'tv' | 'movie';
+}
+
 @ObjectType()
 export class Genre {
     // it can infer string but not number so we need to specify
@@ -8,6 +15,14 @@ export class Genre {
     id: string;
     @Field()
     name: string;
+}
+
+@ObjectType()
+export class GenreResult {
+    @Field(() => [Genre])
+    tv: Genre[];
+    @Field(() => [Genre])
+    movies: Genre[];
 }
 
 export enum Country {
@@ -261,7 +276,7 @@ export enum Country {
     Zambia = 'ZM',
     Zimbabwe = 'ZW',
 }
-export enum SortBy {
+export enum DiscoverMovieSortBy {
     popularityAsc = 'popularity.asc',
     popularityDesc = 'popularity.desc',
     release_dateAsc = 'release_date.asc',
@@ -278,13 +293,25 @@ export enum SortBy {
     vote_countDesc = 'vote_count.desc',
 }
 
+export enum DiscoverTVSortBy {
+    popularityAsc = 'popularity.asc',
+    popularityDesc = 'popularity.desc',
+    vote_averageAsc = 'vote_average.asc',
+    vote_averageDesc = 'vote_average.desc',
+}
+
 registerEnumType(Country, {
     name: 'Country', // this one is mandatory
     description: 'List of countries', // this one is optional
 });
 
-registerEnumType(SortBy, {
-    name: 'SortBy', // this one is mandatory
+registerEnumType(DiscoverMovieSortBy, {
+    name: 'DiscoverMovieSortBy', // this one is mandatory
+    description: 'Sort by', // this one is optional
+});
+
+registerEnumType(DiscoverTVSortBy, {
+    name: 'DiscoverTVSortBy', // this one is mandatory
     description: 'Sort by', // this one is optional
 });
 
@@ -292,8 +319,8 @@ registerEnumType(SortBy, {
 export class DiscoverMovieParams {
     @Field(() => Country, { nullable: true })
     'region': Country = Country['UnitedStates'];
-    @Field(() => SortBy, { nullable: true })
-    'sort_by': SortBy;
+    @Field(() => DiscoverMovieSortBy, { nullable: true })
+    'sort_by': DiscoverMovieSortBy;
     @Field(() => Country, { nullable: true })
     'certification_country': Country;
     @Field({ nullable: true })
@@ -327,11 +354,10 @@ export class DiscoverMovieParams {
     // 'TV';
     'with_release_type': number[] = [4, 5, 6];
 }
-
 @ObjectType()
 export class DiscoverMovieResults {
-    @Field({ nullable: true })
-    poster_path: string;
+    @Field(() => String, { nullable: true })
+    poster_path: string | null;
     @Field({ nullable: true })
     adult: boolean;
     @Field({ nullable: true })
@@ -348,7 +374,7 @@ export class DiscoverMovieResults {
     original_language: string;
     @Field({ nullable: true })
     title: string;
-    @Field({ nullable: true })
+    @Field(() => String, { nullable: true })
     backdrop_path: string;
     @Field(() => Float, { nullable: true })
     popularity: number;
@@ -371,18 +397,73 @@ export class DiscoverMovie {
     @Field(() => Int)
     total_pages: number;
 }
+
+@ArgsType()
+export class DiscoverTVParams {
+    @Field(() => DiscoverTVSortBy, { nullable: true })
+    'sort_by': DiscoverTVSortBy;
+    @Field(() => Int, { nullable: true })
+    'page': number;
+    @Field({ nullable: true })
+    'with_genres': string;
+    @Field(() => String, { nullable: true })
+    'watch_region': string = 'USA';
+    @Field(() => [String], { nullable: true })
+    'with_status': string[] = ['2', '5'];
+}
+@ObjectType()
+export class DiscoverTV {
+    @Field(() => Int)
+    page: number;
+    @Field(() => [DiscoverTVResults])
+    results?: DiscoverTVResults[];
+    @Field(() => Int)
+    total_results: number;
+    @Field(() => Int)
+    total_pages: number;
+}
+@ObjectType()
+export class DiscoverTVResults {
+    @Field(() => String, { nullable: true })
+    poster_path: string;
+    @Field(() => Float)
+    popularity: number;
+    @Field(() => Int)
+    id: number;
+    @Field(() => String, { nullable: true })
+    backdrop_path?: string;
+    @Field(() => Int)
+    vote_average: number;
+    @Field()
+    overview: string;
+    @Field()
+    first_air_date: string;
+    @Field(() => String, { nullable: true })
+    origin_country?: string[] | null;
+    @Field(() => Int)
+    genre_ids?: number[] | null;
+    @Field()
+    original_language: string;
+    @Field(() => Int)
+    vote_count: number;
+    @Field()
+    name: string;
+    @Field()
+    original_name: string;
+}
+
 @ArgsType()
 export class SearchParams {
     @Field({ nullable: false })
     'query': string;
-    @Field({ nullable: true })
+    @Field(() => Boolean, { nullable: true })
     'include_adult': boolean = false;
     @Field(() => Country, { nullable: true })
     'region': Country = Country['UnitedStates'];
 }
 @ObjectType()
 export class SearchResults {
-    @Field({ nullable: true })
+    @Field(() => String, { nullable: true })
     poster_path: string;
     @Field(() => Int, { nullable: false })
     id: number;
@@ -394,10 +475,10 @@ export class SearchResults {
     popularity: number;
     @Field(() => Int, { nullable: true })
     vote_count: number;
-    @Field({ nullable: true })
-    title: string;
-    @Field({ nullable: true })
-    name: string;
+    @Field(() => String, { nullable: true })
+    title: string | null;
+    @Field(() => String, { nullable: true })
+    name: string | null;
     @Field(() => [Int], { nullable: true })
     genre_ids: number[];
 }
@@ -412,4 +493,214 @@ export class Search {
     total_results: number;
     @Field(() => Int)
     total_pages: number;
+}
+
+@ObjectType()
+export class VidsrcMovies {
+    @Field(() => [VidsrcMovieResult], { nullable: true })
+    result?: VidsrcMovieResult[] | null;
+    @Field(() => Int)
+    pages: number;
+}
+@ObjectType()
+export class VidsrcMovieResult {
+    @Field()
+    imdb_id: string;
+    @Field()
+    title: string;
+    @Field()
+    quality: string;
+    @Field()
+    embed_url: string;
+}
+@ArgsType()
+export class VidsrcLastesVideosParams {
+    @Field(() => Int, { nullable: true })
+    page: number = 1;
+}
+
+@ObjectType()
+export class VidsrcTV {
+    @Field(() => [VidsrcTVResult], { nullable: true })
+    result?: VidsrcTVResult[] | null;
+    @Field(() => Int)
+    pages: number;
+}
+@ObjectType()
+export class VidsrcTVResult {
+    @Field()
+    show_imdb_id: string;
+    @Field()
+    show_title: string;
+    @Field()
+    season: string;
+    @Field()
+    episode: string;
+    @Field()
+    embed_url: string;
+}
+@ArgsType()
+export class FindMediaByIMDBParams {
+    @Field()
+    imdb_id: string;
+}
+
+@ObjectType()
+export class FindMediaByIMDB {
+    @Field(() => [FindByIMDBMovieResults], { nullable: true })
+    movie_results?: FindByIMDBMovieResults[] | null;
+    @Field(() => [FindByIMDBTVResults], { nullable: true })
+    tv_results?: FindByIMDBTVResults[] | null;
+    // Dont need type since I am not returning them
+    tv_episode_results?: null[] | null;
+    tv_season_results?: null[] | null;
+    person_results?: null[] | null;
+}
+@ObjectType()
+export class FindByIMDBMovieResults {
+    @Field(() => Float)
+    vote_average: number;
+    @Field(() => [Int], { nullable: true })
+    genre_ids?: number[] | null;
+    @Field(() => Int)
+    vote_count: number;
+    @Field()
+    original_language: string;
+    @Field()
+    original_title: string;
+    @Field(() => String, { nullable: true })
+    poster_path: string | null;
+    @Field(() => Boolean)
+    video: boolean;
+    @Field()
+    overview: string;
+    @Field()
+    release_date: string;
+    @Field()
+    title: string;
+    @Field()
+    id: number;
+    @Field(() => Boolean)
+    adult: boolean;
+    @Field(() => String, { nullable: true })
+    backdrop_path: string;
+    @Field(() => Float)
+    popularity: number;
+}
+@ObjectType()
+export class FindByIMDBTVResults {
+    @Field()
+    original_language: string;
+    @Field()
+    first_air_date: string;
+    @Field(() => String, { nullable: true })
+    poster_path: string | null;
+    @Field(() => Float)
+    vote_average: number;
+    @Field()
+    overview: string;
+    @Field(() => Int)
+    vote_count: number;
+    @Field()
+    name: string;
+    @Field()
+    original_name: string;
+    @Field(() => String, { nullable: true })
+    backdrop_path: string;
+    @Field(() => [String], { nullable: true })
+    origin_country?: string[] | null;
+    @Field(() => [Int], { nullable: true })
+    genre_ids?: number[] | null;
+    @Field(() => Int)
+    id: number;
+    @Field(() => Float)
+    popularity: number;
+}
+
+@ArgsType()
+export class FindMovieByTMDBParams {
+    @Field()
+    movie_id: string;
+}
+@ObjectType()
+export class FindMovieByTMDB {
+    @Field(() => Boolean)
+    adult: boolean;
+    @Field()
+    backdrop_path: string;
+    belongs_to_collection?: null;
+    @Field(() => Int)
+    budget: number;
+    @Field(() => [GenresEntity], { nullable: true })
+    genres?: GenresEntity[] | null;
+    @Field()
+    homepage: string;
+    @Field(() => Int)
+    id: number;
+    @Field()
+    imdb_id: string;
+    @Field()
+    original_language: string;
+    @Field()
+    original_title: string;
+    @Field()
+    overview: string;
+    @Field(() => Float)
+    popularity: number;
+    @Field(() => String, { nullable: true })
+    poster_path?: string;
+    @Field(() => [ProductionCompaniesEntity], { nullable: true })
+    production_companies?: ProductionCompaniesEntity[] | null;
+    @Field(() => [ProductionCountriesEntity], { nullable: true })
+    production_countries?: ProductionCountriesEntity[] | null;
+    @Field()
+    release_date: string;
+    @Field(() => Int)
+    revenue: number;
+    @Field(() => Int)
+    runtime: number;
+    spoken_languages?: SpokenLanguagesEntity[] | null;
+    @Field()
+    status: string;
+    @Field()
+    tagline: string;
+    @Field()
+    title: string;
+    video: boolean;
+    @Field(() => Float)
+    vote_average: number;
+    @Field(() => Int)
+    vote_count: number;
+}
+@ObjectType()
+export class GenresEntity {
+    @Field(() => Int)
+    id: number;
+    @Field()
+    name: string;
+}
+@ObjectType()
+export class ProductionCompaniesEntity {
+    @Field(() => Int)
+    id: number;
+    @Field(() => String, { nullable: true })
+    logo_path?: string | null;
+    @Field()
+    name: string;
+    @Field()
+    origin_country: string;
+}
+@ObjectType()
+export class ProductionCountriesEntity {
+    @Field()
+    iso_3166_1: string;
+    @Field()
+    name: string;
+}
+@ObjectType()
+export class SpokenLanguagesEntity {
+    @Field()
+    iso_639_1: string;
+    @Field()
+    name: string;
 }

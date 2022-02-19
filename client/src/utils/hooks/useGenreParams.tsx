@@ -1,24 +1,35 @@
+import { useQuery } from '@apollo/client';
 import { useEffect, useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
-import { Genres_genres } from '../../apollo/generated/Genres';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
+import { Genres, Genres_Genres } from '../../apollo/generated/Genres';
+import { GET_GENRES } from '../../apollo/queries';
 import { useGenres } from '../../components/Providers/GenreProvider';
+
+interface useGenreParamsProps {
+    genreType: 'tv' | 'movie';
+}
 
 const useGenreParams = () => {
     const { data, loading, error } = useGenres();
+
     const navigate = useNavigate();
+    const { pathname } = useLocation();
+    const temp = pathname.split('/')[1] as 'tv' | 'movies';
+    const type = temp === 'tv' || temp === 'movies' ? temp : 'movies';
+
     const { genre } = useParams() as { genre: string };
-    const [genreSelected, setGenreSelected] = useState<Genres_genres>();
+    const [genreSelected, setGenreSelected] = useState<any>();
 
     useEffect(() => {
-        if (data?.genres.find((i) => i.name === genre.replace(/\b\w/g, (c) => c.toUpperCase()))) {
-            setGenreSelected(data?.genres.find((i) => i.name === genre.replace(/\b\w/g, (c) => c.toUpperCase())));
+        if (genre && !loading && type && data?.Genres[type].find((i) => i.name === genre.replace(/\b\w/g, (c) => c.toUpperCase()))) {
+            setGenreSelected(data?.Genres[type].find((i) => i.name === genre.replace(/\b\w/g, (c) => c.toUpperCase())));
         }
-        if (!loading && !data?.genres.find((i) => i.name === genre.replace(/\b\w/g, (c) => c.toUpperCase()))) {
+        if (genre && !loading && type && !data?.Genres[type].find((i) => i.name === genre.replace(/\b\w/g, (c) => c.toUpperCase()))) {
             navigate('/NotFound');
         }
-    }, [genre, loading, data]);
+    }, [genre, loading, data, type]);
 
-    return { genre: genreSelected, loading, error };
+    return { genre: genreSelected, loading, error, data: data?.Genres[type], type };
 };
 
 export default useGenreParams;

@@ -1,7 +1,7 @@
 import { ApolloError, LazyQueryResult, useLazyQuery } from '@apollo/client';
 import { createContext, useContext } from 'react';
 import { SearchVideos, SearchVideosVariables } from '../../../apollo/generated/SearchVideos';
-import { SearchVideosQuery } from '../../../apollo/queries';
+import { SEARCH_VIDEOS_QUERY } from '../../../apollo/queries';
 
 interface AutoSuggestionContextProps {
     error?: ApolloError;
@@ -14,7 +14,7 @@ interface AutoSuggestionContextProps {
 const AutoSuggestionContext = createContext<AutoSuggestionContextProps | undefined>(undefined);
 
 const AutoSuggestionProvider: React.FC = ({ children }) => {
-    const [autoSuggestResults, { loading, error, data }] = useLazyQuery<SearchVideos, SearchVideosVariables>(SearchVideosQuery, {
+    const [autoSuggestResults, { loading, error, data }] = useLazyQuery<SearchVideos, SearchVideosVariables>(SEARCH_VIDEOS_QUERY, {
         fetchPolicy: 'network-only',
     });
 
