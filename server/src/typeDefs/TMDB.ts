@@ -583,7 +583,7 @@ export class FindByIMDBMovieResults {
     @Field(() => Boolean)
     adult: boolean;
     @Field(() => String, { nullable: true })
-    backdrop_path: string;
+    backdrop_path: string | null;
     @Field(() => Float)
     popularity: number;
 }
@@ -626,8 +626,9 @@ export class FindMovieByTMDBParams {
 export class FindMovieByTMDB {
     @Field(() => Boolean)
     adult: boolean;
-    @Field()
-    backdrop_path: string;
+    @Field(() => String, { nullable: true })
+    backdrop_path: string | null;
+    @Field(() => String, { nullable: true })
     belongs_to_collection?: null;
     @Field(() => Int)
     budget: number;
@@ -703,4 +704,41 @@ export class SpokenLanguagesEntity {
     iso_639_1: string;
     @Field()
     name: string;
+}
+
+@ArgsType()
+export class FindMovieTrailersByTMDBParams {
+    @Field()
+    movie_id: string;
+}
+
+@ObjectType()
+export class FindMovieTrailersByTMDB {
+    @Field(() => Int)
+    id: number;
+    @Field(() => [FindMovieTrailersByTMDBResults], { nullable: true })
+    results?: FindMovieTrailersByTMDBResults[] | null;
+}
+@ObjectType()
+export class FindMovieTrailersByTMDBResults {
+    @Field()
+    iso_639_1: string;
+    @Field()
+    iso_3166_1: string;
+    @Field()
+    name: string;
+    @Field()
+    key: string;
+    @Field()
+    site: string;
+    @Field(() => Int)
+    size: number;
+    @Field()
+    type: string;
+    @Field(() => Boolean)
+    official: boolean;
+    @Field()
+    published_at: string;
+    @Field()
+    id: string;
 }

@@ -3,6 +3,8 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
+import { Country } from "./globalTypes";
+
 // ====================================================
 // GraphQL query operation: SearchVideos
 // ====================================================
@@ -26,5 +28,7 @@ export interface SearchVideos {
 }
 
 export interface SearchVideosVariables {
+  region?: Country | null;
   query: string;
+  includeAdult?: boolean | null;
 }

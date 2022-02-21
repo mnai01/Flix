@@ -8,21 +8,21 @@
 // ====================================================
 
 export interface DiscoverTV_DiscoverTV_results {
-    __typename: 'DiscoverTVResults';
-    id: number;
-    name: string;
-    poster_path: string | null;
+  __typename: "DiscoverTVResults";
+  id: number;
+  name: string;
+  poster_path: string | null;
 }
 
 export interface DiscoverTV_DiscoverTV {
-    __typename: 'DiscoverTV';
-    results: DiscoverTV_DiscoverTV_results[];
+  __typename: "DiscoverTV";
+  results: DiscoverTV_DiscoverTV_results[];
 }
 
 export interface DiscoverTV {
-    DiscoverTV: DiscoverTV_DiscoverTV;
+  DiscoverTV: DiscoverTV_DiscoverTV;
 }
 
 export interface DiscoverTVVariables {
-    withGenres?: string | null;
+  withGenres?: string | null;
 }

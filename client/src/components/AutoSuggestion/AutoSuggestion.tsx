@@ -11,10 +11,10 @@ const AutoSuggestion = () => {
         <Box p={4}>
             <Input
                 variant={'filled'}
-                placeholder='Search'
+                placeholder="Search"
                 onChange={(e) => {
                     if (pathname !== '/search') navigate('/search');
-                    autoSuggestResults({ variables: { query: e.target.value } });
+                    autoSuggestResults({ variables: { query: e.target.value, includeAdult: false, region: 'UnitedStates' } });
                 }}
             />
         </Box>
