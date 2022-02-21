@@ -22,6 +22,8 @@ import {
     DiscoverTVParams,
     FindMovieByTMDB,
     FindMovieByTMDBParams,
+    FindMovieTrailersByTMDB,
+    FindMovieTrailersByTMDBParams,
 } from '../typeDefs/TMDB';
 import axios from 'axios';
 
@@ -144,6 +146,7 @@ export class UserResolver {
                 include_adult,
             },
         });
+
         return { ...data, results: data.results.filter((i: SearchResults) => i.media_type !== 'person' && i.poster_path !== null) };
     }
 
@@ -183,11 +186,21 @@ export class UserResolver {
 
     @Query(() => FindMovieByTMDB)
     @UseMiddleware(isAuthContext)
-    async FindByMovieTMDB(
+    async FindMovieByTMDB(
         @Args()
         { movie_id }: FindMovieByTMDBParams,
     ) {
         const { data } = await axios(`https://api.themoviedb.org/3/movie/${movie_id}?api_key=${process.env.API_KEY_TMDB}`);
+        return data;
+    }
+
+    @Query(() => FindMovieTrailersByTMDB)
+    @UseMiddleware(isAuthContext)
+    async FindMovieTrailersByTMDB(
+        @Args()
+        { movie_id }: FindMovieTrailersByTMDBParams,
+    ) {
+        const { data } = await axios(`https://api.themoviedb.org/3/movie/${movie_id}/videos?api_key=${process.env.API_KEY_TMDB}`);
         return data;
     }
 

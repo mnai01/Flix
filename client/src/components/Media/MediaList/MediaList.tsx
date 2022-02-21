@@ -27,7 +27,7 @@ const MediaList: React.FC<MediaListProps> = ({ medias, loading, horizontal }) =>
             ))
     ) : medias && medias.length > 0 ? (
         medias.map((i: SearchVideos_SearchVideos_results) => (
-            <SwiperSlide key={i.id} style={{ width: 'auto' }}>
+            <SwiperSlide key={i.id} style={{ width: 'auto%' }}>
                 <Box p={1.5}>
                     <MediaCard media={i} />
                 </Box>
@@ -59,6 +59,7 @@ const MediaList: React.FC<MediaListProps> = ({ medias, loading, horizontal }) =>
         <>
             {horizontal ? (
                 <Swiper
+                    style={{ width: '100%' }}
                     slidesPerGroup={5}
                     grabCursor={true}
                     spaceBetween={2}
