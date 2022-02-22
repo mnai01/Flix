@@ -147,7 +147,7 @@ export class UserResolver {
             },
         });
 
-        return { ...data, results: data.results.filter((i: SearchResults) => i.media_type !== 'person' && i.poster_path !== null) };
+        return { ...data, results: data.results.filter((i: SearchResults) => i.media_type !== 'person' && i.poster_path !== null && i.popularity > 3) };
     }
 
     @Query(() => VidsrcMovies)
