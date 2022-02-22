@@ -1,4 +1,4 @@
-import { Flex, Grid, GridItem } from '@chakra-ui/react';
+import { Box, Flex, Grid, GridItem } from '@chakra-ui/react';
 import { motion } from 'framer-motion';
 import { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
@@ -32,15 +32,8 @@ const MediaContent: React.FC = () => {
 
     return (
         <>
-            <Flex direction={'column'} position={'relative'} width={'100%'} height={'100%'} justify={'center'} p={50}>
-                <Grid height="100%" width="100%" templateRows={'repeat(5, 1fr)'} templateColumns="repeat(4, 1fr)" gap={4}>
-                    <GridItem colSpan={4} rowSpan={3} position={'relative'} height="100%" width="100%">
-                        {isMovie || isTrailer ? isMovie ? <MovieSrc /> : <MovieTrailer /> : <MoviePoster />}
-                    </GridItem>
-
-                    <GridItem colSpan={4} rowSpan={1} bg="tomato"></GridItem>
-                    <GridItem colSpan={4} rowSpan={1} bg="tomato" />
-                </Grid>
+            <Flex direction={'column'} width={'100%'} height={'75%'} p={50}>
+                {isMovie || isTrailer ? isMovie ? <MovieSrc /> : <MovieTrailer /> : <MoviePoster />}
             </Flex>
         </>
     );
