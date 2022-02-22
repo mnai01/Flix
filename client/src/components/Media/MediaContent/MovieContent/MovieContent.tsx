@@ -11,29 +11,31 @@ const MediaContent: React.FC = () => {
 
     const Animation = motion.div;
 
-    const [toggleMovie, setToggleMovie] = useState(false);
-    const [toggleTrailer, setToggleTrailer] = useState(false);
+    // const [toggleMovie, setToggleMovie] = useState(false);
+    // const [toggleTrailer, setToggleTrailer] = useState(false);
 
-    useEffect(() => {
-        if (location.pathname.split('/')[3] === 'video') {
-            setToggleMovie(true);
-        } else {
-            setToggleMovie(false);
-        }
+    const isMovie = location.pathname.split('/')[3] === 'video';
+    const isTrailer = location.pathname.split('/')[3] === 'trailer';
+    // useEffect(() => {
+    //     if (location.pathname.split('/')[3] === 'video') {
+    //         setToggleMovie(true);
+    //     } else {
+    //         setToggleMovie(false);
+    //     }
 
-        if (location.pathname.split('/')[3] === 'trailer') {
-            setToggleTrailer(true);
-        } else {
-            setToggleTrailer(false);
-        }
-    }, [location]);
+    //     if (location.pathname.split('/')[3] === 'trailer') {
+    //         setToggleTrailer(true);
+    //     } else {
+    //         setToggleTrailer(false);
+    //     }
+    // }, [location]);
 
     return (
         <>
             <Flex direction={'column'} position={'relative'} width={'100%'} height={'100%'} justify={'center'} p={50}>
                 <Grid height="100%" width="100%" templateRows={'repeat(5, 1fr)'} templateColumns="repeat(4, 1fr)" gap={4}>
                     <GridItem colSpan={4} rowSpan={3} position={'relative'} height="100%" width="100%">
-                        {toggleMovie || toggleTrailer ? toggleMovie ? <MovieSrc /> : <MovieTrailer /> : <MoviePoster />}
+                        {isMovie || isTrailer ? isMovie ? <MovieSrc /> : <MovieTrailer /> : <MoviePoster />}
                     </GridItem>
 
                     <GridItem colSpan={4} rowSpan={1} bg="tomato"></GridItem>
