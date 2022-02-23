@@ -17,6 +17,7 @@ const MovieSrc: React.FC = () => {
                 <iframe
                     allow="fullscreen"
                     onLoad={() => setIframeLoading(false)}
+                    onError={(err) => console.log(err)}
                     style={{ width: '100%', height: '100%', display: iframeLoading ? 'none' : 'block' }}
                     src={`${process.env.REACT_APP_SOURCE}${data?.FindMovieByTMDB.imdb_id}/`}
                 />
