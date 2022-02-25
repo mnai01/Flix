@@ -7,50 +7,51 @@
 // GraphQL query operation: FindMovieByTMDB
 // ====================================================
 
-export interface FindMovieByTMDB_FindMovieByTMDB_production_companies {
-  __typename: "ProductionCompaniesEntity";
-  id: number;
-  logo_path: string | null;
-  name: string;
-  origin_country: string;
-}
-
 export interface FindMovieByTMDB_FindMovieByTMDB_genres {
   __typename: "GenresEntity";
-  id: number;
   name: string;
+  id: number;
 }
 
-export interface FindMovieByTMDB_FindMovieByTMDB_production_countries {
-  __typename: "ProductionCountriesEntity";
-  iso_3166_1: string;
+export interface FindMovieByTMDB_FindMovieByTMDB_videos_results {
+  __typename: "MovieVideosResults";
   name: string;
+  key: string;
+  site: string;
+  id: string;
+}
+
+export interface FindMovieByTMDB_FindMovieByTMDB_videos {
+  __typename: "MovieVideosByTMDB";
+  results: FindMovieByTMDB_FindMovieByTMDB_videos_results[] | null;
+}
+
+export interface FindMovieByTMDB_FindMovieByTMDB_similar_results {
+  __typename: "SimilarMovieResults";
+  adult: boolean;
+  poster_path: string;
+  title: string;
+}
+
+export interface FindMovieByTMDB_FindMovieByTMDB_similar {
+  __typename: "SimilarMovie";
+  page: number;
+  results: FindMovieByTMDB_FindMovieByTMDB_similar_results[] | null;
 }
 
 export interface FindMovieByTMDB_FindMovieByTMDB {
   __typename: "FindMovieByTMDB";
   adult: boolean;
   backdrop_path: string | null;
-  budget: number;
-  homepage: string;
-  id: number;
+  genres: FindMovieByTMDB_FindMovieByTMDB_genres[] | null;
   imdb_id: string;
-  original_language: string;
-  original_title: string;
-  overview: string;
-  popularity: number;
-  poster_path: string | null;
-  release_date: string;
-  revenue: number;
   runtime: number;
-  status: string;
-  tagline: string;
   title: string;
   vote_average: number;
+  release_date: string;
   vote_count: number;
-  production_companies: FindMovieByTMDB_FindMovieByTMDB_production_companies[] | null;
-  genres: FindMovieByTMDB_FindMovieByTMDB_genres[] | null;
-  production_countries: FindMovieByTMDB_FindMovieByTMDB_production_countries[] | null;
+  videos: FindMovieByTMDB_FindMovieByTMDB_videos;
+  similar: FindMovieByTMDB_FindMovieByTMDB_similar;
 }
 
 export interface FindMovieByTMDB {

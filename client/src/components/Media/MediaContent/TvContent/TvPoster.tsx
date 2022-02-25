@@ -1,19 +1,18 @@
 import { Box, Button, Flex, Heading, Image, Tag, Text, useColorMode, useTheme } from '@chakra-ui/react';
 import { useNavigate } from 'react-router-dom';
 import StarRatings from 'react-star-ratings';
-import { FindMovieByTMDB, FindMovieByTMDB_FindMovieByTMDB_genres } from '../../../../apollo/generated/FindMovieByTMDB';
-import { convertMinsToHrsMins } from '../../../../utils/helper/ConvertMinutes';
+import { FindTVByTMDB, FindTVByTMDB_FindTVByTMDB_genres } from '../../../../apollo/generated/FindTVByTMDB';
 import { useSelectedMedia } from '../../../Providers/SelectedMediaProvider';
 
-interface selectedMovieProps {
-    data?: FindMovieByTMDB;
+interface selectedTVProps {
+    data?: FindTVByTMDB;
     loading: boolean;
     tmdb?: string;
 }
 
-const MoviePoster = () => {
-    const { data, loading, tmdb }: selectedMovieProps = useSelectedMedia();
-    const mediaData = data?.FindMovieByTMDB;
+const TvPoster = () => {
+    const { data, loading, tmdb }: selectedTVProps = useSelectedMedia();
+    const mediaData = data?.FindTVByTMDB;
     const navigate = useNavigate();
     const theme = useTheme();
     const { colorMode } = useColorMode();
@@ -21,16 +20,16 @@ const MoviePoster = () => {
         <Box height={'100%'} width={'100%'} position={'relative'}>
             <Box zIndex={1} padding={50} position={'absolute'} style={{ color: '#FFFFFF' }} bottom={'25%'} width={'35%'}>
                 <Heading variant={'h2'} size={'xl'} fontWeight={700} mb={2}>
-                    {mediaData?.title ? mediaData?.title.toUpperCase() : ''}
+                    {mediaData?.name ? mediaData?.name.toUpperCase() : ''}
                 </Heading>
                 <Flex mb={25} gap={15}>
-                    <Text fontWeight={500}>{convertMinsToHrsMins(mediaData?.runtime)}</Text>
+                    <Text fontWeight={500}>{mediaData?.number_of_seasons} Seasons</Text>
                     <Text>|</Text>
-                    <Text fontWeight={500}>{mediaData?.release_date}</Text>
+                    <Text fontWeight={500}>{mediaData?.first_air_date}</Text>
                 </Flex>
 
                 <Flex mb={25} flexWrap={'wrap'} gap={2}>
-                    {mediaData?.genres?.map((genre: FindMovieByTMDB_FindMovieByTMDB_genres) => {
+                    {mediaData?.genres?.map((genre: FindTVByTMDB_FindTVByTMDB_genres) => {
                         return (
                             <Tag size={'md'} key={genre.id} variant="outline" colorScheme="blue">
                                 {genre.name}
@@ -39,10 +38,10 @@ const MoviePoster = () => {
                     })}
                 </Flex>
                 <Flex justifyContent={'space-between'} mb={25}>
-                    <Button width={'45%'} onClick={() => navigate(`/movie/${tmdb}/video`)}>
+                    <Button width={'45%'} onClick={() => navigate(`/tv/${tmdb}/video`)}>
                         Play Movie
                     </Button>
-                    <Button width={'45%'} onClick={() => navigate(`/movie/${tmdb}/trailer`)}>
+                    <Button width={'45%'} onClick={() => navigate(`/tv/${tmdb}/trailer`)}>
                         Play Trailer
                     </Button>
                 </Flex>
@@ -82,4 +81,4 @@ const MoviePoster = () => {
     );
 };
 
-export default MoviePoster;
+export default TvPoster;

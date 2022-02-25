@@ -15,7 +15,7 @@ const AutoSuggestionContext = createContext<AutoSuggestionContextProps | undefin
 
 const AutoSuggestionProvider: React.FC = ({ children }) => {
     const [autoSuggestResults, { loading, error, data }] = useLazyQuery<SearchVideos, SearchVideosVariables>(SEARCH_VIDEOS_QUERY, {
-        fetchPolicy: 'network-only',
+        fetchPolicy: 'cache-first',
     });
 
     return <AutoSuggestionContext.Provider value={{ error, loading, data, autoSuggestResults }}>{children}</AutoSuggestionContext.Provider>;

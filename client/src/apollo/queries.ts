@@ -64,54 +64,100 @@ export const GET_MOVIE_FROM_TMDB = gql`
         FindMovieByTMDB(movie_id: $movieId) {
             adult
             backdrop_path
-            budget
-            homepage
-            id
+            genres {
+                name
+                id
+            }
             imdb_id
-            original_language
-            original_title
-            overview
-            popularity
-            poster_path
-            release_date
-            revenue
             runtime
-            status
-            tagline
             title
             vote_average
+            release_date
             vote_count
-            production_companies {
-                id
-                logo_path
-                name
-                origin_country
+            videos {
+                results {
+                    name
+                    key
+                    site
+                    id
+                }
             }
-            genres {
-                id
-                name
-            }
-            production_countries {
-                iso_3166_1
-                name
+            similar {
+                page
+                results {
+                    adult
+                    poster_path
+                    title
+                }
             }
         }
     }
 `;
 
-export const GET_MOVIE_TRAILER_FROM_TMDB = gql`
-    query FindMovieTrailersByTMDB($movieId: String!) {
-        FindMovieTrailersByTMDB(movie_id: $movieId) {
-            id
-            results {
-                name
-                key
-                site
-                size
-                type
-                id
-                published_at
+export const GET_TV_FROM_TMDB = gql`
+    query FindTVByTMDB($tvShowId: String!) {
+        FindTVByTMDB(tv_show_id: $tvShowId) {
+            backdrop_path
+            created_by {
+                profile_path
             }
+            episode_run_time
+            id
+            genres {
+                name
+                id
+            }
+            number_of_seasons
+            popularity
+            vote_average
+            first_air_date
+            name
+            last_air_date
+            seasons {
+                name
+                poster_path
+                season_number
+                episode_count
+                air_date
+            }
+            videos {
+                results {
+                    name
+                    site
+                    key
+                    published_at
+                }
+            }
+            external_ids {
+                imdb_id
+            }
+            similar {
+                page
+                results {
+                    adult
+                    genre_ids
+                    name
+                    poster_path
+                    vote_average
+                    first_air_date
+                }
+            }
+        }
+    }
+`;
+
+export const GET_SEASON_DETAILS = gql`
+    query FindEpisodeByTMDB($tvShowId: String!, $seasonNumber: Int!) {
+        FindEpisodeByTMDB(tv_show_id: $tvShowId, season_number: $seasonNumber) {
+            episodes {
+                name
+                overview
+                season_number
+                still_path
+                episode_number
+                air_date
+            }
+            season_number
         }
     }
 `;

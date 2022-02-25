@@ -1,1 +1,1 @@
-export { MovieContent } from './MovieContent';
+export { default as MediaContent } from './MediaContent';

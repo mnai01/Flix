@@ -6,5 +6,5 @@ export { default as HomePage } from './HomePage';
 export { default as RegisterPage } from './RegisterPage';
 export { default as CatagoryMediaPage } from './CatagoryMediaPage';
 export { default as NotFound } from './NotFound';
-export { default as MovieContentPage } from './MovieContentPage';
+export { default as MediaContentPage } from './MediaContentPage';
 export { default as SearchPage } from './SearchPage';

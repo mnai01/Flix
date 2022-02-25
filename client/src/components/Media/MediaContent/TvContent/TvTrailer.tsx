@@ -1,27 +1,25 @@
 import { Box, Center, Heading, Spinner } from '@chakra-ui/react';
 import React, { useEffect, useState } from 'react';
-import { FindMovieByTMDB, FindMovieByTMDB_FindMovieByTMDB_videos_results } from '../../../../apollo/generated/FindMovieByTMDB';
-
+import { FindTVByTMDB, FindTVByTMDB_FindTVByTMDB_videos_results } from '../../../../apollo/generated/FindTVByTMDB';
 import { useSelectedMedia } from '../../../Providers/SelectedMediaProvider';
 
 interface selectedMovieProps {
-    data?: FindMovieByTMDB;
+    data?: FindTVByTMDB;
     loading?: boolean;
     tmdb?: string;
 }
-const MovieTrailer: React.FC = () => {
+const TvTrailer: React.FC = () => {
     const { data }: selectedMovieProps = useSelectedMedia();
-    const mediaData = data?.FindMovieByTMDB;
+    const mediaData = data?.FindTVByTMDB;
     const [iframeLoading, setIframeLoading] = useState(true);
 
-    const trailers = mediaData?.videos.results?.filter((i: FindMovieByTMDB_FindMovieByTMDB_videos_results) => {
+    const trailers = mediaData?.videos.results?.filter((i: FindTVByTMDB_FindTVByTMDB_videos_results) => {
         if (i.site === 'YouTube' && i.name.toLowerCase().match(/trailer/)) {
             return true;
         } else {
             return false;
         }
     });
-
     useEffect(() => {
         if (!trailers || trailers?.length <= 0) {
             setIframeLoading(false);
@@ -53,4 +51,4 @@ const MovieTrailer: React.FC = () => {
     );
 };
 
-export default MovieTrailer;
+export default TvTrailer;

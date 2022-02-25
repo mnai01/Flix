@@ -13,10 +13,10 @@ const CatagoryMediaPage = () => {
     const [discover, setDiscover] = useState<any>();
 
     useEffect(() => {
-        if (type === 'tv') {
-            discoverTV({ variables: { withGenres: genre?.id } });
-        } else if (type === 'movies') {
-            discoverMovies({ variables: { withGenres: genre?.id } });
+        if (type === 'tv' && genre?.id) {
+            discoverTV({ variables: { withGenres: genre.id } });
+        } else if (type === 'movies' && genre?.id) {
+            discoverMovies({ variables: { withGenres: genre.id } });
         }
 
         return () => {
@@ -25,14 +25,14 @@ const CatagoryMediaPage = () => {
     }, [type, genre]);
 
     const [discoverMovies, { loading: loadingMovies }] = useLazyQuery<DiscoverMovies, DiscoverMoviesVariables>(GET_MOVIES_BY_GENRE, {
-        fetchPolicy: 'network-only',
+        fetchPolicy: 'cache-first',
         onCompleted: (data) => {
             setDiscover(data.DiscoverMovies);
         },
     });
 
     const [discoverTV, { loading: loadingTV }] = useLazyQuery<DiscoverTV, DiscoverTVVariables>(GET_TV_BY_GENRE, {
-        fetchPolicy: 'network-only',
+        fetchPolicy: 'cache-first',
         onCompleted: (data) => {
             setDiscover(data.DiscoverTV);
         },

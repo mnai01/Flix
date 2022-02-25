@@ -6,26 +6,16 @@ import { createAccessToken, createRefreshToken } from '../helpers/refreshTokens'
 import { isAuthContext } from '../middleware/isAuthContext';
 import { getConnection } from 'typeorm';
 import { sendRefreshToken } from '../helpers/sendTokens';
-import {
-    DiscoverMovie,
-    GenreResult,
-    DiscoverMovieParams,
-    SearchParams,
-    SearchResults,
-    Search,
-    VidsrcMovies,
-    FindMediaByIMDB,
-    FindMediaByIMDBParams,
-    VidsrcTV,
-    VidsrcLastesVideosParams,
-    DiscoverTV,
-    DiscoverTVParams,
-    FindMovieByTMDB,
-    FindMovieByTMDBParams,
-    FindMovieTrailersByTMDB,
-    FindMovieTrailersByTMDBParams,
-} from '../typeDefs/TMDB';
 import axios from 'axios';
+import { GenreResult } from '../typeDefs/TMDB/Genres';
+import { DiscoverMovie, DiscoverMovieParams } from '../typeDefs/TMDB/DiscoverMovie';
+import { DiscoverTV, DiscoverTVParams } from '../typeDefs/TMDB/DiscoverTV';
+import { Search, SearchParams, SearchResults } from '../typeDefs/TMDB/MultiSearch';
+import { VidsrcLastesVideosParams, VidsrcMovies, VidsrcTV } from '../typeDefs/TMDB';
+import { FindMediaByIMDB, FindMediaByIMDBParams } from '../typeDefs/TMDB/MediaByIMDB';
+import { FindMovieByTMDB, FindMovieByTMDBParams } from '../typeDefs/TMDB/MovieByTMDB';
+import { TVByTMDB, TVByTMDBParams } from '../typeDefs/TMDB/TVByTMDB';
+import { SeasonByTMDB, SeasonByTMDBParams } from '../typeDefs/TMDB/SeasonByTMDB';
 
 // With TypeGraphQL we don’t need to explicitly write the schema.
 // Instead, we define our resolvers with TypeScript classes and decorators,
@@ -121,7 +111,7 @@ export class UserResolver {
         @Args()
         { sort_by, page, with_genres, watch_region, with_status }: DiscoverTVParams,
     ) {
-        const { data } = await axios(`https://api.themoviedb.org/3/discover/tv?api_key=${process.env.API_KEY_TMDB}`, {
+        const test = await axios(`https://api.themoviedb.org/3/discover/tv?api_key=${process.env.API_KEY_TMDB}`, {
             params: {
                 sort_by,
                 page,
@@ -130,7 +120,8 @@ export class UserResolver {
                 with_status,
             },
         });
-        return data;
+        console.log(with_genres);
+        return test.data;
     }
 
     @Query(() => Search)
@@ -190,20 +181,35 @@ export class UserResolver {
         @Args()
         { movie_id }: FindMovieByTMDBParams,
     ) {
-        const { data } = await axios(`https://api.themoviedb.org/3/movie/${movie_id}?api_key=${process.env.API_KEY_TMDB}`);
+        const { data } = await axios(
+            `https://api.themoviedb.org/3/movie/${movie_id}?api_key=${process.env.API_KEY_TMDB}&append_to_response=videos,external_ids,similar`,
+        );
         return data;
     }
 
-    @Query(() => FindMovieTrailersByTMDB)
+    @Query(() => TVByTMDB)
     @UseMiddleware(isAuthContext)
-    async FindMovieTrailersByTMDB(
+    async FindTVByTMDB(
         @Args()
-        { movie_id }: FindMovieTrailersByTMDBParams,
+        { tv_show_id }: TVByTMDBParams,
     ) {
-        const { data } = await axios(`https://api.themoviedb.org/3/movie/${movie_id}/videos?api_key=${process.env.API_KEY_TMDB}`);
+        const { data } = await axios(
+            `https://api.themoviedb.org/3/tv/${tv_show_id}?api_key=${process.env.API_KEY_TMDB}&append_to_response=videos,external_ids,similar`,
+        );
         return data;
     }
 
+    @Query(() => SeasonByTMDB)
+    @UseMiddleware(isAuthContext)
+    async FindEpisodeByTMDB(
+        @Args()
+        { tv_show_id, season_number }: SeasonByTMDBParams,
+    ) {
+        const { data } = await axios(
+            `https://api.themoviedb.org/3/tv/${tv_show_id}/season/${season_number}?api_key=${process.env.API_KEY_TMDB}&append_to_response=videos,external_ids,similar`,
+        );
+        return data;
+    }
     // Ability to revoke token for user
     // dont actually expose this,
     // instead make a function someone can call or like a forgot password or something that you can call internal if someone gets hacked

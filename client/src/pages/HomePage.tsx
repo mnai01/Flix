@@ -1,5 +1,4 @@
 import { Box } from '@chakra-ui/react';
-import React from 'react';
 
 const HomePage = () => {
     return (
@@ -14,8 +13,7 @@ const HomePage = () => {
                     '&::-webkit-scrollbar-thumb': {
                         backgroundColor: `rgba(0, 0, 0, 0.05)`,
                     },
-                }}
-            >
+                }}>
                 <h1>HOME</h1>
             </Box>
         </div>
