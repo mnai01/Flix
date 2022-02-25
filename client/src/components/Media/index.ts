@@ -1,4 +1,4 @@
 export { MediaList } from './MediaList';
 export { MediaListHeader } from './MediaListHeader';
 export { MediaCard } from './MediaCard';
-export { MovieContent } from './MediaContent/index';
+export { MediaContent } from './MediaContent';

@@ -16,7 +16,7 @@ const useGenreParams = () => {
     const { pathname } = useLocation();
     const temp = pathname.split('/')[1] as 'tv' | 'movies';
     const type = temp === 'tv' || temp === 'movies' ? temp : 'movies';
-
+    console.log(type);
     const { genre } = useParams() as { genre: string };
     const [genreSelected, setGenreSelected] = useState<any>();
 
@@ -29,6 +29,7 @@ const useGenreParams = () => {
         }
     }, [genre, loading, data, type]);
 
+    console.log(genreSelected);
     return { genre: genreSelected, loading, error, data: data?.Genres[type], type };
 };
 

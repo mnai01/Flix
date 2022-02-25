@@ -14,7 +14,7 @@ const GenreContext = createContext<GenreContextProps | undefined>(undefined);
 
 const GenreProvider: React.FC = ({ children }) => {
     const { loading, error, data } = useQuery<Genres>(GET_GENRES, {
-        fetchPolicy: 'network-only',
+        fetchPolicy: 'cache-first',
     });
 
     return <GenreContext.Provider value={{ error, loading, data: removeGenres(['Soap'], data) as Genres }}>{children}</GenreContext.Provider>;
