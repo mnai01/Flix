@@ -17,7 +17,11 @@ const GenreProvider: React.FC = ({ children }) => {
         fetchPolicy: 'cache-first',
     });
 
-    return <GenreContext.Provider value={{ error, loading, data: removeGenres(['Soap'], data) as Genres }}>{children}</GenreContext.Provider>;
+    return (
+        <GenreContext.Provider value={{ error, loading, data: removeGenres(['Soap', 'News', 'Family', 'Talk'], data) as Genres }}>
+            {children}
+        </GenreContext.Provider>
+    );
 };
 const useGenres = (): GenreContextProps => {
     const context = useContext(GenreContext);

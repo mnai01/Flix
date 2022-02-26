@@ -4,19 +4,8 @@ import { useLocation } from 'react-router-dom';
 import { MoviePoster, MovieSrc, MovieTrailer } from './MovieContent';
 import { TvPoster, TvSrc, TvTrailer } from './TvContent';
 import EpisodeList from './TvContent/EpisodeList';
-import { FindMovieByTMDB } from '../../../apollo/generated/FindMovieByTMDB';
-import { useSelectedMedia } from '../../Providers/SelectedMediaProvider';
-
-interface selectedMediaProps {
-    data?: any;
-    loading: boolean;
-    tmdb?: string;
-}
 
 const MediaContent: React.FC = () => {
-    // PASS ALL PROPS INTO COMPONENTS TO MAKE THEM MODULIZED
-    const { data, loading, tmdb }: selectedMediaProps = useSelectedMedia();
-
     const location = useLocation();
 
     const Animation = motion.div;

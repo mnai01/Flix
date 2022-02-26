@@ -52,7 +52,7 @@ export interface FindTVByTMDB_FindTVByTMDB_similar_results {
   name: string;
   poster_path: string | null;
   vote_average: number;
-  first_air_date: string;
+  first_air_date: string | null;
 }
 
 export interface FindTVByTMDB_FindTVByTMDB_similar {
@@ -71,7 +71,7 @@ export interface FindTVByTMDB_FindTVByTMDB {
   number_of_seasons: number;
   popularity: number;
   vote_average: number;
-  first_air_date: string;
+  first_air_date: string | null;
   name: string;
   last_air_date: string | null;
   seasons: FindTVByTMDB_FindTVByTMDB_seasons[] | null;
