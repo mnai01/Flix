@@ -9,7 +9,7 @@ interface SelectedMediaContextProps {
     error?: ApolloError;
     loading: boolean;
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    data?: any;
+    data: any;
     tmdb?: string;
 }
 
