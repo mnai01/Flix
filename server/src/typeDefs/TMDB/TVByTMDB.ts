@@ -239,7 +239,7 @@ export class SimilarResults {
     popularity: number;
     @Field(() => String, { nullable: true })
     poster_path: string;
-    @Field()
+    @Field(() => String, { nullable: true })
     first_air_date: string;
     @Field(() => Float)
     vote_average: number;
@@ -254,7 +254,7 @@ export class TVByTMDB {
     created_by?: CreatedBy[] | null;
     @Field(() => [Int], { nullable: true })
     episode_run_time: number[] | null;
-    @Field()
+    @Field(() => String, { nullable: true })
     first_air_date: string;
     @Field(() => [Genre], { nullable: true })
     genres: Genre[] | null;

@@ -52,7 +52,7 @@ export class FindByIMDBMovieResults {
 export class FindByIMDBTVResults {
     @Field()
     original_language: string;
-    @Field()
+    @Field(() => String, { nullable: true })
     first_air_date: string;
     @Field(() => String, { nullable: true })
     poster_path: string | null;

@@ -81,6 +81,7 @@ export class UserResolver {
             year,
             with_genres,
             with_release_type,
+            with_original_language,
         }: DiscoverMovieParams,
     ) {
         const { data } = await axios(`https://api.themoviedb.org/3/discover/movie?api_key=${process.env.API_KEY_TMDB}`, {
@@ -100,6 +101,7 @@ export class UserResolver {
                 year,
                 with_genres,
                 with_release_type: with_release_type.join('|'),
+                with_original_language,
             },
         });
         return data;
@@ -109,7 +111,7 @@ export class UserResolver {
     @UseMiddleware(isAuthContext)
     async DiscoverTV(
         @Args()
-        { sort_by, page, with_genres, watch_region, with_status }: DiscoverTVParams,
+        { sort_by, page, with_genres, watch_region, with_status, with_original_language }: DiscoverTVParams,
     ) {
         const test = await axios(`https://api.themoviedb.org/3/discover/tv?api_key=${process.env.API_KEY_TMDB}`, {
             params: {
@@ -118,9 +120,9 @@ export class UserResolver {
                 with_genres,
                 watch_region,
                 with_status,
+                with_original_language,
             },
         });
-        console.log(with_genres);
         return test.data;
     }
 

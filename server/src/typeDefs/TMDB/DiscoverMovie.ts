@@ -62,6 +62,8 @@ export class DiscoverMovieParams {
     // 'Physical';
     // 'TV';
     'with_release_type': number[] = [4, 5, 6];
+    @Field(() => [String], { nullable: true })
+    'with_original_language': string = 'en';
 }
 @ObjectType()
 export class DiscoverMovieResults {
