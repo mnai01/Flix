@@ -23,6 +23,8 @@ export class DiscoverTVParams {
     'watch_region': string = 'USA';
     @Field(() => [String], { nullable: true })
     'with_status': string[] = ['2', '5'];
+    @Field(() => [String], { nullable: true })
+    'with_original_language': string = 'en';
 }
 @ObjectType()
 export class DiscoverTV {
@@ -49,7 +51,7 @@ export class DiscoverTVResults {
     vote_average: number;
     @Field()
     overview: string;
-    @Field()
+    @Field(() => String, { nullable: true })
     first_air_date: string;
     @Field(() => String, { nullable: true })
     origin_country?: string[] | null;
