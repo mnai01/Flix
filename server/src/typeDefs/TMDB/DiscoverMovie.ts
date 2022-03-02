@@ -1,6 +1,7 @@
 /* eslint-disable no-unused-vars */
-import { ArgsType, Field, Float, Int, ObjectType, registerEnumType } from 'type-graphql';
+import { ArgsType, Field, Int, ObjectType, registerEnumType } from 'type-graphql';
 import { Country } from './Countries';
+import { MovieListResultObject } from './Reusable/MovieListResultObject';
 
 export enum DiscoverMovieSortBy {
     popularityAsc = 'popularity.asc',
@@ -65,44 +66,14 @@ export class DiscoverMovieParams {
     @Field(() => [String], { nullable: true })
     'with_original_language': string = 'en';
 }
-@ObjectType()
-export class DiscoverMovieResults {
-    @Field(() => String, { nullable: true })
-    poster_path: string | null;
-    @Field({ nullable: true })
-    adult: boolean;
-    @Field({ nullable: true })
-    overview: string;
-    @Field({ nullable: true })
-    release_date: string;
-    @Field(() => [Int], { nullable: true })
-    genre_ids: number[];
-    @Field(() => Int, { nullable: false })
-    id: number;
-    @Field({ nullable: true })
-    original_title: string;
-    @Field({ nullable: true })
-    original_language: string;
-    @Field({ nullable: true })
-    title: string;
-    @Field(() => String, { nullable: true })
-    backdrop_path: string;
-    @Field(() => Float, { nullable: true })
-    popularity: number;
-    @Field(() => Int, { nullable: true })
-    vote_count: number;
-    @Field({ nullable: true })
-    video: boolean;
-    @Field({ nullable: true })
-    vote_average: string;
-}
+
 @ObjectType()
 export class DiscoverMovie {
     // it can infer string but not number so we need to specify
     @Field(() => Int)
     page: number;
-    @Field(() => [DiscoverMovieResults])
-    results: DiscoverMovieResults[];
+    @Field(() => [MovieListResultObject])
+    results: MovieListResultObject[];
     @Field(() => Int)
     total_results: number;
     @Field(() => Int)
