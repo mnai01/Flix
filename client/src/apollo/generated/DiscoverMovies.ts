@@ -8,7 +8,7 @@
 // ====================================================
 
 export interface DiscoverMovies_DiscoverMovies_results {
-  __typename: "DiscoverMovieResults";
+  __typename: "MovieListResultObject";
   poster_path: string | null;
   id: number;
   title: string | null;

@@ -18,12 +18,13 @@ const SelectedMediaContext = createContext<SelectedMediaContextProps | undefined
 const SelectedMediaProvider: React.FC = ({ children }) => {
     const location = useLocation();
     const { id } = useParams();
-    const [movie, setMovie] = useState<any>();
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const [media, setMedia] = useState<any>();
     const isTV = location.pathname.split('/')[1] === 'tv';
 
     const { loading: movieLoading } = useQuery<FindMovieByTMDB, FindMovieByTMDBVariables>(GET_MOVIE_FROM_TMDB, {
         onCompleted: (data) => {
-            setMovie(data);
+            setMedia(data);
         },
         fetchPolicy: 'cache-first',
         // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
@@ -33,8 +34,7 @@ const SelectedMediaProvider: React.FC = ({ children }) => {
 
     const { loading: tvLoading } = useQuery<FindTVByTMDB, FindTVByTMDBVariables>(GET_TV_FROM_TMDB, {
         onCompleted: (data) => {
-            setMovie(data);
-            console.log(data);
+            setMedia(data);
         },
         fetchPolicy: 'cache-first',
         // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
@@ -42,9 +42,7 @@ const SelectedMediaProvider: React.FC = ({ children }) => {
         skip: !isTV,
     });
 
-    console.log({ movieLoading, tvLoading });
-
-    return <SelectedMediaContext.Provider value={{ data: movie, loading: movieLoading || tvLoading, tmdb: id }}>{children}</SelectedMediaContext.Provider>;
+    return <SelectedMediaContext.Provider value={{ data: media, loading: movieLoading || tvLoading, tmdb: id }}>{children}</SelectedMediaContext.Provider>;
 };
 
 const useSelectedMedia = (): SelectedMediaContextProps => {

@@ -27,10 +27,13 @@ export interface FindMovieByTMDB_FindMovieByTMDB_videos {
 }
 
 export interface FindMovieByTMDB_FindMovieByTMDB_similar_results {
-  __typename: "SimilarMovieResults";
-  adult: boolean;
-  poster_path: string;
-  title: string;
+  __typename: "MovieListResultObject";
+  id: number;
+  adult: boolean | null;
+  poster_path: string | null;
+  title: string | null;
+  vote_average: string | null;
+  genre_ids: number[] | null;
 }
 
 export interface FindMovieByTMDB_FindMovieByTMDB_similar {

@@ -1,6 +1,6 @@
 import { FindTVByTMDB } from '../../../../apollo/generated/FindTVByTMDB';
 import { useSelectedMedia } from '../../../Providers/SelectedMediaProvider';
-import { PosterContent } from '../PosterContent';
+import { Poster } from '../Reusable/Poster';
 
 interface SelectedTVProps {
     data?: FindTVByTMDB;
@@ -13,7 +13,7 @@ const TvPoster = () => {
     const mediaData = data?.FindTVByTMDB;
 
     return (
-        <PosterContent
+        <Poster
             title={mediaData?.name}
             release_date={mediaData?.first_air_date}
             genres={mediaData?.genres}
@@ -23,6 +23,7 @@ const TvPoster = () => {
             nav_trailer={`/tv/${tmdb}/trailer`}
             loading={loading}
             backdrop_path={mediaData?.backdrop_path}
+            remove_src
         />
     );
 };

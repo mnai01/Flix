@@ -1,14 +1,14 @@
 import { Box, Flex } from '@chakra-ui/react';
-import { motion } from 'framer-motion';
+// import { motion } from 'framer-motion';
 import { useLocation } from 'react-router-dom';
-import { MoviePoster, MovieSrc, MovieTrailer } from './MovieContent';
-import { TvPoster, TvSrc, TvTrailer } from './TvContent';
-import EpisodeList from './TvContent/EpisodeList';
+import { MoviePoster, MovieSrc, MovieTrailer } from './Movie';
+import { TvPoster, TvSrc, TvTrailer } from './TV';
+import EpisodeList from './TV/EpisodeList';
 
 const MediaContent: React.FC = () => {
     const location = useLocation();
 
-    const Animation = motion.div;
+    // const Animation = motion.div;
 
     // const [toggleMovie, setToggleMovie] = useState(false);
     // const [toggleTrailer, setToggleTrailer] = useState(false);
@@ -31,29 +31,31 @@ const MediaContent: React.FC = () => {
     // }, [location]);
     return (
         <>
-            <Flex direction={'column'} width={'100%'} height={'75vh'} p={50}>
-                {isTV ? (
-                    isVideo || isTrailer ? (
-                        isVideo ? (
-                            <TvSrc />
+            <Flex direction={'column'} width={'100%'} height={'100%'} p={50}>
+                <Box height={'100%'}>
+                    {isTV ? (
+                        isVideo || isTrailer ? (
+                            isVideo ? (
+                                <TvSrc />
+                            ) : (
+                                <TvTrailer />
+                            )
                         ) : (
-                            <TvTrailer />
+                            <>
+                                <TvPoster />
+                                <EpisodeList />
+                            </>
+                        )
+                    ) : isVideo || isTrailer ? (
+                        isVideo ? (
+                            <MovieSrc />
+                        ) : (
+                            <MovieTrailer />
                         )
                     ) : (
-                        <Box height={'100%'}>
-                            <TvPoster />
-                            <EpisodeList />
-                        </Box>
-                    )
-                ) : isVideo || isTrailer ? (
-                    isVideo ? (
-                        <MovieSrc />
-                    ) : (
-                        <MovieTrailer />
-                    )
-                ) : (
-                    <MoviePoster />
-                )}
+                        <MoviePoster />
+                    )}
+                </Box>
             </Flex>
         </>
     );

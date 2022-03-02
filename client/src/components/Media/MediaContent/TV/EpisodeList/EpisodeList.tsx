@@ -41,7 +41,7 @@ const EpisodeList = () => {
                 <option key={'Select a Season'} value={0}>
                     Select a Season
                 </option>
-                {TvShowData?.FindTVByTMDB.seasons?.map((i, index) => {
+                {TvShowData?.FindTVByTMDB.seasons?.map((i) => {
                     // Check if season starts from season 0 (needs to start from season 1)
                     if (i.season_number === 0) {
                         return false;
