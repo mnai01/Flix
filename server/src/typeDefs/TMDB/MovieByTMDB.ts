@@ -1,4 +1,5 @@
 import { ArgsType, Field, Float, Int, ObjectType } from 'type-graphql';
+import { MovieListResultObject } from './Reusable/MovieListResultObject';
 
 @ArgsType()
 export class FindMovieByTMDBParams {
@@ -63,43 +64,12 @@ export class MovieExternalIds {
 export class SimilarMovie {
     @Field(() => Int)
     page: number;
-    @Field(() => [SimilarMovieResults], { nullable: true })
-    results?: SimilarMovieResults[] | null;
+    @Field(() => [MovieListResultObject], { nullable: true })
+    results?: MovieListResultObject[] | null;
     @Field(() => Int)
     total_pages: number;
     @Field(() => Int)
     total_results: number;
-}
-@ObjectType()
-export class SimilarMovieResults {
-    @Field(() => Boolean)
-    adult: boolean;
-    @Field()
-    backdrop_path: string;
-    @Field(() => [Int], { nullable: true })
-    genre_ids?: number[] | null;
-    @Field(() => Int)
-    id: number;
-    @Field()
-    title: string;
-    @Field(() => [String], { nullable: true })
-    origin_country?: string[] | null;
-    @Field()
-    original_language: string;
-    @Field()
-    original_title: string;
-    @Field()
-    overview: string;
-    @Field(() => Float)
-    popularity: number;
-    @Field()
-    poster_path: string;
-    @Field()
-    release_date: string;
-    @Field(() => Float)
-    vote_average: number;
-    @Field(() => Int)
-    vote_count: number;
 }
 
 @ObjectType()
