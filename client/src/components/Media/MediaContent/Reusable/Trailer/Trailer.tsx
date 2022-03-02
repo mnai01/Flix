@@ -1,33 +1,23 @@
-import { Box, Center, Heading, Spinner } from '@chakra-ui/react';
+import { Center, Heading, Spinner } from '@chakra-ui/react';
 import React, { useEffect, useState } from 'react';
-import { FindTVByTMDB, FindTVByTMDB_FindTVByTMDB_videos_results } from '../../../../apollo/generated/FindTVByTMDB';
-import { useSelectedMedia } from '../../../Providers/SelectedMediaProvider';
+import { ContentWrapperContainer } from '../../ContentWrapper/ContentWrapperStyles';
 
-interface selectedMovieProps {
-    data?: FindTVByTMDB;
-    loading?: boolean;
-    tmdb?: string;
+interface TrailerProps {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    trailers: any;
 }
-const TvTrailer: React.FC = () => {
-    const { data }: selectedMovieProps = useSelectedMedia();
-    const mediaData = data?.FindTVByTMDB;
+
+const Trailer: React.FC<TrailerProps> = ({ trailers }) => {
     const [iframeLoading, setIframeLoading] = useState(true);
 
-    const trailers = mediaData?.videos.results?.filter((i: FindTVByTMDB_FindTVByTMDB_videos_results) => {
-        if (i.site === 'YouTube' && i.name.toLowerCase().match(/trailer/)) {
-            return true;
-        } else {
-            return false;
-        }
-    });
     useEffect(() => {
         if (!trailers || trailers?.length <= 0) {
             setIframeLoading(false);
         }
-    }, [data]);
+    }, [trailers]);
 
     return (
-        <Box width={'100%'} height={'100%'}>
+        <ContentWrapperContainer>
             {iframeLoading && (
                 <Center h={'100%'}>
                     <Spinner size="xl" />
@@ -47,8 +37,8 @@ const TvTrailer: React.FC = () => {
                     <Heading>No Trailer Found</Heading>
                 </Center>
             )}
-        </Box>
+        </ContentWrapperContainer>
     );
 };
 
-export default TvTrailer;
+export default Trailer;

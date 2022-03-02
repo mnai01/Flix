@@ -8,7 +8,7 @@
 // ====================================================
 
 export interface DiscoverTV_DiscoverTV_results {
-  __typename: "DiscoverTVResults";
+  __typename: "TVListResultObject";
   id: number;
   name: string;
   poster_path: string | null;

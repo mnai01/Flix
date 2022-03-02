@@ -85,9 +85,12 @@ export const GET_MOVIE_FROM_TMDB = gql`
             similar {
                 page
                 results {
+                    id
                     adult
                     poster_path
                     title
+                    vote_average
+                    genre_ids
                 }
             }
         }
@@ -134,6 +137,7 @@ export const GET_TV_FROM_TMDB = gql`
             similar {
                 page
                 results {
+                    id
                     adult
                     genre_ids
                     name

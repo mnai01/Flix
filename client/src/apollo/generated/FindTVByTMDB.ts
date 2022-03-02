@@ -47,6 +47,7 @@ export interface FindTVByTMDB_FindTVByTMDB_external_ids {
 
 export interface FindTVByTMDB_FindTVByTMDB_similar_results {
   __typename: "SimilarResults";
+  id: number;
   adult: boolean;
   genre_ids: number[] | null;
   name: string;

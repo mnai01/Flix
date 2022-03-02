@@ -46,7 +46,7 @@ const Sidebar = () => {
         <Flex direction="column" flexBasis={'220px'} flexGrow={0} flexShrink={0} height="100%" justify="space-around" p={1}>
             <AutoSuggestion />
             <SidebarSection title={'Navigation'} items={NavigationMenu} />
-            {type === 'tv' || type === 'movies' ? <SidebarSection title={'Categories'} items={genreArr} /> : ''}
+            {type === 'tv' || type === 'movies' ? <SidebarSection title={type === 'tv' ? 'TV Categories' : 'Movie Categories'} items={genreArr} /> : ''}
             <ModeSwitch />
         </Flex>
     );

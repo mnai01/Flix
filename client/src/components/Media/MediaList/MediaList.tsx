@@ -1,5 +1,5 @@
 import { Box, Flex, Skeleton } from '@chakra-ui/react';
-import SwiperCore, { Autoplay, Navigation, Pagination } from 'swiper';
+import SwiperCore, { Navigation, Pagination } from 'swiper';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { MediaCard } from '../';
 import { SearchVideos_SearchVideos_results } from '../../../apollo/generated/SearchVideos';
@@ -14,7 +14,7 @@ interface MediaListProps {
 }
 SwiperCore.use([Navigation, Pagination]);
 
-const MediaList: React.FC<MediaListProps> = ({ medias, loading, horizontal }) => {
+const MediaList: React.FC<MediaListProps> = ({ medias, loading, horizontal = false }) => {
     const childrenSwiper = loading ? (
         Array(36)
             .fill(0)
@@ -34,7 +34,9 @@ const MediaList: React.FC<MediaListProps> = ({ medias, loading, horizontal }) =>
             </SwiperSlide>
         ))
     ) : (
-        <h1>No result found</h1>
+        <SwiperSlide key={1}>
+            <h1>No result found</h1>
+        </SwiperSlide>
     );
 
     const childrenVertical = loading ? (
