@@ -69,6 +69,7 @@ const MediaCarousel: React.FC<MediaCarouselProps> = ({ data, loading }) => {
             }}>
             {!loading &&
                 data &&
+                // eslint-disable-next-line @typescript-eslint/no-explicit-any
                 data.map((i: any) => (
                     <SwiperSlide key={i.title} style={{ width: 'auto' }}>
                         <Poster
