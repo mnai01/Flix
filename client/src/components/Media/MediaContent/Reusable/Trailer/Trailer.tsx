@@ -1,5 +1,5 @@
 import { Center, Heading, Skeleton, Spinner } from '@chakra-ui/react';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { ContentWrapperContainer } from '../../ContentWrapper/ContentWrapperStyles';
 
 interface TrailerProps {

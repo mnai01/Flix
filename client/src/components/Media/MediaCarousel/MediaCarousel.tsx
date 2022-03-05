@@ -8,7 +8,9 @@ import { Poster } from '../MediaContent/Reusable';
 SwiperCore.use([Navigation, Pagination, Autoplay]);
 
 interface MediaCarouselProps {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     data?: any[] | null;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     error?: any;
     loading?: boolean;
 }
@@ -68,7 +70,7 @@ const MediaCarousel: React.FC<MediaCarouselProps> = ({ data, loading }) => {
             {!loading &&
                 data &&
                 data.map((i: any) => (
-                    <SwiperSlide key={i.title!} style={{ width: 'auto' }}>
+                    <SwiperSlide key={i.title} style={{ width: 'auto' }}>
                         <Poster
                             loading={loading}
                             title={i.title}

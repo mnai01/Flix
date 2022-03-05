@@ -1,4 +1,4 @@
-import { Box, Button, Center, Flex, Heading, Image, Skeleton, Tag, Text, useColorMode, useTheme } from '@chakra-ui/react';
+import { Box, Button, Flex, Heading, Image, Skeleton, Tag, Text, useColorMode, useTheme } from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import StarRatings from 'react-star-ratings';
