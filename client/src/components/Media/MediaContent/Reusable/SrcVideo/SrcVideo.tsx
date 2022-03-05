@@ -1,4 +1,4 @@
-import { Center, Heading, Spinner } from '@chakra-ui/react';
+import { Center, Heading, Skeleton, Spinner } from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
 import { ContentWrapperContainer } from '../../ContentWrapper/ContentWrapperStyles';
 
@@ -12,22 +12,22 @@ interface SrcVideoProps {
 
 const SrcVideo: React.FC<SrcVideoProps> = ({ data, link, imdb }) => {
     const [iframeLoading, setIframeLoading] = useState(true);
-    useEffect(() => {
-        if (!data || !data.imdb_id) setIframeLoading(false);
-    }, []);
+    console.log(data, imdb);
 
     return (
         <ContentWrapperContainer>
-            {(!data || !imdb || iframeLoading) && (
+            {data && imdb && iframeLoading && (
                 <Center h={'100%'}>
-                    <Spinner size="xl" />
+                    <Skeleton width="100%" height={'100%'} />
+                    <Spinner size="xl" position={'absolute'} />
                 </Center>
             )}
+
             {data && imdb ? (
                 <iframe
                     allow="fullscreen"
                     onLoad={() => setIframeLoading(false)}
-                    // onError={(err) => console.log(err)}
+                    onError={() => setIframeLoading(false)}
                     style={{ width: '100%', height: '100%', display: iframeLoading ? 'none' : 'block' }}
                     src={link}
                 />

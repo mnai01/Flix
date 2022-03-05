@@ -12,6 +12,11 @@ export interface DiscoverTV_DiscoverTV_results {
   id: number;
   name: string;
   poster_path: string | null;
+  backdrop_path: string | null;
+  vote_average: number;
+  popularity: number;
+  vote_count: number;
+  overview: string;
 }
 
 export interface DiscoverTV_DiscoverTV {

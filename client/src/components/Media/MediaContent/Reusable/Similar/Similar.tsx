@@ -1,5 +1,5 @@
 import { Divider, Heading } from '@chakra-ui/react';
-import { MediaList } from '../../../MediaList';
+import { MediaList } from '../../../';
 
 interface SimilarProps {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any

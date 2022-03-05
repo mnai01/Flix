@@ -1,8 +1,7 @@
 import { useParams } from 'react-router-dom';
 import { FindTVByTMDB } from '../../../../apollo/generated/FindTVByTMDB';
 import { useSelectedMedia } from '../../../Providers/SelectedMediaProvider';
-import { Similar } from '../Reusable';
-import { SrcVideo } from '../Reusable/SrcVideo';
+import { Similar, SrcVideo } from '../Reusable';
 
 interface TvSrcProps {
     data?: FindTVByTMDB;

@@ -1,22 +1,37 @@
-import { Box } from '@chakra-ui/react';
+import { useQuery } from '@apollo/client';
+import { Box, Flex, Heading } from '@chakra-ui/react';
+import { DiscoverMovies, DiscoverMoviesVariables } from '../apollo/generated/DiscoverMovies';
+import { DiscoverMovieSortBy } from '../apollo/generated/globalTypes';
+import { GET_MOVIES_BY_GENRE } from '../apollo/queries';
+import { MediaCarousel, MediaList } from '../components/Media';
 
 const HomePage = () => {
+    const { data, error, loading } = useQuery<DiscoverMovies, DiscoverMoviesVariables>(GET_MOVIES_BY_GENRE, {
+        fetchPolicy: 'cache-first',
+        variables: {
+            sortBy: DiscoverMovieSortBy.popularityDesc,
+        },
+    });
+
+    const { data: bestByRating, loading: loadingByRating } = useQuery<DiscoverMovies, DiscoverMoviesVariables>(GET_MOVIES_BY_GENRE, {
+        fetchPolicy: 'cache-first',
+        variables: {
+            sortBy: DiscoverMovieSortBy.vote_averageDesc,
+            voteCountGte: 10000,
+            voteAverageGte: 7,
+        },
+    });
+
     return (
-        <div>
-            <Box
-                sx={{
-                    '&::-webkit-scrollbar': {
-                        width: '16px',
-                        borderRadius: '8px',
-                        backgroundColor: `rgba(0, 0, 0, 0.05)`,
-                    },
-                    '&::-webkit-scrollbar-thumb': {
-                        backgroundColor: `rgba(0, 0, 0, 0.05)`,
-                    },
-                }}>
-                <h1>HOME</h1>
+        <Flex direction={'column'} width={'100%'} height={'100%'} my={50}>
+            {/* <Box mb={8}>
+                <Heading>HOT PICKS</Heading>
+            </Box> */}
+            <MediaCarousel data={data?.DiscoverMovies?.results} loading={loading} />
+            <Box my={2}>
+                <MediaList medias={bestByRating?.DiscoverMovies.results} loading={loadingByRating} horizontal title={'Top Rated Movies'} />
             </Box>
-        </div>
+        </Flex>
     );
 };
 

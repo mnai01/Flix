@@ -23,7 +23,7 @@ export const isAuthContext: MiddlewareFn<MyContext> = ({ context }, next) => {
         context.payload = payload as any;
     } catch (err) {
         console.log(err);
-        throw new Error('Not Authenticated1');
+        throw new Error('Not Authenticated');
     }
 
     // Returns the resolver and goes to the next middleware

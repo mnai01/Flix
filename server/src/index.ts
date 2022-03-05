@@ -9,6 +9,7 @@ import { createConnection } from 'typeorm';
 import express from 'express';
 import authRouter from './routes/auth';
 import moivesRouter from './routes/movies';
+import { MediaResolver } from './resolvers/MediaResolver';
 
 (async () => {
     const app = express();
@@ -27,7 +28,7 @@ import moivesRouter from './routes/movies';
 
     const apolloServer = new ApolloServer({
         schema: await buildSchema({
-            resolvers: [UserResolver],
+            resolvers: [UserResolver, MediaResolver],
         }),
         // lets you access whatever u return in the gql resolver.
         // basically every graphql function can get access to this info

@@ -29,5 +29,5 @@ export class MovieListResultObject {
     @Field({ nullable: true })
     video: boolean;
     @Field({ nullable: true })
-    vote_average: string;
+    vote_average: number;
 }

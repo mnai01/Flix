@@ -1,4 +1,4 @@
-import { Center, Heading, Spinner } from '@chakra-ui/react';
+import { Center, Heading, Skeleton, Spinner } from '@chakra-ui/react';
 import React, { useEffect, useState } from 'react';
 import { ContentWrapperContainer } from '../../ContentWrapper/ContentWrapperStyles';
 
@@ -10,19 +10,15 @@ interface TrailerProps {
 const Trailer: React.FC<TrailerProps> = ({ trailers }) => {
     const [iframeLoading, setIframeLoading] = useState(true);
 
-    useEffect(() => {
-        if (!trailers || trailers?.length <= 0) {
-            setIframeLoading(false);
-        }
-    }, [trailers]);
-
     return (
         <ContentWrapperContainer>
-            {iframeLoading && (
+            {trailers && trailers?.length > 0 && iframeLoading && (
                 <Center h={'100%'}>
-                    <Spinner size="xl" />
+                    <Skeleton width="100%" height={'100%'} />
+                    <Spinner size="xl" position={'absolute'} />
                 </Center>
             )}
+
             {trailers && trailers?.length > 0 ? (
                 <iframe
                     allow="fullscreen"
@@ -30,6 +26,7 @@ const Trailer: React.FC<TrailerProps> = ({ trailers }) => {
                     width={'100%'}
                     height={'100%'}
                     onLoad={() => setIframeLoading(false)}
+                    onError={() => setIframeLoading(true)}
                     style={{ display: iframeLoading ? 'none' : 'block' }}
                 />
             ) : (

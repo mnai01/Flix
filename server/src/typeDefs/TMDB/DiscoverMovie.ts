@@ -65,6 +65,10 @@ export class DiscoverMovieParams {
     'with_release_type': number[] = [4, 5, 6];
     @Field(() => [String], { nullable: true })
     'with_original_language': string = 'en';
+    @Field(() => Int, { nullable: true })
+    'vote_countGte': number;
+    @Field(() => Int, { nullable: true })
+    'vote_averageGte': number;
 }
 
 @ObjectType()

@@ -20,6 +20,7 @@ const AutoSuggestionProvider: React.FC = ({ children }) => {
 
     return <AutoSuggestionContext.Provider value={{ error, loading, data, autoSuggestResults }}>{children}</AutoSuggestionContext.Provider>;
 };
+
 const useAutoSuggestion = (): AutoSuggestionContextProps => {
     const context = useContext(AutoSuggestionContext);
     if (context === undefined) {

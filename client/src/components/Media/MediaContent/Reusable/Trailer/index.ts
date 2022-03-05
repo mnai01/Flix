@@ -1,1 +1,1 @@
-export { default as Trailer } from './Trailer';
+export { default } from './Trailer';
