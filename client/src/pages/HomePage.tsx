@@ -1,12 +1,12 @@
 import { useQuery } from '@apollo/client';
-import { Box, Flex, Heading } from '@chakra-ui/react';
+import { Box, Flex } from '@chakra-ui/react';
 import { DiscoverMovies, DiscoverMoviesVariables } from '../apollo/generated/DiscoverMovies';
 import { DiscoverMovieSortBy } from '../apollo/generated/globalTypes';
 import { GET_MOVIES_BY_GENRE } from '../apollo/queries';
 import { MediaCarousel, MediaList } from '../components/Media';
 
 const HomePage = () => {
-    const { data, error, loading } = useQuery<DiscoverMovies, DiscoverMoviesVariables>(GET_MOVIES_BY_GENRE, {
+    const { data, loading } = useQuery<DiscoverMovies, DiscoverMoviesVariables>(GET_MOVIES_BY_GENRE, {
         fetchPolicy: 'cache-first',
         variables: {
             sortBy: DiscoverMovieSortBy.popularityDesc,

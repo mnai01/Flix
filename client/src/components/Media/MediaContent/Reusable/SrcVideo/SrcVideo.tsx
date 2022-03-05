@@ -1,5 +1,5 @@
 import { Center, Heading, Skeleton, Spinner } from '@chakra-ui/react';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { ContentWrapperContainer } from '../../ContentWrapper/ContentWrapperStyles';
 
 interface SrcVideoProps {
@@ -12,7 +12,6 @@ interface SrcVideoProps {
 
 const SrcVideo: React.FC<SrcVideoProps> = ({ data, link, imdb }) => {
     const [iframeLoading, setIframeLoading] = useState(true);
-    console.log(data, imdb);
 
     return (
         <ContentWrapperContainer>
