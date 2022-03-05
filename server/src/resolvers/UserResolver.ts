@@ -1,4 +1,4 @@
-import { Arg, Args, Ctx, Field, Mutation, ObjectType, Query, Resolver, UseMiddleware, Int } from 'type-graphql';
+import { Arg, Ctx, Field, Mutation, ObjectType, Query, Resolver, UseMiddleware, Int } from 'type-graphql';
 import { User } from '../entity/User';
 import { hash, compare } from 'bcryptjs';
 import { MyContext } from '../typeDefs/MyContext';
@@ -6,16 +6,10 @@ import { createAccessToken, createRefreshToken } from '../helpers/refreshTokens'
 import { isAuthContext } from '../middleware/isAuthContext';
 import { getConnection } from 'typeorm';
 import { sendRefreshToken } from '../helpers/sendTokens';
-import axios from 'axios';
-import { GenreResult } from '../typeDefs/TMDB/Genres';
-import { DiscoverMovie, DiscoverMovieParams } from '../typeDefs/TMDB/DiscoverMovie';
-import { DiscoverTV, DiscoverTVParams } from '../typeDefs/TMDB/DiscoverTV';
-import { Search, SearchParams, SearchResults } from '../typeDefs/TMDB/MultiSearch';
-import { VidsrcLastesVideosParams, VidsrcMovies, VidsrcTV } from '../typeDefs/TMDB';
-import { FindMediaByIMDB, FindMediaByIMDBParams } from '../typeDefs/TMDB/MediaByIMDB';
-import { FindMovieByTMDB, FindMovieByTMDBParams } from '../typeDefs/TMDB/MovieByTMDB';
-import { TVByTMDB, TVByTMDBParams } from '../typeDefs/TMDB/TVByTMDB';
-import { SeasonByTMDB, SeasonByTMDBParams } from '../typeDefs/TMDB/SeasonByTMDB';
+
+// import { TopRatedMovies } from '../typeDefs/TMDB/TopRatedMovies';
+// import { MovieListResultObject } from '../typeDefs/TMDB/Reusable/MovieListResultObject';
+// import { PopularMovies } from '../typeDefs/TMDB/PopularMovies';
 
 // With TypeGraphQL we don’t need to explicitly write the schema.
 // Instead, we define our resolvers with TypeScript classes and decorators,
@@ -47,171 +41,6 @@ export class UserResolver {
         return User.find();
     }
 
-    @Query(() => GenreResult)
-    @UseMiddleware(isAuthContext)
-    async Genres() {
-        const tvGenres = axios(`https://api.themoviedb.org/3/genre/tv/list?api_key=${process.env.API_KEY_TMDB}&language=en-US`);
-        const movieGenres = axios(`https://api.themoviedb.org/3/genre/movie/list?api_key=${process.env.API_KEY_TMDB}&language=en-US`);
-        const allPromise = Promise.all([tvGenres, movieGenres]);
-        try {
-            const values = await allPromise;
-            return { tv: values[0].data.genres, movies: values[1].data.genres };
-        } catch (err) {
-            throw new Error(err);
-        }
-    }
-
-    @Query(() => DiscoverMovie)
-    @UseMiddleware(isAuthContext)
-    async DiscoverMovies(
-        @Args()
-        {
-            region,
-            sort_by,
-            certification_country,
-            certification,
-            certificationLte,
-            certificationGte,
-            include_adult,
-            include_video,
-            page,
-            primary_release_year,
-            primary_release_dateGte,
-            primary_release_dateLte,
-            year,
-            with_genres,
-            with_release_type,
-            with_original_language,
-        }: DiscoverMovieParams,
-    ) {
-        const { data } = await axios(`https://api.themoviedb.org/3/discover/movie?api_key=${process.env.API_KEY_TMDB}`, {
-            params: {
-                region,
-                sort_by,
-                certification_country,
-                certification,
-                certificationLte,
-                certificationGte,
-                include_adult,
-                include_video,
-                page,
-                primary_release_year,
-                primary_release_dateGte,
-                primary_release_dateLte,
-                year,
-                with_genres,
-                with_release_type: with_release_type.join('|'),
-                with_original_language,
-            },
-        });
-        return data;
-    }
-
-    @Query(() => DiscoverTV)
-    @UseMiddleware(isAuthContext)
-    async DiscoverTV(
-        @Args()
-        { sort_by, page, with_genres, watch_region, with_status, with_original_language }: DiscoverTVParams,
-    ) {
-        const test = await axios(`https://api.themoviedb.org/3/discover/tv?api_key=${process.env.API_KEY_TMDB}`, {
-            params: {
-                sort_by,
-                page,
-                with_genres,
-                watch_region,
-                with_status,
-                with_original_language,
-            },
-        });
-        return test.data;
-    }
-
-    @Query(() => Search)
-    @UseMiddleware(isAuthContext)
-    async SearchVideos(
-        @Args()
-        { region, query, include_adult }: SearchParams,
-    ) {
-        const { data } = await axios(`https://api.themoviedb.org/3/search/multi?api_key=${process.env.API_KEY_TMDB}`, {
-            params: {
-                region,
-                query,
-                include_adult,
-            },
-        });
-
-        return { ...data, results: data.results.filter((i: SearchResults) => i.media_type !== 'person' && i.poster_path !== null && i.popularity > 3) };
-    }
-
-    @Query(() => VidsrcMovies)
-    @UseMiddleware(isAuthContext)
-    async GetLatestMovies(
-        @Args()
-        { page }: VidsrcLastesVideosParams,
-    ) {
-        const { data } = await axios(`https://vidsrc.me/movies/latest/page-${page}.json`);
-        return data;
-    }
-
-    @Query(() => VidsrcTV)
-    @UseMiddleware(isAuthContext)
-    async GetLatestTV(
-        @Args()
-        { page }: VidsrcLastesVideosParams,
-    ) {
-        const { data } = await axios(`https://vidsrc.me/episodes/latest/page-${page}.json`);
-        return data;
-    }
-
-    @Query(() => FindMediaByIMDB)
-    @UseMiddleware(isAuthContext)
-    async FindByIMDB_ID(
-        @Args()
-        { imdb_id }: FindMediaByIMDBParams,
-    ) {
-        const { data } = await axios(`https://api.themoviedb.org/3/find/${imdb_id}?api_key=${process.env.API_KEY_TMDB}`, {
-            params: {
-                external_source: 'imdb_id',
-            },
-        });
-        return data;
-    }
-
-    @Query(() => FindMovieByTMDB)
-    @UseMiddleware(isAuthContext)
-    async FindMovieByTMDB(
-        @Args()
-        { movie_id }: FindMovieByTMDBParams,
-    ) {
-        const { data } = await axios(
-            `https://api.themoviedb.org/3/movie/${movie_id}?api_key=${process.env.API_KEY_TMDB}&append_to_response=videos,external_ids,similar`,
-        );
-        return data;
-    }
-
-    @Query(() => TVByTMDB)
-    @UseMiddleware(isAuthContext)
-    async FindTVByTMDB(
-        @Args()
-        { tv_show_id }: TVByTMDBParams,
-    ) {
-        const { data } = await axios(
-            `https://api.themoviedb.org/3/tv/${tv_show_id}?api_key=${process.env.API_KEY_TMDB}&append_to_response=videos,external_ids,similar`,
-        );
-        return data;
-    }
-
-    @Query(() => SeasonByTMDB)
-    @UseMiddleware(isAuthContext)
-    async FindEpisodeByTMDB(
-        @Args()
-        { tv_show_id, season_number }: SeasonByTMDBParams,
-    ) {
-        const { data } = await axios(
-            `https://api.themoviedb.org/3/tv/${tv_show_id}/season/${season_number}?api_key=${process.env.API_KEY_TMDB}&append_to_response=videos,external_ids,similar`,
-        );
-        return data;
-    }
     // Ability to revoke token for user
     // dont actually expose this,
     // instead make a function someone can call or like a forgot password or something that you can call internal if someone gets hacked

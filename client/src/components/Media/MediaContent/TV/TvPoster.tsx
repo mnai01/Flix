@@ -1,6 +1,6 @@
 import { FindTVByTMDB } from '../../../../apollo/generated/FindTVByTMDB';
 import { useSelectedMedia } from '../../../Providers/SelectedMediaProvider';
-import { Poster } from '../Reusable/Poster';
+import { Poster } from '../Reusable';
 
 interface SelectedTVProps {
     data?: FindTVByTMDB;

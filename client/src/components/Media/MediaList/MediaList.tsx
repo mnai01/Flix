@@ -1,4 +1,4 @@
-import { Box, Flex, Skeleton } from '@chakra-ui/react';
+import { Box, Flex, Heading, Skeleton } from '@chakra-ui/react';
 import SwiperCore, { Navigation, Pagination } from 'swiper';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { MediaCard } from '../';
@@ -11,24 +11,26 @@ interface MediaListProps {
     medias?: any;
     loading?: boolean;
     horizontal?: boolean;
+    title?: string;
 }
+
 SwiperCore.use([Navigation, Pagination]);
 
-const MediaList: React.FC<MediaListProps> = ({ medias, loading, horizontal = false }) => {
+const MediaList: React.FC<MediaListProps> = ({ medias, loading, horizontal = false, title }) => {
     const childrenSwiper = loading ? (
         Array(36)
             .fill(0)
             .map((_, i) => (
-                <SwiperSlide key={i}>
-                    <Box p={1.5}>
-                        <Skeleton width="185px" height="278px" />
+                <SwiperSlide key={i} style={{ width: 'auto' }}>
+                    <Box pr={3}>
+                        <Skeleton width={'100%'} height="278px" />
                     </Box>
                 </SwiperSlide>
             ))
     ) : medias && medias.length > 0 ? (
         medias.map((i: SearchVideos_SearchVideos_results) => (
-            <SwiperSlide key={i.id} style={{ width: 'auto%' }}>
-                <Box p={1.5}>
+            <SwiperSlide key={i.id} style={{ width: 'auto' }}>
+                <Box pr={3}>
                     <MediaCard media={i} />
                 </Box>
             </SwiperSlide>
@@ -43,13 +45,13 @@ const MediaList: React.FC<MediaListProps> = ({ medias, loading, horizontal = fal
         Array(36)
             .fill(0)
             .map((_, i) => (
-                <Box p={1.5} key={i}>
-                    <Skeleton width="185px" height="278px" />
+                <Box p={1.5} key={i} width="185px" height="278px">
+                    <Skeleton width="100%" height={'100%'} />
                 </Box>
             ))
     ) : medias && medias.length > 0 ? (
         medias.map((i: SearchVideos_SearchVideos_results) => (
-            <Box p={1.5} key={i.id}>
+            <Box p={1.5} key={i.id} style={{ width: '185px' }}>
                 <MediaCard media={i} />
             </Box>
         ))
@@ -59,8 +61,14 @@ const MediaList: React.FC<MediaListProps> = ({ medias, loading, horizontal = fal
 
     return (
         <>
+            {title && (
+                <Box py={2.5}>
+                    <Heading size={'sm'}>{title}</Heading>
+                </Box>
+            )}
             {horizontal ? (
                 <Swiper
+                    // onReachEnd={() => console.log('end')}
                     style={{ width: '100%' }}
                     slidesPerGroup={5}
                     grabCursor={true}

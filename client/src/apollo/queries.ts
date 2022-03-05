@@ -36,12 +36,18 @@ export const GET_GENRES = gql`
 `;
 
 export const GET_MOVIES_BY_GENRE = gql`
-    query DiscoverMovies($withGenres: String) {
-        DiscoverMovies(with_genres: $withGenres) {
+    query DiscoverMovies($withGenres: String, $sortBy: DiscoverMovieSortBy, $voteCountGte: Int, $voteAverageGte: Int) {
+        DiscoverMovies(with_genres: $withGenres, sort_by: $sortBy, vote_countGte: $voteCountGte, vote_averageGte: $voteAverageGte) {
             results {
                 poster_path
                 id
                 title
+                backdrop_path
+                vote_average
+                popularity
+                vote_count
+                overview
+                release_date
             }
         }
     }
@@ -54,6 +60,11 @@ export const GET_TV_BY_GENRE = gql`
                 id
                 name
                 poster_path
+                backdrop_path
+                vote_average
+                popularity
+                vote_count
+                overview
             }
         }
     }
@@ -63,6 +74,7 @@ export const GET_MOVIE_FROM_TMDB = gql`
     query FindMovieByTMDB($movieId: String!) {
         FindMovieByTMDB(movie_id: $movieId) {
             adult
+            overview
             backdrop_path
             genres {
                 name
@@ -100,6 +112,7 @@ export const GET_MOVIE_FROM_TMDB = gql`
 export const GET_TV_FROM_TMDB = gql`
     query FindTVByTMDB($tvShowId: String!) {
         FindTVByTMDB(tv_show_id: $tvShowId) {
+            overview
             backdrop_path
             created_by {
                 profile_path
@@ -165,3 +178,19 @@ export const GET_SEASON_DETAILS = gql`
         }
     }
 `;
+
+// export const TOP_RATED_MOVIES = gql`
+//     query TopRatedMovies {
+//         TopRatedMovies {
+//             results {
+//                 backdrop_path
+//                 title
+//                 vote_average
+//                 genre_ids
+//                 id
+//                 release_date
+//                 overview
+//             }
+//         }
+//     }
+// `;

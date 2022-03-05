@@ -32,7 +32,7 @@ export interface FindMovieByTMDB_FindMovieByTMDB_similar_results {
   adult: boolean | null;
   poster_path: string | null;
   title: string | null;
-  vote_average: string | null;
+  vote_average: number | null;
   genre_ids: number[] | null;
 }
 
@@ -45,6 +45,7 @@ export interface FindMovieByTMDB_FindMovieByTMDB_similar {
 export interface FindMovieByTMDB_FindMovieByTMDB {
   __typename: "FindMovieByTMDB";
   adult: boolean;
+  overview: string;
   backdrop_path: string | null;
   genres: FindMovieByTMDB_FindMovieByTMDB_genres[] | null;
   imdb_id: string;

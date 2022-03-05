@@ -64,6 +64,7 @@ export interface FindTVByTMDB_FindTVByTMDB_similar {
 
 export interface FindTVByTMDB_FindTVByTMDB {
   __typename: "TVByTMDB";
+  overview: string;
   backdrop_path: string | null;
   created_by: FindTVByTMDB_FindTVByTMDB_created_by[] | null;
   episode_run_time: number[] | null;

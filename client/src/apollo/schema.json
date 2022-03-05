@@ -282,6 +282,30 @@
                 "defaultValue": "[\"en\"]",
                 "isDeprecated": false,
                 "deprecationReason": null
+              },
+              {
+                "name": "vote_countGte",
+                "description": null,
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Int",
+                  "ofType": null
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              },
+              {
+                "name": "vote_averageGte",
+                "description": null,
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Int",
+                  "ofType": null
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
               }
             ],
             "type": {
@@ -1131,7 +1155,7 @@
             "args": [],
             "type": {
               "kind": "SCALAR",
-              "name": "String",
+              "name": "Float",
               "ofType": null
             },
             "isDeprecated": false,

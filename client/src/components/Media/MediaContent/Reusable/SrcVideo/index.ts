@@ -1,1 +1,1 @@
-export { default as SrcVideo } from './SrcVideo';
+export { default } from './SrcVideo';

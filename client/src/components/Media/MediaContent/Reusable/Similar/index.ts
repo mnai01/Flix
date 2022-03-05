@@ -1,1 +1,1 @@
-export { default as Similar } from './Similar';
+export { default } from './Similar';

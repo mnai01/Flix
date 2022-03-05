@@ -1,7 +1,6 @@
 import { FindTVByTMDB, FindTVByTMDB_FindTVByTMDB_videos_results } from '../../../../apollo/generated/FindTVByTMDB';
 import { useSelectedMedia } from '../../../Providers/SelectedMediaProvider';
-import { Similar } from '../Reusable';
-import { Trailer } from '../Reusable/Trailer';
+import { Similar, Trailer } from '../Reusable';
 
 interface TvTrailerProps {
     data?: FindTVByTMDB;

@@ -262,6 +262,26 @@ export enum Country {
   Zimbabwe = "Zimbabwe",
 }
 
+/**
+ * Sort by
+ */
+export enum DiscoverMovieSortBy {
+  original_titleAsc = "original_titleAsc",
+  original_titleDesc = "original_titleDesc",
+  popularityAsc = "popularityAsc",
+  popularityDesc = "popularityDesc",
+  primary_release_dateAsc = "primary_release_dateAsc",
+  primary_release_dateDesc = "primary_release_dateDesc",
+  release_dateAsc = "release_dateAsc",
+  release_dateDesc = "release_dateDesc",
+  revenueAsc = "revenueAsc",
+  revenueSesc = "revenueSesc",
+  vote_averageAsc = "vote_averageAsc",
+  vote_averageDesc = "vote_averageDesc",
+  vote_countAsc = "vote_countAsc",
+  vote_countDesc = "vote_countDesc",
+}
+
 //==============================================================
 // END Enums and Input Objects
 //==============================================================

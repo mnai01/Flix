@@ -1,7 +1,6 @@
 import { FindMovieByTMDB } from '../../../../apollo/generated/FindMovieByTMDB';
 import { useSelectedMedia } from '../../../Providers/SelectedMediaProvider';
-import { Similar } from '../Reusable';
-import { SrcVideo } from '../Reusable/SrcVideo';
+import { Similar, SrcVideo } from '../Reusable';
 
 interface MovieSrcProps {
     data?: FindMovieByTMDB;
