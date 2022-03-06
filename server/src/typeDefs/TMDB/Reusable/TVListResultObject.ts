@@ -10,7 +10,7 @@ export class TVListResultObject {
     id: number;
     @Field(() => String, { nullable: true })
     backdrop_path?: string;
-    @Field(() => Int)
+    @Field(() => Float)
     vote_average: number;
     @Field()
     overview: string;
