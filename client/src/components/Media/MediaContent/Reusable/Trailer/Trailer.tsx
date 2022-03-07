@@ -18,7 +18,6 @@ const Trailer: React.FC<TrailerProps> = ({ trailers }) => {
                     <Spinner size="xl" position={'absolute'} />
                 </Center>
             )}
-
             {trailers && trailers?.length > 0 ? (
                 <iframe
                     allow="fullscreen"
