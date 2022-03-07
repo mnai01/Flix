@@ -13,9 +13,10 @@ interface MediaCarouselProps {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     error?: any;
     loading?: boolean;
+    height?: number;
 }
 
-const MediaCarousel: React.FC<MediaCarouselProps> = ({ data, loading }) => {
+const MediaCarousel: React.FC<MediaCarouselProps> = ({ data, loading, height }) => {
     // const { data: genreCollection } = useGenres();
 
     // let collect: any = [];
@@ -33,7 +34,7 @@ const MediaCarousel: React.FC<MediaCarouselProps> = ({ data, loading }) => {
 
     return (
         <Swiper
-            style={{ width: '100%' }}
+            style={{ width: '100%', height: `${height ? height + '%' : 'auto'}` }}
             slidesPerGroup={1}
             autoplay={{
                 delay: 5000,

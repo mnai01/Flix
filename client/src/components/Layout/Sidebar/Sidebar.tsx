@@ -38,7 +38,7 @@ const Sidebar = () => {
 
     return (
         // other sites use 240px
-        <Flex direction="column" flexBasis={'220px'} flexGrow={0} flexShrink={0} height="100%" justify="space-around" p={1}>
+        <Flex direction="column" flexBasis={'220px'} flexGrow={0} flexShrink={0} height="fit-content" justify="space-around" p={1}>
             <AutoSuggestion />
             <SidebarSection title={'Navigation'} items={NavigationMenu} />
             <SidebarSection title={type === 'tv' ? 'TV Categories' : type === 'movies' ? 'Movie Categories' : 'Categories'} items={data} loading={loading} />

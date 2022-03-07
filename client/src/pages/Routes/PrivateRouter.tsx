@@ -12,7 +12,7 @@ const PageRoutes = () => {
     return (
         <AutoSuggestionProvider>
             <GenreProvider>
-                <Flex>
+                <Flex height={'100%'} width={'100%'}>
                     <Sidebar />
                     <PageWrapper>
                         <Routes>

@@ -24,7 +24,7 @@ const HomePage = () => {
 
     return (
         <Flex direction={'column'} width={'100%'} height={'100%'} my={50}>
-            <MediaCarousel data={data?.DiscoverMovies?.results} loading={loading} />
+            <MediaCarousel data={data?.DiscoverMovies?.results} loading={loading} height={50} />
             <Box my={2}>
                 <MediaList medias={bestByRating?.DiscoverMovies.results} loading={loadingByRating} horizontal title={'Top Rated Movies'} />
             </Box>

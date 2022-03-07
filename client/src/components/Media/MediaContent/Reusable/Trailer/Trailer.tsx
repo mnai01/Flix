@@ -1,6 +1,5 @@
 import { Center, Heading, Skeleton, Spinner } from '@chakra-ui/react';
 import React, { useState } from 'react';
-import { ContentWrapperContainer } from '../../ContentWrapper/ContentWrapperStyles';
 
 interface TrailerProps {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -11,7 +10,7 @@ const Trailer: React.FC<TrailerProps> = ({ trailers }) => {
     const [iframeLoading, setIframeLoading] = useState(true);
 
     return (
-        <ContentWrapperContainer>
+        <>
             {trailers && trailers?.length > 0 && iframeLoading && (
                 <Center h={'100%'}>
                     <Skeleton width="100%" height={'100%'} />
@@ -33,7 +32,7 @@ const Trailer: React.FC<TrailerProps> = ({ trailers }) => {
                     <Heading>No Trailer Found</Heading>
                 </Center>
             )}
-        </ContentWrapperContainer>
+        </>
     );
 };
 

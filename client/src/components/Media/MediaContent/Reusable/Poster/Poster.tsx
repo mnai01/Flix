@@ -3,7 +3,6 @@ import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import StarRatings from 'react-star-ratings';
 import { convertMinsToHrsMins } from '../../../../../utils/helper/ConvertMinutes';
-import { ContentWrapperContainer } from '../../ContentWrapper/ContentWrapperStyles';
 
 interface SelectedMediaProps {
     title?: string | null;
@@ -48,7 +47,7 @@ const Poster: React.FC<SelectedMediaProps> = ({
     // backdrop_path === null ? <h1>NONE</h1> : 'LOAD MOVIE POSTER';
 
     return (
-        <ContentWrapperContainer position={'relative'}>
+        <Box width={'100%'} height={'100%'} position={'relative'}>
             {loading ? (
                 <Skeleton width={'100%'} height={'100%'} />
             ) : (
@@ -144,7 +143,7 @@ const Poster: React.FC<SelectedMediaProps> = ({
                     {!load && <Skeleton width="100%" height={'100%'} />}
                 </>
             )}
-        </ContentWrapperContainer>
+        </Box>
     );
 };
 
