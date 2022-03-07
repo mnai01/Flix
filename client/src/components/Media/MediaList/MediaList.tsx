@@ -70,35 +70,16 @@ const MediaList: React.FC<MediaListProps> = ({ medias, loading, horizontal = fal
                 <Swiper
                     // onReachEnd={() => console.log('end')}
                     style={{ width: '100%' }}
-                    slidesPerGroup={5}
+                    slidesPerGroup={1}
                     grabCursor={true}
                     spaceBetween={2}
                     centeredSlides={false}
-                    slidesPerView={8}
+                    slidesPerView={'auto'}
+                    loop={true}
+                    loopedSlides={0}
                     pagination={false}
                     initialSlide={0}
-                    breakpoints={{
-                        '576': {
-                            slidesPerView: 3,
-                            spaceBetween: 0,
-                        },
-                        '768': {
-                            slidesPerView: 4,
-                            spaceBetween: 0,
-                        },
-                        '992': {
-                            slidesPerView: 5,
-                            spaceBetween: 0,
-                        },
-                        '1200': {
-                            slidesPerView: 6,
-                            spaceBetween: 0,
-                        },
-                        '1400': {
-                            slidesPerView: 9,
-                            spaceBetween: 0,
-                        },
-                    }}>
+                    observer={true}>
                     {childrenSwiper}
                 </Swiper>
             ) : (
