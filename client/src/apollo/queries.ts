@@ -194,3 +194,20 @@ export const GET_SEASON_DETAILS = gql`
 //         }
 //     }
 // `;
+
+export const GET_TRENDING = gql`
+    query GetTrending {
+        GetTrending {
+            results {
+                id
+                media_type
+                vote_average
+                title
+                name
+                release_date
+                first_air_date
+                poster_path
+            }
+        }
+    }
+`;
