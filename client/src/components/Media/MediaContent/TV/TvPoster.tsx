@@ -24,6 +24,7 @@ const TvPoster = () => {
             loading={loading}
             backdrop_path={mediaData?.backdrop_path}
             remove_src
+            overview={mediaData?.overview}
         />
     );
 };

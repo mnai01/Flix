@@ -1,6 +1,5 @@
 import { Center, Heading, Skeleton, Spinner } from '@chakra-ui/react';
 import { useState } from 'react';
-import { ContentWrapperContainer } from '../../ContentWrapper/ContentWrapperStyles';
 
 interface SrcVideoProps {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -14,7 +13,7 @@ const SrcVideo: React.FC<SrcVideoProps> = ({ data, link, imdb }) => {
     const [iframeLoading, setIframeLoading] = useState(true);
 
     return (
-        <ContentWrapperContainer>
+        <>
             {data && imdb && iframeLoading && (
                 <Center h={'100%'}>
                     <Skeleton width="100%" height={'100%'} />
@@ -35,7 +34,7 @@ const SrcVideo: React.FC<SrcVideoProps> = ({ data, link, imdb }) => {
                     <Heading>No Movie Found</Heading>
                 </Center>
             )}
-        </ContentWrapperContainer>
+        </>
     );
 };
 

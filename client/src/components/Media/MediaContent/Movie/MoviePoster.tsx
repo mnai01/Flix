@@ -23,6 +23,7 @@ const MoviePoster = () => {
                 nav_trailer={`/movie/${tmdb}/trailer`}
                 loading={loading}
                 backdrop_path={mediaData?.backdrop_path}
+                overview={mediaData?.overview}
             />
             <Similar medias={data?.FindMovieByTMDB.similar.results} loading={loading} horizontal />
         </>

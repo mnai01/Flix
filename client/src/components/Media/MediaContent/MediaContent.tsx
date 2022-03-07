@@ -1,4 +1,4 @@
-import { Box, Flex } from '@chakra-ui/react';
+import { Box } from '@chakra-ui/react';
 // import { motion } from 'framer-motion';
 import { useLocation } from 'react-router-dom';
 import { MoviePoster, MovieSrc, MovieTrailer } from './Movie';
@@ -30,34 +30,30 @@ const MediaContent: React.FC = () => {
     //     }
     // }, [location]);
     return (
-        <>
-            <Flex direction={'column'} width={'100%'} height={'100%'} p={50}>
-                <Box height={'100%'}>
-                    {isTV ? (
-                        isVideo || isTrailer ? (
-                            isVideo ? (
-                                <TvSrc />
-                            ) : (
-                                <TvTrailer />
-                            )
-                        ) : (
-                            <>
-                                <TvPoster />
-                                <EpisodeList />
-                            </>
-                        )
-                    ) : isVideo || isTrailer ? (
-                        isVideo ? (
-                            <MovieSrc />
-                        ) : (
-                            <MovieTrailer />
-                        )
+        <Box height={'60%'} width={'100%'}>
+            {isTV ? (
+                isVideo || isTrailer ? (
+                    isVideo ? (
+                        <TvSrc />
                     ) : (
-                        <MoviePoster />
-                    )}
-                </Box>
-            </Flex>
-        </>
+                        <TvTrailer />
+                    )
+                ) : (
+                    <>
+                        <TvPoster />
+                        <EpisodeList />
+                    </>
+                )
+            ) : isVideo || isTrailer ? (
+                isVideo ? (
+                    <MovieSrc />
+                ) : (
+                    <MovieTrailer />
+                )
+            ) : (
+                <MoviePoster />
+            )}
+        </Box>
     );
 };
 

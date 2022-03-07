@@ -1,8 +1,5 @@
-import { useQuery } from '@apollo/client';
 import { useEffect, useState } from 'react';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
-import { Genres, Genres_Genres } from '../../apollo/generated/Genres';
-import { GET_GENRES } from '../../apollo/queries';
 import { useGenres } from '../../components/Providers/GenreProvider';
 import { uncapitalize } from '../helper/FirstCharacterHelper';
 
@@ -14,6 +11,7 @@ const useGenreParams = () => {
     const temp = pathname.split('/')[1] as 'tv' | 'movies' | 'home';
     const type: 'tv' | 'movies' | false = temp === 'tv' || temp === 'movies' ? temp : false;
     const { genre } = useParams() as { genre: string };
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const [genreSelected, setGenreSelected] = useState<any>();
 
     useEffect(() => {
@@ -30,7 +28,8 @@ const useGenreParams = () => {
         loading,
         error,
         data: type
-            ? data?.Genres[type]?.map((i: any) => {
+            ? // eslint-disable-next-line @typescript-eslint/no-explicit-any
+              data?.Genres[type]?.map((i: any) => {
                   return { path: `/${type}/category/${uncapitalize(i.name)}`, label: i.name, isFullWidth: true };
               })
             : (false as const),
