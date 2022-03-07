@@ -10,6 +10,7 @@ import { FindMovieByTMDB, FindMovieByTMDBParams } from '../typeDefs/TMDB/MovieBy
 import { TVByTMDB, TVByTMDBParams } from '../typeDefs/TMDB/TVByTMDB';
 import { isAuthContext } from '../middleware/isAuthContext';
 import { SeasonByTMDB, SeasonByTMDBParams } from '../typeDefs/TMDB/SeasonByTMDB';
+import { TrendingParams, Trending, TrendingResults } from '../typeDefs/TMDB/Trending';
 
 @Resolver()
 export class MediaResolver {
@@ -184,6 +185,36 @@ export class MediaResolver {
             `https://api.themoviedb.org/3/tv/${tv_show_id}/season/${season_number}?api_key=${process.env.API_KEY_TMDB}&append_to_response=videos,external_ids,similar`,
         );
         return data;
+    }
+
+    @Query(() => Trending)
+    @UseMiddleware(isAuthContext)
+    async GetTrending(
+        @Args()
+        { region, include_adult, media_type, time }: TrendingParams,
+    ) {
+        const { data } = await axios(`https://api.themoviedb.org/3/trending/${media_type}/${time}?api_key=${process.env.API_KEY_TMDB}`, {
+            params: {
+                region,
+                include_adult,
+            },
+        });
+
+        // Checks is media is 2 weeks old from release date. This can help prevent media being shown that has
+        // not been released on dvd/streaming yet since "trending" api doesnt have that option to tell
+        const tv = data.results.filter((i: TrendingResults) => {
+            const tvDate = new Date(i.first_air_date);
+            const today = new Date();
+            tvDate.setDate(tvDate.getDate() + 7);
+            return i.name && i.first_air_date && tvDate < today;
+        });
+        const movies = data.results.filter((i: TrendingResults) => {
+            const movieDate = new Date(i.release_date);
+            const today = new Date();
+            movieDate.setDate(movieDate.getDate() + 7);
+            return i.title && i.release_date && movieDate < today;
+        });
+        return { ...data, results: [...movies, ...tv] };
     }
 
     // @Query(() => TopRatedMovies)
