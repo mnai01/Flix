@@ -3,7 +3,8 @@ import { Flex } from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
 import { DiscoverMovies, DiscoverMoviesVariables } from '../apollo/generated/DiscoverMovies';
 import { DiscoverTV, DiscoverTVVariables } from '../apollo/generated/DiscoverTV';
-import { GET_MOVIES_BY_GENRE, GET_TV_BY_GENRE } from '../apollo/queries';
+import { GetTrending } from '../apollo/generated/GetTrending';
+import { GET_MOVIES_BY_GENRE, GET_TRENDING, GET_TV_BY_GENRE } from '../apollo/queries';
 import { MediaList, MediaListHeader } from '../components/Media';
 import useGenreParams from '../utils/hooks/useGenreParams';
 
@@ -17,16 +18,15 @@ const CatagoryMediaPage = () => {
             discoverTV({ variables: { withGenres: genre.id } });
         } else if (type === 'movies' && genre?.id) {
             discoverMovies({ variables: { withGenres: genre.id } });
+        } else if (type === 'home') {
+            trendingMedia();
         }
-
-        return () => {
-            setDiscover('');
-        };
     }, [type, genre]);
 
     const [discoverMovies, { loading: loadingMovies }] = useLazyQuery<DiscoverMovies, DiscoverMoviesVariables>(GET_MOVIES_BY_GENRE, {
         fetchPolicy: 'cache-first',
         onCompleted: (data) => {
+            console.log('called');
             setDiscover(data.DiscoverMovies);
         },
     });
@@ -35,6 +35,16 @@ const CatagoryMediaPage = () => {
         fetchPolicy: 'cache-first',
         onCompleted: (data) => {
             setDiscover(data.DiscoverTV);
+        },
+    });
+
+    const [trendingMedia, { loading: loadingTrending }] = useLazyQuery<GetTrending>(GET_TRENDING, {
+        fetchPolicy: 'cache-first',
+        onCompleted: (data) => {
+            setDiscover(data.GetTrending);
+        },
+        onError: (err) => {
+            console.log(err);
         },
     });
 
