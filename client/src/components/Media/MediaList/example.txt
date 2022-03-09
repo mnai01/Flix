@@ -1,0 +1,39 @@
+  const childrenVertical =
+        loading && !medias ? (
+            Array(20)
+                .fill(0)
+                .map((_, i) => (
+                    <Box p={1.5} key={i} width="185px" height="278px">
+                        <Skeleton width="100%" height={'100%'} />
+                    </Box>
+                ))
+        ) : loading && medias ? (
+            <>
+                {medias.map((i: SearchVideos_SearchVideos_results, index: number) => {
+                    return (
+                        <Box p={1.5} key={i.id} style={{ width: '185px' }}>
+                            <MediaCard media={i} />
+                        </Box>
+                    );
+                })}
+            </>
+        ) : medias && medias.length > 0 ? (
+            medias.map((i: SearchVideos_SearchVideos_results, index: number) => {
+                // make last item contain a ref so we can tell if we are at the bottom of the list
+                if (medias.length === index + 1 && lastElementRef) {
+                    return (
+                        <Box p={1.5} key={i.id} style={{ width: '185px' }} ref={lastElementRef}>
+                            <MediaCard media={i} />
+                        </Box>
+                    );
+                }
+
+                return (
+                    <Box p={1.5} key={i.id} style={{ width: '185px' }}>
+                        <MediaCard media={i} />
+                    </Box>
+                );
+            })
+        ) : (
+            <h1>No result found</h1>
+        );

@@ -12,11 +12,13 @@ interface MediaListProps {
     loading?: boolean;
     horizontal?: boolean;
     title?: string;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    lastElementRef?: any;
 }
 
 SwiperCore.use([Navigation, Pagination]);
 
-const MediaList: React.FC<MediaListProps> = ({ medias, loading, horizontal = false, title }) => {
+const MediaList: React.FC<MediaListProps> = ({ medias, loading, horizontal = false, title, lastElementRef }) => {
     const childrenSwiper = loading ? (
         Array(36)
             .fill(0)
@@ -41,23 +43,51 @@ const MediaList: React.FC<MediaListProps> = ({ medias, loading, horizontal = fal
         </SwiperSlide>
     );
 
-    const childrenVertical = loading ? (
-        Array(36)
+    // MAYBE TRY TO
+    const childrenVertical =
+        loading && !medias ? (
+            Array(20)
+                .fill(0)
+                .map((_, i) => (
+                    <Box p={1.5} key={i} width="185px" height="278px">
+                        <Skeleton width="100%" height={'100%'} />
+                    </Box>
+                ))
+        ) : medias && medias.length > 0 ? (
+            medias.map((i: SearchVideos_SearchVideos_results, index: number) => {
+                // make last item contain a ref so we can tell if we are at the bottom of the list
+                if (medias.length === index + 1 && lastElementRef) {
+                    return (
+                        <Box p={1.5} key={i.id} style={{ width: '185px' }} ref={lastElementRef}>
+                            <MediaCard media={i} />
+                        </Box>
+                    );
+                }
+
+                return (
+                    <Box p={1.5} key={i.id} style={{ width: '185px' }}>
+                        <MediaCard media={i} />
+                    </Box>
+                );
+            })
+        ) : (
+            <h1>No result found</h1>
+        );
+
+    // EX. can be found in example.txt file
+    // This has to be seperated and cant be thrown in the childrenVertical since if the childrenVertical changed its conditional it will rerender a new section and since they arent identical since one
+    // has a skeleton and the other doesnt it will case a flashing of content. If they both just had media and no skeleton it should work fine because they all have the same keys and content but once you
+    // change the keys on one of the sections the flashing will come back
+    const skeletonVerticalLoadExtra =
+        loading &&
+        medias &&
+        Array(20)
             .fill(0)
             .map((_, i) => (
                 <Box p={1.5} key={i} width="185px" height="278px">
                     <Skeleton width="100%" height={'100%'} />
                 </Box>
-            ))
-    ) : medias && medias.length > 0 ? (
-        medias.map((i: SearchVideos_SearchVideos_results) => (
-            <Box p={1.5} key={i.id} style={{ width: '185px' }}>
-                <MediaCard media={i} />
-            </Box>
-        ))
-    ) : (
-        <h1>No result found</h1>
-    );
+            ));
 
     return (
         <>
@@ -85,6 +115,7 @@ const MediaList: React.FC<MediaListProps> = ({ medias, loading, horizontal = fal
             ) : (
                 <Flex wrap={horizontal ? 'nowrap' : 'wrap'} overflowX={horizontal ? 'scroll' : 'hidden'}>
                     {childrenVertical}
+                    {skeletonVerticalLoadExtra}
                 </Flex>
             )}
         </>
