@@ -1,4 +1,4 @@
-import { Box, Heading } from '@chakra-ui/react';
+import { Flex, Heading } from '@chakra-ui/react';
 
 interface MediaListHeaderProps {
     title?: string;
@@ -6,11 +6,11 @@ interface MediaListHeaderProps {
 
 const MediaListHeader: React.FC<MediaListHeaderProps> = ({ title }) => {
     return (
-        <Box mx={'6px'} my={'10px'}>
+        <Flex mx={'6px'} my={'10px'} justify={'space-between'}>
             <Heading variant={'h3'} size={'sm'}>
                 {title ? title : 'Search'}
             </Heading>
-        </Box>
+        </Flex>
     );
 };
 
