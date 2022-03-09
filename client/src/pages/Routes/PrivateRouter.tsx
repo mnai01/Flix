@@ -23,6 +23,7 @@ const PageRoutes = () => {
                             <Route path="/search" element={<SearchPage />} />
                             <Route path="/movies/category/:genre" element={<CatagoryMediaPage />} />
                             <Route path="/tv/category/:genre" element={<CatagoryMediaPage />} />
+                            <Route path="/home/category/:genre" element={<CatagoryMediaPage />} />
                             <Route path="/movie/:id" element={<MediaContentPage />} />
                             <Route path="/tv/:id" element={<MediaContentPage />} />
                             <Route path="/movie/:id/video" element={<MediaContentPage />} />

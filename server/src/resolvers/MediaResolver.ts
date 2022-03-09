@@ -11,6 +11,9 @@ import { TVByTMDB, TVByTMDBParams } from '../typeDefs/TMDB/TVByTMDB';
 import { isAuthContext } from '../middleware/isAuthContext';
 import { SeasonByTMDB, SeasonByTMDBParams } from '../typeDefs/TMDB/SeasonByTMDB';
 import { TrendingParams, Trending, TrendingResults } from '../typeDefs/TMDB/Trending';
+import { TopRatedMovies } from '../typeDefs/TMDB/TopRatedMovies';
+import { MovieListResultObject } from '../typeDefs/TMDB/Reusable/MovieListResultObject';
+import { PopularMovies } from '../typeDefs/TMDB/PopularMovies';
 
 @Resolver()
 export class MediaResolver {
@@ -217,31 +220,31 @@ export class MediaResolver {
         return { ...data, results: [...movies, ...tv] };
     }
 
-    // @Query(() => TopRatedMovies)
-    // @UseMiddleware(isAuthContext)
-    // async TopRatedMovies() {
-    //     const { data } = await axios(`https://api.themoviedb.org/3/movie/top_rated?api_key=${process.env.API_KEY_TMDB}`, {
-    //         params: {
-    //             region: 'US',
-    //         },
-    //     });
-    //     return {
-    //         ...data,
-    //         results: data.results.filter((i: MovieListResultObject) => i.adult !== true && i.poster_path !== null && i.backdrop_path !== null),
-    //     };
-    // }
+    @Query(() => TopRatedMovies)
+    @UseMiddleware(isAuthContext)
+    async TopRatedMovies() {
+        const { data } = await axios(`https://api.themoviedb.org/3/movie/top_rated?api_key=${process.env.API_KEY_TMDB}`, {
+            params: {
+                region: 'US',
+            },
+        });
+        return {
+            ...data,
+            results: data.results.filter((i: MovieListResultObject) => i.adult !== true && i.poster_path !== null && i.backdrop_path !== null),
+        };
+    }
 
-    // @Query(() => PopularMovies)
-    // @UseMiddleware(isAuthContext)
-    // async PopularMovies() {
-    //     const { data } = await axios(`https://api.themoviedb.org/3/movie/popular?api_key=${process.env.API_KEY_TMDB}`, {
-    //         params: {
-    //             region: 'US',
-    //         },
-    //     });
-    //     return {
-    //         ...data,
-    //         results: data.results.filter((i: MovieListResultObject) => i.adult !== true && i.poster_path !== null && i.backdrop_path !== null),
-    //     };
-    // }
+    @Query(() => PopularMovies)
+    @UseMiddleware(isAuthContext)
+    async PopularMovies() {
+        const { data } = await axios(`https://api.themoviedb.org/3/movie/popular?api_key=${process.env.API_KEY_TMDB}`, {
+            params: {
+                region: 'US',
+            },
+        });
+        return {
+            ...data,
+            results: data.results.filter((i: MovieListResultObject) => i.adult !== true && i.poster_path !== null && i.backdrop_path !== null),
+        };
+    }
 }

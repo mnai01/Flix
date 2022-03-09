@@ -3,7 +3,8 @@ import { Flex } from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
 import { DiscoverMovies, DiscoverMovies_DiscoverMovies, DiscoverMoviesVariables } from '../apollo/generated/DiscoverMovies';
 import { DiscoverTV, DiscoverTV_DiscoverTV, DiscoverTVVariables } from '../apollo/generated/DiscoverTV';
-import { GET_MOVIES_BY_GENRE, GET_TV_BY_GENRE } from '../apollo/queries';
+import { GetTrending } from '../apollo/generated/GetTrending';
+import { GET_MOVIES_BY_GENRE, GET_TRENDING, GET_TV_BY_GENRE } from '../apollo/queries';
 import { MediaList, MediaListHeader } from '../components/Media';
 import useGenreParams from '../utils/hooks/useGenreParams';
 import useInfiniteScroll from '../utils/hooks/useInfiniteScroll';
@@ -28,6 +29,8 @@ const CatagoryMediaPage = () => {
         } else if (type === 'movies' && genre?.id) {
             discoverMovies({ variables: { withGenres: genre.id, page: 1 } });
             setPageObj({ page: 1, totalPages: 1 });
+        } else if (type === 'home') {
+            trendingMedia();
         }
 
         return () => {
@@ -37,7 +40,7 @@ const CatagoryMediaPage = () => {
 
     const [discoverMovies, { loading: loadingMovies }] = useLazyQuery<DiscoverMovies, DiscoverMoviesVariables>(GET_MOVIES_BY_GENRE, {
         fetchPolicy: 'cache-first',
-        onCompleted: (data) => {
+        onCompleted: (data: DiscoverMovies) => {
             setDiscover((prevState: DiscoverMovies_DiscoverMovies) => {
                 return prevState?.page >= 1 ? { ...prevState, results: [...prevState.results, ...data.DiscoverMovies.results] } : { ...data.DiscoverMovies };
             });
@@ -65,6 +68,13 @@ const CatagoryMediaPage = () => {
         },
     });
 
+    const [trendingMedia, { loading: loadingTrending }] = useLazyQuery<GetTrending>(GET_TRENDING, {
+        fetchPolicy: 'cache-first',
+        onCompleted: (data) => {
+            setDiscover(data.GetTrending);
+        },
+    });
+
     const fetchItems = () => {
         if (type === 'tv' && genre?.id) {
             discoverTV({ variables: { withGenres: genre.id, page: pageObj.page } });
@@ -83,7 +93,7 @@ const CatagoryMediaPage = () => {
         // To override this behavior, use min-width: 0 or overflow: hidden.
         <Flex direction="column" style={{ overflow: 'hidden', minWidth: 0 }}>
             <MediaListHeader title={genre && genre.name} />
-            <MediaList medias={discover && discover.results} loading={loadingMovies || loadingTV} lastElementRef={lastElementRef} />
+            <MediaList medias={discover && discover.results} loading={loadingMovies || loadingTV || loadingTrending} lastElementRef={lastElementRef} />
         </Flex>
     );
 };
