@@ -715,6 +715,30 @@
                 "defaultValue": "UnitedStates",
                 "isDeprecated": false,
                 "deprecationReason": null
+              },
+              {
+                "name": "media_type",
+                "description": null,
+                "type": {
+                  "kind": "ENUM",
+                  "name": "MediaType",
+                  "ofType": null
+                },
+                "defaultValue": "all",
+                "isDeprecated": false,
+                "deprecationReason": null
+              },
+              {
+                "name": "time",
+                "description": null,
+                "type": {
+                  "kind": "ENUM",
+                  "name": "Time",
+                  "ofType": null
+                },
+                "defaultValue": "week",
+                "isDeprecated": false,
+                "deprecationReason": null
               }
             ],
             "type": {
@@ -2976,7 +3000,7 @@
               "name": null,
               "ofType": {
                 "kind": "SCALAR",
-                "name": "Int",
+                "name": "Float",
                 "ofType": null
               }
             },
@@ -7643,6 +7667,60 @@
         "inputFields": null,
         "interfaces": [],
         "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "ENUM",
+        "name": "MediaType",
+        "description": "Media Type",
+        "specifiedByUrl": null,
+        "fields": null,
+        "inputFields": null,
+        "interfaces": null,
+        "enumValues": [
+          {
+            "name": "all",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "movie",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "tv",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "possibleTypes": null
+      },
+      {
+        "kind": "ENUM",
+        "name": "Time",
+        "description": "Time window",
+        "specifiedByUrl": null,
+        "fields": null,
+        "inputFields": null,
+        "interfaces": null,
+        "enumValues": [
+          {
+            "name": "day",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "week",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
         "possibleTypes": null
       },
       {
