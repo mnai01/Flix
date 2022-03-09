@@ -3,7 +3,7 @@ import { Flex } from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
 import { DiscoverMovies, DiscoverMovies_DiscoverMovies, DiscoverMoviesVariables } from '../apollo/generated/DiscoverMovies';
 import { DiscoverTV, DiscoverTV_DiscoverTV, DiscoverTVVariables } from '../apollo/generated/DiscoverTV';
-import { GetTrending } from '../apollo/generated/GetTrending';
+import { GetTrending, GetTrending_GetTrending, GetTrendingVariables } from '../apollo/generated/GetTrending';
 import { GET_MOVIES_BY_GENRE, GET_TRENDING, GET_TV_BY_GENRE } from '../apollo/queries';
 import { MediaList, MediaListHeader } from '../components/Media';
 import useGenreParams from '../utils/hooks/useGenreParams';
@@ -29,8 +29,9 @@ const CatagoryMediaPage = () => {
         } else if (type === 'movies' && genre?.id) {
             discoverMovies({ variables: { withGenres: genre.id, page: 1 } });
             setPageObj({ page: 1, totalPages: 1 });
-        } else if (type === 'home') {
-            trendingMedia();
+        } else if (type === 'home' && genre?.name === 'Top Trending') {
+            trendingMedia({ variables: { page: 1 } });
+            setPageObj({ page: 1, totalPages: 1 });
         }
 
         return () => {
@@ -68,10 +69,18 @@ const CatagoryMediaPage = () => {
         },
     });
 
-    const [trendingMedia, { loading: loadingTrending }] = useLazyQuery<GetTrending>(GET_TRENDING, {
+    const [trendingMedia, { loading: loadingTrending }] = useLazyQuery<GetTrending, GetTrendingVariables>(GET_TRENDING, {
         fetchPolicy: 'cache-first',
         onCompleted: (data) => {
-            setDiscover(data.GetTrending);
+            setDiscover((prevState: GetTrending_GetTrending) => {
+                return prevState?.page >= 1 ? { ...prevState, results: [...prevState.results, ...data.GetTrending.results] } : { ...data.GetTrending };
+            });
+            setPageObj((prev: PageObject) => {
+                return {
+                    page: prev.page + 1,
+                    totalPages: data.GetTrending.total_pages,
+                };
+            });
         },
     });
 
@@ -80,6 +89,8 @@ const CatagoryMediaPage = () => {
             discoverTV({ variables: { withGenres: genre.id, page: pageObj.page } });
         } else if (type === 'movies' && genre?.id) {
             discoverMovies({ variables: { withGenres: genre.id, page: pageObj.page } });
+        } else if (type === 'home' && genre?.name === 'Top Trending') {
+            trendingMedia({ variables: { page: pageObj.page } });
         }
     };
 

@@ -1,5 +1,12 @@
 import { MovieListResultObject } from './Reusable/MovieListResultObject';
-import { Field, Int, ObjectType } from 'type-graphql';
+import { ArgsType, Field, Int, ObjectType } from 'type-graphql';
+
+@ArgsType()
+export class TopRatedMoviesParams {
+    @Field(() => Int)
+    page: number;
+}
+
 @ObjectType()
 export class TopRatedMovies {
     @Field(() => Int)

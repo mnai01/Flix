@@ -21,9 +21,15 @@ export interface GetTrending_GetTrending_results {
 
 export interface GetTrending_GetTrending {
   __typename: "Trending";
+  page: number;
+  total_pages: number;
   results: GetTrending_GetTrending_results[];
 }
 
 export interface GetTrending {
   GetTrending: GetTrending_GetTrending;
+}
+
+export interface GetTrendingVariables {
+  page: number;
 }

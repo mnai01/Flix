@@ -32,6 +32,8 @@ export class TrendingParams {
     'media_type': MediaType = MediaType['all'];
     @Field(() => TimeType, { nullable: true })
     'time': TimeType = TimeType['week'];
+    @Field(() => Int, { nullable: true })
+    'page': number;
 }
 
 @ObjectType()
