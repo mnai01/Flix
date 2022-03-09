@@ -184,8 +184,10 @@ export const GET_SEASON_DETAILS = gql`
 `;
 
 // export const TOP_RATED_MOVIES = gql`
-//     query TopRatedMovies {
-//         TopRatedMovies {
+//     query TopRatedMovies($page: Int!) {
+//         TopRatedMovies(page: $page) {
+//             page
+//             total_results
 //             results {
 //                 backdrop_path
 //                 title
@@ -200,8 +202,10 @@ export const GET_SEASON_DETAILS = gql`
 // `;
 
 export const GET_TRENDING = gql`
-    query GetTrending {
-        GetTrending {
+    query GetTrending($page: Int!) {
+        GetTrending(page: $page) {
+            page
+            total_pages
             results {
                 id
                 media_type

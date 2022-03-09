@@ -10,6 +10,11 @@ export interface MenuItemProps {
     isFullWidth: boolean;
 }
 
+interface genreSelectedProps {
+    name: string;
+    id: string;
+}
+
 const useGenreParams = () => {
     const { data, loading, error } = useGenres();
 
@@ -18,7 +23,7 @@ const useGenreParams = () => {
     const temp = pathname.split('/')[1] as 'tv' | 'movies' | 'home';
     const type: 'tv' | 'movies' | 'home' = temp === 'tv' || temp === 'movies' ? temp : 'home';
     const { genre } = useParams() as { genre: string };
-    const [genreSelected, setGenreSelected] = useState<any>();
+    const [genreSelected, setGenreSelected] = useState<genreSelectedProps>();
 
     const customCategory = { home: [{ name: 'Top Trending', id: '000000' }] };
     const customData = { ...data?.Genres, ...customCategory };
