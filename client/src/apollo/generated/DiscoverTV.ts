@@ -21,6 +21,8 @@ export interface DiscoverTV_DiscoverTV_results {
 
 export interface DiscoverTV_DiscoverTV {
   __typename: "DiscoverTV";
+  page: number;
+  total_pages: number;
   results: DiscoverTV_DiscoverTV_results[];
 }
 
@@ -29,5 +31,6 @@ export interface DiscoverTV {
 }
 
 export interface DiscoverTVVariables {
+  page?: number | null;
   withGenres?: string | null;
 }

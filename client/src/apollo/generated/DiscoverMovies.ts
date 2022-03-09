@@ -24,6 +24,8 @@ export interface DiscoverMovies_DiscoverMovies_results {
 
 export interface DiscoverMovies_DiscoverMovies {
   __typename: "DiscoverMovie";
+  page: number;
+  total_pages: number;
   results: DiscoverMovies_DiscoverMovies_results[];
 }
 
@@ -32,6 +34,7 @@ export interface DiscoverMovies {
 }
 
 export interface DiscoverMoviesVariables {
+  page?: number | null;
   withGenres?: string | null;
   sortBy?: DiscoverMovieSortBy | null;
   voteCountGte?: number | null;

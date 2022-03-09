@@ -36,8 +36,10 @@ export const GET_GENRES = gql`
 `;
 
 export const GET_MOVIES_BY_GENRE = gql`
-    query DiscoverMovies($withGenres: String, $sortBy: DiscoverMovieSortBy, $voteCountGte: Int, $voteAverageGte: Int) {
-        DiscoverMovies(with_genres: $withGenres, sort_by: $sortBy, vote_countGte: $voteCountGte, vote_averageGte: $voteAverageGte) {
+    query DiscoverMovies($page: Int, $withGenres: String, $sortBy: DiscoverMovieSortBy, $voteCountGte: Int, $voteAverageGte: Int) {
+        DiscoverMovies(page: $page, with_genres: $withGenres, sort_by: $sortBy, vote_countGte: $voteCountGte, vote_averageGte: $voteAverageGte) {
+            page
+            total_pages
             results {
                 poster_path
                 id
@@ -54,8 +56,10 @@ export const GET_MOVIES_BY_GENRE = gql`
 `;
 
 export const GET_TV_BY_GENRE = gql`
-    query DiscoverTV($withGenres: String) {
-        DiscoverTV(with_genres: $withGenres) {
+    query DiscoverTV($page: Int, $withGenres: String) {
+        DiscoverTV(page: $page, with_genres: $withGenres) {
+            page
+            total_pages
             results {
                 id
                 name
