@@ -1,10 +1,12 @@
 import { Box, Flex, Heading, Skeleton } from '@chakra-ui/react';
+import { IoIosArrowForward } from 'react-icons/io';
 import SwiperCore, { Navigation, Pagination } from 'swiper';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { MediaCard } from '../';
 import { SearchVideos_SearchVideos_results } from '../../../apollo/generated/SearchVideos';
 import 'swiper/swiper-bundle.min.css';
 import 'swiper/swiper.min.css';
+import { useNavigate } from 'react-router-dom';
 
 interface MediaListProps {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -14,11 +16,13 @@ interface MediaListProps {
     title?: string;
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     lastElementRef?: any;
+    navigateTo?: string;
 }
 
 SwiperCore.use([Navigation, Pagination]);
 
-const MediaList: React.FC<MediaListProps> = ({ medias, loading, horizontal = false, title, lastElementRef }) => {
+const MediaList: React.FC<MediaListProps> = ({ medias, loading, horizontal = false, title, lastElementRef, navigateTo }) => {
+    const navigate = useNavigate();
     const childrenSwiper = loading ? (
         Array(36)
             .fill(0)
@@ -93,7 +97,10 @@ const MediaList: React.FC<MediaListProps> = ({ medias, loading, horizontal = fal
         <>
             {title && (
                 <Box py={2.5}>
-                    <Heading size={'sm'}>{title}</Heading>
+                    <Heading size={'sm'} display={'flex'} onClick={() => (navigateTo ? navigate(navigateTo) : {})} cursor={'pointer'}>
+                        {title}
+                        {navigateTo && <IoIosArrowForward style={{ marginLeft: '5px', marginTop: 'auto' }} />}
+                    </Heading>
                 </Box>
             )}
             {horizontal ? (

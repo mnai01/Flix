@@ -6,7 +6,7 @@ import { DiscoverTV, DiscoverTV_DiscoverTV, DiscoverTVVariables } from '../apoll
 import { GetTrending, GetTrending_GetTrending, GetTrendingVariables } from '../apollo/generated/GetTrending';
 import { GET_MOVIES_BY_GENRE, GET_TRENDING, GET_TV_BY_GENRE } from '../apollo/queries';
 import { MediaList, MediaListHeader } from '../components/Media';
-import useGenreParams from '../utils/hooks/useGenreParams';
+import { default as useGenreParams } from '../utils/hooks/useGenreParams';
 import useInfiniteScroll from '../utils/hooks/useInfiniteScroll';
 
 interface PageObject {
@@ -33,7 +33,6 @@ const CatagoryMediaPage = () => {
             trendingMedia({ variables: { page: 1 } });
             setPageObj({ page: 1, totalPages: 1 });
         }
-
         return () => {
             setDiscover({});
         };
@@ -96,7 +95,7 @@ const CatagoryMediaPage = () => {
 
     // pageObj.page !== pageObj.totalPages checks to see if there are more pages, if not return nothing in the callback function
     // eslint-disable-next-line @typescript-eslint/no-empty-function
-    const [lastElementRef] = useInfiniteScroll(pageObj.page !== pageObj.totalPages ? fetchItems : () => {}, loadingMovies || loadingTV);
+    const [lastElementRef] = useInfiniteScroll(pageObj.page !== pageObj.totalPages ? fetchItems : () => {}, loadingMovies || loadingTV || loadingTrending);
 
     return (
         // An initial setting on flex items is min-width: auto. This means that a flex item, by default, cannot be smaller than the size of its content.

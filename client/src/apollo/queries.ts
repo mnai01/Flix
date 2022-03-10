@@ -56,8 +56,8 @@ export const GET_MOVIES_BY_GENRE = gql`
 `;
 
 export const GET_TV_BY_GENRE = gql`
-    query DiscoverTV($page: Int, $withGenres: String) {
-        DiscoverTV(page: $page, with_genres: $withGenres) {
+    query DiscoverTV($page: Int, $withGenres: String, $sortBy: DiscoverTVSortBy, $voteCountGte: Int, $voteAverageGte: Int) {
+        DiscoverTV(page: $page, with_genres: $withGenres, sort_by: $sortBy, vote_countGte: $voteCountGte, vote_averageGte: $voteAverageGte) {
             page
             total_pages
             results {
