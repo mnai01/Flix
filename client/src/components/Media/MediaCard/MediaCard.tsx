@@ -1,5 +1,5 @@
 import { Box, Image, Skeleton } from '@chakra-ui/react';
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { SearchVideos_SearchVideos_results } from '../../../apollo/generated/SearchVideos';
 
@@ -36,4 +36,4 @@ const MediaCard: React.FC<MediaProps> = ({ media }) => {
     );
 };
 
-export default MediaCard;
+export default React.memo(MediaCard);

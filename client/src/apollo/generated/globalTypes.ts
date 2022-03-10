@@ -282,6 +282,18 @@ export enum DiscoverMovieSortBy {
   vote_countDesc = "vote_countDesc",
 }
 
+/**
+ * Sort by TV
+ */
+export enum DiscoverTVSortBy {
+  popularityAsc = "popularityAsc",
+  popularityDesc = "popularityDesc",
+  vote_averageAsc = "vote_averageAsc",
+  vote_averageDesc = "vote_averageDesc",
+  vote_countAsc = "vote_countAsc",
+  vote_countDesc = "vote_countDesc",
+}
+
 //==============================================================
 // END Enums and Input Objects
 //==============================================================

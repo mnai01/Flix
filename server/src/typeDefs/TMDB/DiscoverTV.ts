@@ -7,11 +7,14 @@ export enum DiscoverTVSortBy {
     popularityDesc = 'popularity.desc',
     vote_averageAsc = 'vote_average.asc',
     vote_averageDesc = 'vote_average.desc',
+    vote_countAsc = 'vote_count.asc',
+    vote_countDesc = 'vote_count.desc',
 }
 registerEnumType(DiscoverTVSortBy, {
     name: 'DiscoverTVSortBy', // this one is mandatory
-    description: 'Sort by', // this one is optional
+    description: 'Sort by TV', // this one is optional
 });
+
 @ArgsType()
 export class DiscoverTVParams {
     @Field(() => DiscoverTVSortBy, { nullable: true })
@@ -26,6 +29,10 @@ export class DiscoverTVParams {
     'with_status': string[] = ['2', '5'];
     @Field(() => [String], { nullable: true })
     'with_original_language': string = 'en';
+    @Field(() => Int, { nullable: true })
+    'vote_countGte': number;
+    @Field(() => Int, { nullable: true })
+    'vote_averageGte': number;
 }
 @ObjectType()
 export class DiscoverTV {

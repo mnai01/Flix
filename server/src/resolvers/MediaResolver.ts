@@ -85,7 +85,7 @@ export class MediaResolver {
     @UseMiddleware(isAuthContext)
     async DiscoverTV(
         @Args()
-        { sort_by, page, with_genres, watch_region, with_status, with_original_language }: DiscoverTVParams,
+        { sort_by, page, with_genres, watch_region, with_status, with_original_language, vote_countGte, vote_averageGte }: DiscoverTVParams,
     ) {
         const test = await axios(`https://api.themoviedb.org/3/discover/tv?api_key=${process.env.API_KEY_TMDB}`, {
             params: {
@@ -95,6 +95,8 @@ export class MediaResolver {
                 watch_region,
                 with_status,
                 with_original_language,
+                'vote_count.gte': vote_countGte,
+                'vote_average.gte': vote_averageGte,
             },
         });
         return test.data;

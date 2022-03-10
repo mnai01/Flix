@@ -411,6 +411,30 @@
                 "defaultValue": "[\"en\"]",
                 "isDeprecated": false,
                 "deprecationReason": null
+              },
+              {
+                "name": "vote_countGte",
+                "description": null,
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Int",
+                  "ofType": null
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              },
+              {
+                "name": "vote_averageGte",
+                "description": null,
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Int",
+                  "ofType": null
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
               }
             ],
             "type": {
@@ -3148,7 +3172,7 @@
       {
         "kind": "ENUM",
         "name": "DiscoverTVSortBy",
-        "description": "Sort by",
+        "description": "Sort by TV",
         "specifiedByUrl": null,
         "fields": null,
         "inputFields": null,
@@ -3174,6 +3198,18 @@
           },
           {
             "name": "vote_averageDesc",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "vote_countAsc",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "vote_countDesc",
             "description": null,
             "isDeprecated": false,
             "deprecationReason": null
