@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
+import { Genres_Genres_movies } from '../../apollo/generated/Genres';
 import { useGenres } from '../../components/Providers/GenreProvider';
 import { uncapitalize } from '../helper/FirstCharacterHelper';
 
@@ -15,8 +16,8 @@ interface genreSelectedProps {
     id: string;
 }
 
-const useGenreParams = () => {
-    const { data, loading, error } = useGenres();
+export const useGenreParams = () => {
+    const { data: genreApiData, error, loading } = useGenres();
 
     const navigate = useNavigate();
     const { pathname } = useLocation();
@@ -25,23 +26,25 @@ const useGenreParams = () => {
     const { genre } = useParams() as { genre: string };
     const [genreSelected, setGenreSelected] = useState<genreSelectedProps>();
 
-    const customCategory = { home: [{ name: 'Top Trending', id: '000000' }] };
-    const customData = { ...data?.Genres, ...customCategory };
+    // If you dont want custom home genres switch { home: [{ __typename: 'Genre', name: 'Top Trending', id: '000000' }] } to { home: undefined }] }
+    const customGenres: { home?: Array<Genres_Genres_movies> } = { home: [{ __typename: 'Genre', name: 'Top Trending', id: '000000' }] };
+
+    const data = customGenres.home !== undefined ? { ...genreApiData?.Genres, ...customGenres } : { ...genreApiData?.Genres };
 
     useEffect(() => {
-        if (genre && !loading && type && customData[type]?.find((i) => i.name === genre.replace(/\b\w/g, (c) => c.toUpperCase()))) {
-            setGenreSelected(customData[type]?.find((i) => i.name === genre.replace(/\b\w/g, (c) => c.toUpperCase())));
+        if (genre && !loading && type && data[type]?.find((i) => i.name === genre.replace(/\b\w/g, (c) => c.toUpperCase()))) {
+            setGenreSelected(data[type]?.find((i) => i.name === genre.replace(/\b\w/g, (c) => c.toUpperCase())));
         }
-        if (genre && !loading && type && !customData[type]?.find((i) => i.name === genre.replace(/\b\w/g, (c) => c.toUpperCase()))) {
+        if (genre && !loading && type && !data[type]?.find((i) => i.name === genre.replace(/\b\w/g, (c) => c.toUpperCase()))) {
             navigate('/NotFound');
         }
-    }, [genre, loading, data, type]);
+    }, [genre, loading, genreApiData, type]);
 
-    const parseGenreData: MenuItemProps[] | undefined = customData[type]?.map((i: any) => {
+    const parseGenreButtonData: MenuItemProps[] | undefined = data[type]?.map((i: any) => {
         return { path: `/${type}/category/${uncapitalize(i.name)}`, label: i.name, isFullWidth: true };
     });
 
-    return { genre: genreSelected, loading, error, data: parseGenreData, type };
+    return { genre: genreSelected, loading, error, data: parseGenreButtonData, type };
 };
 
 export default useGenreParams;
