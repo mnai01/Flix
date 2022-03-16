@@ -26,10 +26,10 @@ const TVsPage: React.FC = () => {
     return (
         <Flex direction={'column'} width={'100%'} height={'100%'} my={50}>
             <Box my={2}>
-                <MediaList medias={data?.DiscoverTV?.results} loading={loading} horizontal title={'Top Trending'} />
+                <MediaList medias={data?.Media?.results} loading={loading} horizontal title={'Top Trending'} />
             </Box>
             <Box my={2}>
-                <MediaList medias={bestByRating?.DiscoverTV.results} loading={loadingByRating} horizontal title={'Top Rated Movies'} />
+                <MediaList medias={bestByRating?.Media.results} loading={loadingByRating} horizontal title={'Top Rated Movies'} />
             </Box>
         </Flex>
     );

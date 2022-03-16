@@ -37,3 +37,52 @@
         ) : (
             <h1>No result found</h1>
         );
+
+
+
+
+
+
+
+
+
+
+useQuery method with custom caching
+
+    const {
+        data,
+        loading: testLoading,
+        error,
+        fetchMore,
+        refetch,
+        networkStatus,
+    } = useQuery(GET_MOVIES_BY_GENRE, {
+        fetchPolicy: 'network-only',
+        nextFetchPolicy: 'cache-first',
+        variables: { ...CustomVar, page: pageObj.page },
+        notifyOnNetworkStatusChange: true,
+    });
+
+    useEffect(() => {
+        refetch();
+        setPageObj({ page: 1, totalPages: 1 });
+        console.log('refetching');
+    }, [CustomVar.withGenres]);
+
+    // const [discover, setDiscover] = useState<any>(testData);
+    // const { data, loading: customLoading, error, fetchMore } = useCustomLazyQuery(CustomQuery, CustomVar);
+
+    useEffect(() => fetchItems(), [genre]);
+
+    const fetchItems = () => {
+        setPageObj((prev: PageObject) => {
+            return {
+                page: prev.page + 1,
+                totalPages: data ? data.Media.total_pages : 1,
+            };
+        });
+        console.log({ variables: { ...CustomVar, page: pageObj.page } });
+        fetchMore({ variables: { ...CustomVar, page: pageObj.page } });
+
+ 
+    };
