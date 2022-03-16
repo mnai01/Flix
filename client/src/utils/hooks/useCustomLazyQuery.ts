@@ -2,11 +2,10 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 
-import { useLazyQuery } from '@apollo/client';
-import { useState } from 'react';
-import { DiscoverMovies, DiscoverMovies_DiscoverMovies, DiscoverMoviesVariables } from '../../apollo/generated/DiscoverMovies';
-import { DiscoverTV, DiscoverTV_DiscoverTV, DiscoverTVVariables } from '../../apollo/generated/DiscoverTV';
-import { GET_MOVIES_BY_GENRE, GET_TV_BY_GENRE } from '../../apollo/queries';
+import { useLazyQuery, useQuery } from '@apollo/client';
+import { useEffect, useState } from 'react';
+import useGenreParams from './useGenreParams';
+import useInfiniteScroll from './useInfiniteScroll';
 
 interface PageObject {
     page: number;
@@ -14,51 +13,47 @@ interface PageObject {
 }
 
 // NOT WORKING
-export const useQueryMutation = () => {
-    // const { genre, type } = useGenreParams();
-    const [discover, setDiscover] = useState<any>();
-    const [pageObj, setPageObj] = useState<PageObject>({ page: 1, totalPages: 4 });
+export const useCustomLazyQuery = (query: any, variables: any, dependecies: any = []) => {
+    const { genre, type, loading: loadingGenre } = useGenreParams();
+    const [pageObj, setPageObj] = useState<PageObject>({ page: 1, totalPages: 0 });
+    const [discover, setDiscover] = useState<any>(undefined);
 
-    const [discoverMovies, { data, loading: loadingMovies, error: errorMovies }] = useLazyQuery<DiscoverMovies, DiscoverMoviesVariables>(GET_MOVIES_BY_GENRE, {
-        fetchPolicy: 'cache-first',
-        onCompleted: (data: DiscoverMovies) => {
-            setDiscover((prevState: DiscoverMovies_DiscoverMovies) => {
-                return prevState?.page >= 1 ? { ...prevState, results: [...prevState.results, ...data.DiscoverMovies.results] } : { ...data.DiscoverMovies };
+    // Modulized query that uses media data (specifically for discoverTV and discoverMovie
+    // api which has an alias of Media
+    const [lazy, { data, loading, error }] = useLazyQuery(query, {
+        fetchPolicy: 'no-cache',
+        onCompleted: (data) => {
+            setDiscover((prevState: any) => {
+                return prevState?.page >= 1 ? { ...prevState, results: [...prevState.results, ...data.Media.results] } : { ...data.Media };
             });
-
             setPageObj((prev: PageObject) => {
                 return {
                     page: prev.page + 1,
-                    totalPages: data.DiscoverMovies.total_pages,
+                    totalPages: data && data?.Media ? data.Media?.total_pages : 1,
                 };
             });
         },
     });
 
-    const [discoverTV, { loading: loadingTV }] = useLazyQuery<DiscoverTV, DiscoverTVVariables>(GET_TV_BY_GENRE, {
-        fetchPolicy: 'cache-first',
-        onCompleted: (data: DiscoverTV) => {
-            setDiscover((prevState: DiscoverTV_DiscoverTV) => {
-                return prevState?.page >= 1 ? { ...prevState, results: [...prevState.results, ...data.DiscoverTV.results] } : { ...data.DiscoverTV };
-            });
-            setPageObj((prev: PageObject) => {
-                return {
-                    page: prev.page + 1,
-                    totalPages: data.DiscoverTV.total_pages,
-                };
-            });
-        },
-    });
+    useEffect(() => {
+        lazy({ variables: { ...variables, page: 1 } });
+        setPageObj({ page: 1, totalPages: 1 });
+        return () => {
+            setDiscover({});
+        };
+    }, [...dependecies, genre, type, loadingGenre]);
+
+    const fetchItems = () => {
+        lazy({ variables: { ...variables, page: pageObj.page } });
+    };
+
+    // eslint-disable-next-line @typescript-eslint/no-empty-function
+    const [lastElementRef] = useInfiniteScroll(pageObj.page !== pageObj.totalPages ? fetchItems : () => {}, loading);
+
     return {
-        query: {
-            discoverMovies: {
-                discoverMoviesFunc: discoverMovies,
-                Data: data,
-                Loading: loadingMovies,
-                Error: errorMovies,
-            },
-        },
-        pageDetails: { page: pageObj.page, totalPages: pageObj.totalPages },
-        loading: loadingTV || loadingMovies,
+        data: discover,
+        loading,
+        error,
+        lastElementRef,
     };
 };
