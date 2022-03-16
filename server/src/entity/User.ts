@@ -1,4 +1,4 @@
-import { BaseEntity, Column, CreateDateColumn, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+import { BaseEntity, Column, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 import { Field, Int, ObjectType } from 'type-graphql';
 
 // BaseEntity gives us more functionality like User.save
@@ -38,14 +38,21 @@ export class WatchedMovies extends BaseEntity {
     user: User;
 
     // it can infer string but not number so we need to specify
-    @Column('text')
     @Field()
+    @Column('text')
     tmdb: string;
 
     @Field()
     @Column('text')
     type: string;
 
-    @CreateDateColumn()
+    @Field()
+    @Column('text')
+    poster_path: string;
+
+    @Field()
+    @Column({
+        default: () => 'NOW()',
+    })
     created_at: Date;
 }
