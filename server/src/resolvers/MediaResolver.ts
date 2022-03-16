@@ -1,4 +1,4 @@
-import { Args, Query, Resolver, UseMiddleware } from 'type-graphql';
+import { Args, Ctx, Query, Resolver, UseMiddleware } from 'type-graphql';
 import axios from 'axios';
 import { GenreResult } from '../typeDefs/TMDB/Genres';
 import { DiscoverMovie, DiscoverMovieParams } from '../typeDefs/TMDB/DiscoverMovie';
@@ -11,6 +11,8 @@ import { TVByTMDB, TVByTMDBParams } from '../typeDefs/TMDB/TVByTMDB';
 import { isAuthContext } from '../middleware/isAuthContext';
 import { SeasonByTMDB, SeasonByTMDBParams } from '../typeDefs/TMDB/SeasonByTMDB';
 import { TrendingParams, Trending, TrendingResults } from '../typeDefs/TMDB/Trending';
+import { MyContext } from '../typeDefs/MyContext';
+import { WatchedMovies } from '../entity/User';
 // import { TopRatedMovies, TopRatedMoviesParams } from '../typeDefs/TMDB/TopRatedMovies';
 // import { MovieListResultObject } from '../typeDefs/TMDB/Reusable/MovieListResultObject';
 // import { PopularMovies, PopularMoviesParams } from '../typeDefs/TMDB/PopularMovies';
@@ -223,39 +225,48 @@ export class MediaResolver {
         return { ...data, results: [...movies, ...tv] };
     }
 
-    //     @Query(() => TopRatedMovies)
-    //     @UseMiddleware(isAuthContext)
-    //     async TopRatedMovies(
-    //         @Args()
-    //         { page }: TopRatedMoviesParams,
-    //     ) {
-    //         const { data } = await axios(`https://api.themoviedb.org/3/movie/top_rated?api_key=${process.env.API_KEY_TMDB}`, {
-    //             params: {
-    //                 region: 'US',
-    //                 page,
-    //             },
-    //         });
-    //         return {
-    //             ...data,
-    //             results: data.results.filter((i: MovieListResultObject) => i.adult !== true && i.poster_path !== null && i.backdrop_path !== null),
-    //         };
-    //     }
-
-    //     @Query(() => PopularMovies)
-    //     @UseMiddleware(isAuthContext)
-    //     async PopularMovies(
-    //         @Args()
-    //         { page }: PopularMoviesParams,
-    //     ) {
-    //         const { data } = await axios(`https://api.themoviedb.org/3/movie/popular?api_key=${process.env.API_KEY_TMDB}`, {
-    //             params: {
-    //                 region: 'US',
-    //                 page,
-    //             },
-    //         });
-    //         return {
-    //             ...data,
-    //             results: data.results.filter((i: MovieListResultObject) => i.adult !== true && i.poster_path !== null && i.backdrop_path !== null),
-    //         };
-    //     }
+    @UseMiddleware(isAuthContext)
+    @Query(() => [WatchedMovies])
+    async WatchedMovies(@Ctx() { payload }: MyContext) {
+        const watchedMovies = await WatchedMovies.find({ where: { user: payload?.userId }, order: { created_at: 'DESC' } });
+        // adds without saving
+        // const watched = await WatchedMovies.create({ tmdb, user, type });
+        return watchedMovies;
+    }
 }
+
+//     @Query(() => TopRatedMovies)
+//     @UseMiddleware(isAuthContext)
+//     async TopRatedMovies(
+//         @Args()
+//         { page }: TopRatedMoviesParams,
+//     ) {
+//         const { data } = await axios(`https://api.themoviedb.org/3/movie/top_rated?api_key=${process.env.API_KEY_TMDB}`, {
+//             params: {
+//                 region: 'US',
+//                 page,
+//             },
+//         });
+//         return {
+//             ...data,
+//             results: data.results.filter((i: MovieListResultObject) => i.adult !== true && i.poster_path !== null && i.backdrop_path !== null),
+//         };
+//     }
+
+//     @Query(() => PopularMovies)
+//     @UseMiddleware(isAuthContext)
+//     async PopularMovies(
+//         @Args()
+//         { page }: PopularMoviesParams,
+//     ) {
+//         const { data } = await axios(`https://api.themoviedb.org/3/movie/popular?api_key=${process.env.API_KEY_TMDB}`, {
+//             params: {
+//                 region: 'US',
+//                 page,
+//             },
+//         });
+//         return {
+//             ...data,
+//             results: data.results.filter((i: MovieListResultObject) => i.adult !== true && i.poster_path !== null && i.backdrop_path !== null),
+//         };
+//     }
