@@ -11,6 +11,7 @@ interface SelectedMediaContextProps {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     data: any;
     tmdb?: string;
+    isTV: boolean;
 }
 
 const SelectedMediaContext = createContext<SelectedMediaContextProps | undefined>(undefined);
@@ -42,7 +43,11 @@ const SelectedMediaProvider: React.FC = ({ children }) => {
         skip: !isTV,
     });
 
-    return <SelectedMediaContext.Provider value={{ data: media, loading: movieLoading || tvLoading, tmdb: id }}>{children}</SelectedMediaContext.Provider>;
+    return (
+        <SelectedMediaContext.Provider value={{ data: media, loading: movieLoading || tvLoading, tmdb: id, isTV: isTV }}>
+            {children}
+        </SelectedMediaContext.Provider>
+    );
 };
 
 const useSelectedMedia = (): SelectedMediaContextProps => {

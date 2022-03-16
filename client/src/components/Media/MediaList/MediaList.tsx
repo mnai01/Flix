@@ -1,12 +1,12 @@
 import { Box, Flex, Heading, Skeleton } from '@chakra-ui/react';
 import { IoIosArrowForward } from 'react-icons/io';
+import { useNavigate } from 'react-router-dom';
 import SwiperCore, { Navigation, Pagination } from 'swiper';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { MediaCard } from '../';
 import { SearchVideos_SearchVideos_results } from '../../../apollo/generated/SearchVideos';
 import 'swiper/swiper-bundle.min.css';
 import 'swiper/swiper.min.css';
-import { useNavigate } from 'react-router-dom';
 
 interface MediaListProps {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -21,7 +21,7 @@ interface MediaListProps {
 
 SwiperCore.use([Navigation, Pagination]);
 
-const MediaList: React.FC<MediaListProps> = ({ medias, loading, horizontal = false, title, lastElementRef, navigateTo }) => {
+const MediaList: React.FC<MediaListProps> = ({ medias, loading, horizontal = false, title, navigateTo, lastElementRef }) => {
     const navigate = useNavigate();
     const childrenSwiper = loading ? (
         Array(36)
@@ -47,7 +47,6 @@ const MediaList: React.FC<MediaListProps> = ({ medias, loading, horizontal = fal
         </SwiperSlide>
     );
 
-    // MAYBE TRY TO
     const childrenVertical =
         loading && !medias ? (
             Array(20)
@@ -112,7 +111,7 @@ const MediaList: React.FC<MediaListProps> = ({ medias, loading, horizontal = fal
                     spaceBetween={2}
                     centeredSlides={false}
                     slidesPerView={'auto'}
-                    loop={true}
+                    loop={medias && medias.length <= 9 ? false : true}
                     loopedSlides={0}
                     pagination={false}
                     initialSlide={0}

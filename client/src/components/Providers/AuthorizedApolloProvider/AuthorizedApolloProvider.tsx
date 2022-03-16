@@ -22,7 +22,31 @@ const AuthorizedApolloProvider: React.FC = ({ children }) => {
 
     const apolloClient = new ApolloClient({
         link: concat(authMiddleware, link),
-        cache: new InMemoryCache(),
+        cache: new InMemoryCache({
+            // Caching No Bueno
+            // typePolicies: {
+            //     Query: {
+            //         fields: {
+            //             DiscoverMovies: {
+            //                 read: (existing) => {
+            //                     return existing;
+            //                 },
+            //                 merge: (existing, incoming) => {
+            //                     return existing ? { ...incoming, results: [...existing.results, ...incoming.results] } : incoming;
+            //                 },
+            //             },
+            //             DiscoverTV: {
+            //                 read: (existing) => {
+            //                     return existing;
+            //                 },
+            //                 merge: (existing, incoming) => {
+            //                     return existing ? { ...incoming, results: [...existing.results, ...incoming.results] } : incoming;
+            //                 },
+            //             },
+            //         },
+            //     },
+            // },
+        }),
     });
 
     return <ApolloProvider client={apolloClient}>{children}</ApolloProvider>;

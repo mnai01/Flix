@@ -1,0 +1,21 @@
+custom merge for DiscoverMovies media object (does not follow aliases)
+
+ const apolloClient = new ApolloClient({
+        link: concat(authMiddleware, link),
+        cache: new InMemoryCache({
+            typePolicies: {
+                Query: {
+                    fields: {
+                        DiscoverMovies: {
+                            read: (existing) => {
+                                return existing;
+                            },
+                            merge: (existing, incoming) => {
+                                return existing ? { ...incoming, results: [...existing.results, ...incoming.results] } : incoming;
+                            },
+                        },
+                    },
+                },
+            },
+        }),
+    });

@@ -25,10 +25,10 @@ const MoviesPage: React.FC = () => {
     return (
         <Flex direction={'column'} width={'100%'} height={'100%'} my={50}>
             <Box my={2}>
-                <MediaList medias={data?.DiscoverMovies?.results} loading={loading} horizontal title={'Top Trending'} navigateTo={'/movies/category/top'} />
+                <MediaList medias={data?.Media?.results} loading={loading} horizontal title={'Top Trending'} navigateTo={'/movies/category/top'} />
             </Box>
             <Box my={2}>
-                <MediaList medias={bestByRating?.DiscoverMovies.results} loading={loadingByRating} horizontal title={'Top Rated Movies'} />
+                <MediaList medias={bestByRating?.Media.results} loading={loadingByRating} horizontal title={'Top Rated Movies'} />
             </Box>
         </Flex>
     );
