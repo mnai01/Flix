@@ -37,7 +37,7 @@ export const GET_GENRES = gql`
 
 export const GET_MOVIES_BY_GENRE = gql`
     query DiscoverMovies($page: Int, $withGenres: String, $sortBy: DiscoverMovieSortBy, $voteCountGte: Int, $voteAverageGte: Int) {
-        DiscoverMovies(page: $page, with_genres: $withGenres, sort_by: $sortBy, vote_countGte: $voteCountGte, vote_averageGte: $voteAverageGte) {
+        Media: DiscoverMovies(page: $page, with_genres: $withGenres, sort_by: $sortBy, vote_countGte: $voteCountGte, vote_averageGte: $voteAverageGte) {
             page
             total_pages
             results {
@@ -57,7 +57,7 @@ export const GET_MOVIES_BY_GENRE = gql`
 
 export const GET_TV_BY_GENRE = gql`
     query DiscoverTV($page: Int, $withGenres: String, $sortBy: DiscoverTVSortBy, $voteCountGte: Int, $voteAverageGte: Int) {
-        DiscoverTV(page: $page, with_genres: $withGenres, sort_by: $sortBy, vote_countGte: $voteCountGte, vote_averageGte: $voteAverageGte) {
+        Media: DiscoverTV(page: $page, with_genres: $withGenres, sort_by: $sortBy, vote_countGte: $voteCountGte, vote_averageGte: $voteAverageGte) {
             page
             total_pages
             results {
@@ -77,6 +77,8 @@ export const GET_TV_BY_GENRE = gql`
 export const GET_MOVIE_FROM_TMDB = gql`
     query FindMovieByTMDB($movieId: String!) {
         FindMovieByTMDB(movie_id: $movieId) {
+            id
+            poster_path
             adult
             overview
             backdrop_path
@@ -116,6 +118,8 @@ export const GET_MOVIE_FROM_TMDB = gql`
 export const GET_TV_FROM_TMDB = gql`
     query FindTVByTMDB($tvShowId: String!) {
         FindTVByTMDB(tv_show_id: $tvShowId) {
+            id
+            poster_path
             overview
             backdrop_path
             created_by {
@@ -203,7 +207,7 @@ export const GET_SEASON_DETAILS = gql`
 
 export const GET_TRENDING = gql`
     query GetTrending($page: Int!) {
-        GetTrending(page: $page) {
+        Media: GetTrending(page: $page) {
             page
             total_pages
             results {
@@ -216,6 +220,18 @@ export const GET_TRENDING = gql`
                 first_air_date
                 poster_path
             }
+        }
+    }
+`;
+
+export const GET_WATCHED_MOVIES = gql`
+    query WatchedMovies {
+        WatchedMovies {
+            uuid: id
+            id: tmdb
+            type
+            created_at
+            poster_path
         }
     }
 `;

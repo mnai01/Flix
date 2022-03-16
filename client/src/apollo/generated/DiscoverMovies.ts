@@ -9,7 +9,7 @@ import { DiscoverMovieSortBy } from "./globalTypes";
 // GraphQL query operation: DiscoverMovies
 // ====================================================
 
-export interface DiscoverMovies_DiscoverMovies_results {
+export interface DiscoverMovies_Media_results {
   __typename: "MovieListResultObject";
   poster_path: string | null;
   id: number;
@@ -22,15 +22,15 @@ export interface DiscoverMovies_DiscoverMovies_results {
   release_date: string | null;
 }
 
-export interface DiscoverMovies_DiscoverMovies {
+export interface DiscoverMovies_Media {
   __typename: "DiscoverMovie";
   page: number;
   total_pages: number;
-  results: DiscoverMovies_DiscoverMovies_results[];
+  results: DiscoverMovies_Media_results[];
 }
 
 export interface DiscoverMovies {
-  DiscoverMovies: DiscoverMovies_DiscoverMovies;
+  Media: DiscoverMovies_Media;
 }
 
 export interface DiscoverMoviesVariables {

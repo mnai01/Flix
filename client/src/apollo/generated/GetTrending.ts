@@ -7,7 +7,7 @@
 // GraphQL query operation: GetTrending
 // ====================================================
 
-export interface GetTrending_GetTrending_results {
+export interface GetTrending_Media_results {
   __typename: "TrendingResults";
   id: number;
   media_type: string;
@@ -19,15 +19,15 @@ export interface GetTrending_GetTrending_results {
   poster_path: string | null;
 }
 
-export interface GetTrending_GetTrending {
+export interface GetTrending_Media {
   __typename: "Trending";
   page: number;
   total_pages: number;
-  results: GetTrending_GetTrending_results[];
+  results: GetTrending_Media_results[];
 }
 
 export interface GetTrending {
-  GetTrending: GetTrending_GetTrending;
+  Media: GetTrending_Media;
 }
 
 export interface GetTrendingVariables {

@@ -44,6 +44,8 @@ export interface FindMovieByTMDB_FindMovieByTMDB_similar {
 
 export interface FindMovieByTMDB_FindMovieByTMDB {
   __typename: "FindMovieByTMDB";
+  id: number;
+  poster_path: string | null;
   adult: boolean;
   overview: string;
   backdrop_path: string | null;
