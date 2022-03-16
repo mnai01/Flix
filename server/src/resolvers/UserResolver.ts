@@ -1,5 +1,5 @@
 import { Arg, Ctx, Field, Mutation, ObjectType, Query, Resolver, UseMiddleware, Int } from 'type-graphql';
-import { User } from '../entity/User';
+import { User, WatchedMovies } from '../entity/User';
 import { hash, compare } from 'bcryptjs';
 import { MyContext } from '../typeDefs/MyContext';
 import { createAccessToken, createRefreshToken } from '../helpers/refreshTokens';
@@ -108,6 +108,42 @@ export class UserResolver {
             return true;
         } catch (err) {
             console.log('no work');
+            return false;
+        }
+    }
+
+    @UseMiddleware(isAuthContext)
+    @Mutation(() => Boolean)
+    async addToWatched(@Ctx() { payload }: MyContext, @Arg('tmdb') tmdb: string, @Arg('type') type: string, @Arg('poster_path') poster_path: string) {
+        // Get user
+        const user = await User.findOne({ where: { id: payload?.userId } });
+        // Check if user exists
+        if (!user) {
+            throw new Error('could not find user');
+        }
+
+        // check if token version on user is 0.
+        // This tell us if user is banned
+        if (user.tokenVersion === 0) {
+            throw new Error('You are banned');
+        }
+
+        const watchedMovies = await WatchedMovies.find({ where: { user: payload?.userId }, order: { created_at: 'ASC' } });
+        // adds without saving
+        // const watched = await WatchedMovies.create({ tmdb, user, type });
+        try {
+            if (watchedMovies.find((i) => i.tmdb === tmdb)) {
+                WatchedMovies.update({ tmdb: tmdb }, { created_at: new Date() });
+            } else if (watchedMovies.length >= 9) {
+                watchedMovies.splice(0, 1);
+                WatchedMovies.delete({ id: watchedMovies[0].id });
+            } else {
+                await WatchedMovies.insert({ tmdb, user, type, poster_path });
+            }
+
+            // CAN BE UPDATED TO REMOVE USER AND ONLY PASS IN ID
+            return true;
+        } catch (err) {
             return false;
         }
     }
