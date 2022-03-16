@@ -7,3 +7,9 @@ export const LOGIN = gql`
         }
     }
 `;
+
+export const ADD_WATCHED = gql`
+    mutation AddToWatched($type: String!, $tmdb: String!, $posterPath: String!) {
+        addToWatched(type: $type, tmdb: $tmdb, poster_path: $posterPath)
+    }
+`;

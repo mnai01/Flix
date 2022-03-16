@@ -64,11 +64,12 @@ export interface FindTVByTMDB_FindTVByTMDB_similar {
 
 export interface FindTVByTMDB_FindTVByTMDB {
   __typename: "TVByTMDB";
+  id: number;
+  poster_path: string | null;
   overview: string;
   backdrop_path: string | null;
   created_by: FindTVByTMDB_FindTVByTMDB_created_by[] | null;
   episode_run_time: number[] | null;
-  id: number;
   genres: FindTVByTMDB_FindTVByTMDB_genres[] | null;
   number_of_seasons: number;
   popularity: number;
