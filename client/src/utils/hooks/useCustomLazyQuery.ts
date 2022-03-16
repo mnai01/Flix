@@ -1,10 +1,9 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-unused-vars */
-
 import { useLazyQuery, useQuery } from '@apollo/client';
 import { useEffect, useState } from 'react';
-import useGenreParams from './useGenreParams';
+import { useGenreParams } from './useGenreParams';
 import useInfiniteScroll from './useInfiniteScroll';
 
 interface PageObject {
