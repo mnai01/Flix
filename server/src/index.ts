@@ -38,7 +38,10 @@ import { MediaResolver } from './resolvers/MediaResolver';
     // This allows you to react to Apollo Server startup failures by crashing your process instead of starting to serve traffic.
     // Adding graphql to express server
     await apolloServer.start();
-    apolloServer.applyMiddleware({ app, cors: { credentials: true, origin: ['https://studio.apollographql.com', 'http://localhost:3000'] } });
+    apolloServer.applyMiddleware({
+        app,
+        cors: { credentials: true, origin: ['https://studio.apollographql.com', 'http://localhost:3000', 'http://localhost:3050'] },
+    });
 
     app.listen(4000, () => {
         console.log('express server started');

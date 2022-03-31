@@ -5,9 +5,10 @@ import { useNavigate } from 'react-router-dom';
 interface MediaProps {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     media: any;
+    width?: number;
 }
 
-const MediaCard: React.FC<MediaProps> = ({ media }) => {
+const MediaCard: React.FC<MediaProps> = ({ media, width }) => {
     const { id, poster_path, title, type } = media;
     const navigate = useNavigate();
     const typeOfMedia = type ? type : title ? 'movie' : 'tv';
@@ -16,7 +17,7 @@ const MediaCard: React.FC<MediaProps> = ({ media }) => {
     return (
         <>
             {media && (
-                <Box onClick={() => navigate(`/${typeOfMedia}/${id}`)} height="278px" width="100%">
+                <Box onClick={() => navigate(`/${typeOfMedia}/${id}`)} height="278px" width={width ? `${width}px` : '100%'}>
                     <Image
                         as="img"
                         height={'100%'}

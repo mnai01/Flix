@@ -23,29 +23,30 @@ SwiperCore.use([Navigation, Pagination]);
 
 const MediaList: React.FC<MediaListProps> = ({ medias, loading, horizontal = false, title, navigateTo, lastElementRef }) => {
     const navigate = useNavigate();
-    const childrenSwiper = loading ? (
-        Array(36)
-            .fill(0)
-            .map((_, i) => (
-                <SwiperSlide key={i} style={{ width: 'auto' }}>
+    const childrenSwiper =
+        loading && !medias ? (
+            Array(36)
+                .fill(0)
+                .map((_, i) => (
+                    <SwiperSlide key={i} style={{ width: 'auto' }}>
+                        <Box pr={3}>
+                            <Skeleton width={'185px'} height="278px" />
+                        </Box>
+                    </SwiperSlide>
+                ))
+        ) : medias && medias.length > 0 ? (
+            medias.map((i: SearchVideos_SearchVideos_results) => (
+                <SwiperSlide key={i.id} style={{ width: 'auto' }}>
                     <Box pr={3}>
-                        <Skeleton width={'100%'} height="278px" />
+                        <MediaCard media={i} width={185} />
                     </Box>
                 </SwiperSlide>
             ))
-    ) : medias && medias.length > 0 ? (
-        medias.map((i: SearchVideos_SearchVideos_results) => (
-            <SwiperSlide key={i.id} style={{ width: 'auto' }}>
-                <Box pr={3}>
-                    <MediaCard media={i} />
-                </Box>
+        ) : (
+            <SwiperSlide key={1}>
+                <h1>No result found</h1>
             </SwiperSlide>
-        ))
-    ) : (
-        <SwiperSlide key={1}>
-            <h1>No result found</h1>
-        </SwiperSlide>
-    );
+        );
 
     const childrenVertical =
         loading && !medias ? (
