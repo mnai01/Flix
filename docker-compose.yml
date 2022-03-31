@@ -1,0 +1,70 @@
+version: '3.6'
+
+services:
+    client:
+        stdin_open: true
+        build:
+            context: ./client
+        env_file:
+            - ./client/.env
+        volumes:
+            - /app/node_modules
+            - ./client:/app
+        mem_limit: 512m
+        mem_reservation: 256M
+        cpus: 0.5
+
+    api:
+        build:
+            context: ./server
+        environment:
+            - GO_ENV=docker-dev
+        env_file:
+            - ./server/.env
+        depends_on:
+            - db
+        ports:
+            - 4000:4000
+        volumes:
+            - /app/node_modules
+            - ./server:/app
+        mem_limit: 256m
+        mem_reservation: 100M
+
+    nginx:
+        depends_on:
+            - api
+            - client
+        restart: always
+        build:
+            dockerfile: Dockerfile
+            context: ./nginx
+        ports:
+            - '3050:80'
+        mem_limit: 156m
+
+    db:
+        image: postgres:latest
+        env_file:
+            - ./postgres.env
+        ports:
+            - 5432:5432
+        volumes:
+            - postgres_data:/var/lib/postgresql/data
+        mem_limit: 100m
+
+    # pgadmin:
+    #     image: dpage/pgadmin4
+    #     container_name: pgadmin4_container
+    #     restart: always
+    #     ports:
+    #         - '5050:80'
+    #     environment:
+    #         PGADMIN_DEFAULT_EMAIL: EMAIL
+    #         PGADMIN_DEFAULT_PASSWORD: PASSWORD
+    #     volumes:
+    #         - pgadmin-data:/var/lib/pgadmin
+
+volumes:
+    postgres_data:
+    # pgadmin-data:
