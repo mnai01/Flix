@@ -30,7 +30,7 @@ const MediaContent: React.FC = () => {
     //     }
     // }, [location]);
     return (
-        <Box height={'60%'} width={'100%'}>
+        <Box height={'60vh'} width={'100%'}>
             {isTV ? (
                 isVideo || isTrailer ? (
                     isVideo ? (
