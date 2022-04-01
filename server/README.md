@@ -20,3 +20,6 @@ Steps to run this project:
 16. split bearer and token
 17. verify token with secret using JWT
 18. if valid return payload to context so function has access to user data without need for db verification
+
+docker build -t server ./
+docker run -it -p 4000:4000 server

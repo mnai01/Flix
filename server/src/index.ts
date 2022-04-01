@@ -12,10 +12,11 @@ import moivesRouter from './routes/movies';
 import { MediaResolver } from './resolvers/MediaResolver';
 
 (async () => {
+    const origins = ['https://studio.apollographql.com', 'http://localhost:3000', 'http://localhost'];
     const app = express();
     // Init Middleware
     // this should happen before any other routes are created
-    app.use(cors({ origin: ['https://studio.apollographql.com', 'http://localhost:3000', 'http://localhost:3050'], credentials: true }));
+    app.use(cors({ origin: [...origins], credentials: true }));
     app.use(cookieParser());
     // It parses incoming requests with JSON payloads and is based on body-parser.
     app.use(express.json());
@@ -40,7 +41,7 @@ import { MediaResolver } from './resolvers/MediaResolver';
     await apolloServer.start();
     apolloServer.applyMiddleware({
         app,
-        cors: { credentials: true, origin: ['https://studio.apollographql.com', 'http://localhost:3000', 'http://localhost:3050'] },
+        cors: { credentials: true, origin: [...origins] },
     });
 
     app.listen(4000, () => {
