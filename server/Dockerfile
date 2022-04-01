@@ -1,15 +1,6 @@
-FROM node:alpine
-
+FROM node:14.14.0-alpine
 WORKDIR /app
-
-COPY package.json ./
-
-COPY package-lock.json ./
-
-COPY ormconfig.json ./
-
-COPY ./ ./
-
+COPY ./package.json ./
 RUN npm i
-
+COPY . .
 CMD ["npm", "run", "start"]
