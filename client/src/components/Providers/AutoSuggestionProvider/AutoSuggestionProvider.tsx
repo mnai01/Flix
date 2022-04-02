@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import { ApolloError, LazyQueryResult, useLazyQuery } from '@apollo/client';
 import { createContext, useContext } from 'react';
 import { SearchVideos, SearchVideosVariables } from '../../../apollo/generated/SearchVideos';

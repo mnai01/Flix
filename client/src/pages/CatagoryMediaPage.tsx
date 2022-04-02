@@ -1,15 +1,9 @@
-import { gql } from '@apollo/client';
 import { Flex } from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
 import { GET_MOVIES_BY_GENRE, GET_TRENDING, GET_TV_BY_GENRE } from '../apollo/queries';
 import { MediaList, MediaListHeader } from '../components/Media';
 import { useCustomLazyQuery } from '../utils/hooks/useCustomLazyQuery';
 import { default as useGenreParams } from '../utils/hooks/useGenreParams';
-
-interface PageObject {
-    page: number;
-    totalPages: number;
-}
 
 const CatagoryMediaPage = () => {
     const { genre, type } = useGenreParams();
@@ -32,8 +26,6 @@ const CatagoryMediaPage = () => {
     // eslint-disable-next-line @typescript-eslint/no-empty-function
 
     const { data, loading, lastElementRef } = useCustomLazyQuery(query?.queryReference, { withGenres: genre?.id }, [query.queryReference, query.variables]);
-
-    console.log({ data });
 
     return (
         // An initial setting on flex items is min-width: auto. This means that a flex item, by default, cannot be smaller than the size of its content.
