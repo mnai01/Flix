@@ -2,11 +2,13 @@ import { useQuery } from '@apollo/client';
 import { Box, Flex } from '@chakra-ui/react';
 import { DiscoverMovies, DiscoverMoviesVariables } from '../apollo/generated/DiscoverMovies';
 import { DiscoverMovieSortBy } from '../apollo/generated/globalTypes';
-import { WatchedMovies } from '../apollo/generated/WatchedMovies';
-import { GET_MOVIES_BY_GENRE, GET_WATCHED_MOVIES } from '../apollo/queries';
+import { GET_MOVIES_BY_GENRE } from '../apollo/queries';
 import { MediaCarousel, MediaList } from '../components/Media';
+import { useWatchedMedia } from '../components/Providers/WatchedMediaProvider';
 
 const HomePage = () => {
+    const { data: watchedMedia, loading: loadingWatched } = useWatchedMedia();
+
     const { data, loading } = useQuery<DiscoverMovies, DiscoverMoviesVariables>(GET_MOVIES_BY_GENRE, {
         fetchPolicy: 'cache-first',
         variables: {
@@ -21,10 +23,6 @@ const HomePage = () => {
             voteCountGte: 10000,
             voteAverageGte: 7,
         },
-    });
-
-    const { data: watchedMedia, loading: loadingWatched } = useQuery<WatchedMovies>(GET_WATCHED_MOVIES, {
-        fetchPolicy: 'network-only',
     });
 
     return (

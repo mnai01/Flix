@@ -5,8 +5,11 @@ import { DiscoverTV, DiscoverTVVariables } from '../apollo/generated/DiscoverTV'
 import { DiscoverTVSortBy } from '../apollo/generated/globalTypes';
 import { GET_TV_BY_GENRE } from '../apollo/queries';
 import { MediaList } from '../components/Media';
+import { useWatchedMedia } from '../components/Providers/WatchedMediaProvider';
 
 const TVsPage: React.FC = () => {
+    const { data: watchedMedia, loading: loadingWatched } = useWatchedMedia();
+
     const { data, loading } = useQuery<DiscoverTV, DiscoverTVVariables>(GET_TV_BY_GENRE, {
         fetchPolicy: 'cache-first',
         variables: {
@@ -30,6 +33,14 @@ const TVsPage: React.FC = () => {
             </Box>
             <Box my={2}>
                 <MediaList medias={bestByRating?.Media.results} loading={loadingByRating} horizontal title={'Top Rated Movies'} />
+            </Box>
+            <Box my={2}>
+                <MediaList
+                    medias={watchedMedia?.WatchedMovies.filter((media: any) => media.type === 'tv')}
+                    loading={loadingWatched}
+                    title={'Recently Watched'}
+                    horizontal
+                />
             </Box>
         </Flex>
     );

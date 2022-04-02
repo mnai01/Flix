@@ -6,10 +6,11 @@ import { Similar, SrcVideo } from '../Reusable';
 interface TvSrcProps {
     data?: FindTVByTMDB;
     loading: boolean;
+    isTV: boolean;
 }
 
 const TvSrc: React.FC = () => {
-    const { data, loading }: TvSrcProps = useSelectedMedia();
+    const { data, loading, isTV }: TvSrcProps = useSelectedMedia();
     const { s, e } = useParams();
 
     return (
@@ -19,6 +20,7 @@ const TvSrc: React.FC = () => {
                 loading={loading}
                 link={`${process.env.REACT_APP_SOURCE}${data?.FindTVByTMDB.external_ids.imdb_id}/${s}-${e}`}
                 imdb={data?.FindTVByTMDB.external_ids.imdb_id}
+                isTV={isTV}
             />
             <Similar medias={data?.FindTVByTMDB.similar.results} loading={loading} horizontal />
         </>
