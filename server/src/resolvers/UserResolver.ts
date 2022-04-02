@@ -103,11 +103,8 @@ export class UserResolver {
 
             // Insert it into DB
             await User.insert({ email, password: hashedPassword });
-            console.log('worked');
-
             return true;
         } catch (err) {
-            console.log('no work');
             return false;
         }
     }

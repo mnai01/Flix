@@ -16,18 +16,18 @@ interface FormSubmitValues {
 const LoginForm: React.FC = () => {
     const toast = useToast();
     const methods = useForm<FormSubmitValues>();
-    const { setAuthHanlder } = useAuth();
+    const { setAuthHandler } = useAuth();
     const navigate = useNavigate();
 
     const [Login, { loading }] = useMutation<Login, LoginVariables>(LOGIN, {
         onCompleted: ({ login }) => {
             if (login.accessToken) {
-                setAuthHanlder({ ok: true, accessToken: login.accessToken });
+                setAuthHandler({ ok: true, accessToken: login.accessToken });
                 navigate('/', { replace: true });
             }
         },
         onError: () => {
-            setAuthHanlder();
+            setAuthHandler({ ok: false, accessToken: '' });
             toast({
                 title: 'Error',
                 description: 'There is an error',
@@ -45,12 +45,12 @@ const LoginForm: React.FC = () => {
     return (
         <form onSubmit={methods.handleSubmit(onSubmit)}>
             <FormProvider {...methods}>
-                <Center w='100%' h='100vh'>
-                    <Box maxW='sm' alignSelf='center'>
-                        <VStack align='flex-start' spacing='12px'>
-                            <ChakraInput registerName={'email'} placeHolder='email' requiredMsg={'Please Enter Email'} />
-                            <ChakraInput registerName={'password'} placeHolder='password' requiredMsg={'Please Enter Password'} />
-                            <Button mt={4} width='sm' type='submit' isLoading={loading}>
+                <Center w="100%" h="100vh">
+                    <Box maxW="sm" alignSelf="center">
+                        <VStack align="flex-start" spacing="12px">
+                            <ChakraInput registerName={'email'} placeHolder="email" requiredMsg={'Please Enter Email'} />
+                            <ChakraInput registerName={'password'} placeHolder="password" requiredMsg={'Please Enter Password'} />
+                            <Button mt={4} width="sm" type="submit" isLoading={loading}>
                                 Log In
                             </Button>
                         </VStack>

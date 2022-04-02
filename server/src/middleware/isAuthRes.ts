@@ -6,9 +6,6 @@ import { NextFunction, Request, Response } from 'express';
 export const isAuthRes = (req: Request, res: Response, next: NextFunction) => {
     const authorization = req.headers['authorization'];
 
-    // Read header Authorization
-    console.log(authorization, 'auth');
-
     if (!authorization) {
         throw new Error('Not Authenticated');
     }
