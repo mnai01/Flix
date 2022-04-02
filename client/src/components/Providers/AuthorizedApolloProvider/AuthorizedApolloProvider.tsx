@@ -49,7 +49,9 @@ const AuthorizedApolloProvider: React.FC = ({ children }) => {
                 },
                 handleError: () => {
                     // Might need full URL here
-                    window.location.href = '/';
+                    // this gets called on login error which is a bug. Maybe a conditional where if refecth error check location
+                    // if location not / then redirect? This can prevent the login accesstoken error
+                    // window.location.href = '/';
                 },
             }),
             authMiddleware,
