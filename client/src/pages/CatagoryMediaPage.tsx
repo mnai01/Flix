@@ -33,8 +33,6 @@ const CatagoryMediaPage = () => {
 
     const { data, loading, lastElementRef } = useCustomLazyQuery(query?.queryReference, { withGenres: genre?.id }, [query.queryReference, query.variables]);
 
-    console.log({ data });
-
     return (
         // An initial setting on flex items is min-width: auto. This means that a flex item, by default, cannot be smaller than the size of its content.
         // Therefore, text-overflow: ellipsis cannot work because a flex item will simply expand, rather than permit an overflow. (Scroll bars will not render either, for the same reason.)
