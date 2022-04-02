@@ -21,5 +21,36 @@ Steps to run this project:
 17. verify token with secret using JWT
 18. if valid return payload to context so function has access to user data without need for db verification
 
+# Required ormconfig.json
+
+```
+{
+    "type": "postgres",
+    "host": "localhost",
+    "port": 5432,
+    "username": "root",
+    "password": "root",
+    "database": "database",
+    "synchronize": true,
+    "logging": false,
+    "entities": ["src/entity/**/*.ts"],
+    "migrations": ["src/migration/**/*.ts"],
+    "subscribers": ["src/subscriber/**/*.ts"],
+    "cli": {
+        "entitiesDir": "src/entity",
+        "migrationsDir": "src/migration",
+        "subscribersDir": "src/subscriber"
+    }
+}
+
+```
+
+#### When running local `npm run dev`
+
+Be sure to add the correct db host in the ormconfig.json
+`"host": "localhost"`
+
+#### When running docker
+
 docker build -t server ./
 docker run -it -p 4000:4000 server
