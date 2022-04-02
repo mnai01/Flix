@@ -27,6 +27,7 @@ const AuthorizedApolloProvider: React.FC = ({ children }) => {
                         return true;
                     }
                     try {
+                        // eslint-disable-next-line @typescript-eslint/no-explicit-any
                         const { exp }: any = jwtDecode(token);
                         if (Date.now() >= exp * 1000) {
                             return false;
@@ -46,9 +47,9 @@ const AuthorizedApolloProvider: React.FC = ({ children }) => {
                 handleFetch: (accessToken) => {
                     setAuthHandler({ ok: !!accessToken, accessToken });
                 },
-                handleError: (err) => {
-                    console.warn('Your refresh token is invalid. Try to relogin');
-                    console.error(err);
+                handleError: () => {
+                    // Might need full URL here
+                    window.location.href = '/';
                 },
             }),
             authMiddleware,
