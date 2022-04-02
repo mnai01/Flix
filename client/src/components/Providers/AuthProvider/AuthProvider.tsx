@@ -7,7 +7,7 @@ interface authContextProps {
     accessToken: string;
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     isAuth: isAuthProps;
-    setAuthHanlder: (data?: fetchReturn) => void;
+    setAuthHandler: (data?: fetchReturn) => void;
 }
 interface fetchReturn {
     ok: boolean;
@@ -22,7 +22,7 @@ interface isAuthProps {
 
 const authContextInitialState: authContextProps = {
     accessToken: '',
-    setAuthHanlder: (data?: fetchReturn) => {},
+    setAuthHandler: (data?: fetchReturn) => {},
     isAuth: { auth: false, loading: true, accessToken: '' },
 };
 
@@ -34,7 +34,7 @@ const AuthProvider: React.FC = ({ children }) => {
     // check is refresh token is auth
     const [isAuth, setAuth] = useState({ auth: false, loading: true, accessToken: '' });
 
-    const setAuthHanlder = (data?: fetchReturn) => {
+    const setAuthHandler = (data?: fetchReturn) => {
         if (data) {
             setAuth({ auth: data.ok, loading: false, accessToken: data.accessToken });
         } else {
@@ -46,14 +46,14 @@ const AuthProvider: React.FC = ({ children }) => {
         // Check auth on page load
         const checkAuth = async () => {
             const data: fetchReturn = await (await fetch('http://localhost:4000/api/auth/refresh_token', { method: 'POST', credentials: 'include' })).json();
-            setAuthHanlder(data);
+            setAuthHandler(data);
         };
         checkAuth().catch((err) => {
-            setAuthHanlder();
+            setAuthHandler();
         });
     }, []);
 
-    return <AuthContext.Provider value={{ accessToken: isAuth.accessToken, isAuth, setAuthHanlder }}>{children}</AuthContext.Provider>;
+    return <AuthContext.Provider value={{ accessToken: isAuth.accessToken, isAuth, setAuthHandler }}>{children}</AuthContext.Provider>;
 };
 
 const useAuth = (): authContextProps => {
