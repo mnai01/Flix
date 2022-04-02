@@ -10,7 +10,7 @@ interface SrcVideoProps {
     loading: boolean;
     link: string;
     imdb?: string | null;
-    isTV?: boolean;
+    isTV: boolean;
 }
 
 const SrcVideo: React.FC<SrcVideoProps> = ({ data, link, imdb, isTV }) => {
