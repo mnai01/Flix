@@ -33,6 +33,9 @@ docker-compose stop
 
 docker-compose rm
 
+_remove images in linux_
+sudo docker rmi -f $(sudo docker images -a -q)
+
 #### Bring up the services again
 
 docker-compose up --build

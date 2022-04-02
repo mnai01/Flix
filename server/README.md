@@ -52,5 +52,9 @@ Be sure to add the correct db host in the ormconfig.json
 
 #### When running docker
 
+Be sure to add the correct db host in the ormconfig.json
+`"host": "host.docker.internal"`
+
 docker build -t server ./
+
 docker run -it -p 4000:4000 server
