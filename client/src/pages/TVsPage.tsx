@@ -36,6 +36,7 @@ const TVsPage: React.FC = () => {
             </Box>
             <Box my={2}>
                 <MediaList
+                    // eslint-disable-next-line @typescript-eslint/no-explicit-any
                     medias={watchedMedia?.WatchedMovies.filter((media: any) => media.type === 'tv')}
                     loading={loadingWatched}
                     title={'Recently Watched'}

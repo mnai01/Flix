@@ -40,6 +40,7 @@ export const useGenreParams = () => {
         }
     }, [genre, loading, genreApiData, type]);
 
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const parseGenreButtonData: MenuItemProps[] | undefined = data[type]?.map((i: any) => {
         return { path: `/${type}/category/${uncapitalize(i.name)}`, label: i.name, isFullWidth: true };
     });
