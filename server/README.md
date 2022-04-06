@@ -1,6 +1,6 @@
-# JWT AUTH
+## Fill in example.env
 
-Steps to run this project:
+### Steps to run this project:
 
 1. start express
 2. create connection with typeorm
@@ -53,7 +53,7 @@ Be sure to add the correct db host in the ormconfig.json
 #### When running docker
 
 Be sure to add the correct db host in the ormconfig.json
-`"host": "host.docker.internal"`
+`"host": "<database_container_name_in_docker_compose>"`
 
 docker build -t server ./
 
