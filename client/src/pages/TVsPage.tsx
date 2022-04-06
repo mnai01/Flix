@@ -32,7 +32,7 @@ const TVsPage: React.FC = () => {
                 <MediaList medias={data?.Media?.results} loading={loading} horizontal title={'Top Trending'} />
             </Box>
             <Box my={2}>
-                <MediaList medias={bestByRating?.Media.results} loading={loadingByRating} horizontal title={'Top Rated Movies'} />
+                <MediaList medias={bestByRating?.Media.results} loading={loadingByRating} horizontal title={'Top Rated Shows'} />
             </Box>
             <Box my={2}>
                 <MediaList
