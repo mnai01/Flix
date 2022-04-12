@@ -6,7 +6,7 @@ interface MediaListHeaderProps {
 
 const MediaListHeader: React.FC<MediaListHeaderProps> = ({ title }) => {
     return (
-        <Flex mx={'6px'} my={'10px'} justify={'space-between'}>
+        <Flex justify={'space-between'} pb={2.5}>
             <Heading variant={'h3'} size={'sm'}>
                 {title ? title : 'Search'}
             </Heading>
