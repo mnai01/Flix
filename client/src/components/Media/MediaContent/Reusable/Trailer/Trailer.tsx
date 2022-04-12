@@ -25,7 +25,7 @@ const Trailer: React.FC<TrailerProps> = ({ trailers }) => {
                     height={'100%'}
                     onLoad={() => setIframeLoading(false)}
                     onError={() => setIframeLoading(true)}
-                    style={{ display: iframeLoading ? 'none' : 'block' }}
+                    style={{ display: iframeLoading ? 'none' : 'block', marginTop: '20px' }}
                 />
             ) : (
                 <Center height={'100%'}>

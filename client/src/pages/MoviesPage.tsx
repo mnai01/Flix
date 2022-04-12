@@ -26,14 +26,14 @@ const MoviesPage: React.FC = () => {
     });
 
     return (
-        <Flex direction={'column'} width={'100%'} height={'100%'} my={50}>
-            <Box my={2}>
+        <Flex direction={'column'} width={'100%'} height={'100%'}>
+            <Box mb={2}>
                 <MediaList medias={data?.Media?.results} loading={loading} title={'Top Trending'} horizontal />
             </Box>
-            <Box my={2}>
+            <Box mb={2}>
                 <MediaList medias={bestByRating?.Media.results} loading={loadingByRating} title={'Top Rated Movies'} horizontal />
             </Box>
-            <Box my={2}>
+            <Box mb={2}>
                 <MediaList
                     // eslint-disable-next-line @typescript-eslint/no-explicit-any
                     medias={watchedMedia?.WatchedMovies.filter((media: any) => media.type === 'movie')}

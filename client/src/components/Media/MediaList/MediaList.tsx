@@ -53,7 +53,7 @@ const MediaList: React.FC<MediaListProps> = ({ medias, loading, horizontal = fal
             Array(20)
                 .fill(0)
                 .map((_, i) => (
-                    <Box p={1.5} key={i} width="185px" height="278px">
+                    <Box pr={1.5} pb={1.5} key={i} width="185px" height="278px">
                         <Skeleton width="100%" height={'100%'} />
                     </Box>
                 ))
@@ -62,14 +62,14 @@ const MediaList: React.FC<MediaListProps> = ({ medias, loading, horizontal = fal
                 // make last item contain a ref so we can tell if we are at the bottom of the list
                 if (medias.length === index + 1 && lastElementRef) {
                     return (
-                        <Box p={1.5} key={i.id} style={{ width: '185px' }} ref={lastElementRef}>
+                        <Box pr={1.5} pb={1.5} key={i.id} style={{ width: '185px' }} ref={lastElementRef}>
                             <MediaCard media={i} />
                         </Box>
                     );
                 }
 
                 return (
-                    <Box p={1.5} key={i.id} style={{ width: '185px' }}>
+                    <Box pr={1.5} pb={1.5} key={i.id} style={{ width: '185px' }}>
                         <MediaCard media={i} />
                     </Box>
                 );
@@ -88,7 +88,7 @@ const MediaList: React.FC<MediaListProps> = ({ medias, loading, horizontal = fal
         Array(20)
             .fill(0)
             .map((_, i) => (
-                <Box p={1.5} key={i} width="185px" height="278px">
+                <Box pr={1.5} pb={1.5} key={i} width="185px" height="278px">
                     <Skeleton width="100%" height={'100%'} />
                 </Box>
             ));
@@ -96,7 +96,7 @@ const MediaList: React.FC<MediaListProps> = ({ medias, loading, horizontal = fal
     return (
         <>
             {title && (
-                <Box py={2.5}>
+                <Box pb={2.5}>
                     <Heading size={'sm'} display={'flex'} onClick={() => (navigateTo ? navigate(navigateTo) : {})} cursor={'pointer'}>
                         {title}
                         {navigateTo && <IoIosArrowForward style={{ marginLeft: '5px', marginTop: 'auto' }} />}
