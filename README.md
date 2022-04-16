@@ -1,11 +1,17 @@
-download postgres
-Add postgres to to system env
-create db
-CREATE DATABASE <name>
+### Start here
 
-ENV
-Add secrets
-Add api key
+`npm run dev` to start project.
+Make sure to run `npm i` in this root, client and server folder
+
+Make sure to create a postgres db associated with the same name as the database listed in the ormconfig.json file which you created in the server folder
+
+Make sure to add all env neccesary
+
+### SOME API ROUTE Design
+
+![MovieApiDesign](./MovieApiDesign.jpg)
+
+### Docker-Compose
 
 Rebuild compose
 

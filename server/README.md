@@ -1,5 +1,10 @@
 ## Fill in example.env
 
+API_KEY_TMDB=
+ACCESS_TOKEN_SECRET=
+REFRESH_TOKEN_SECRET=
+REGISTER_TOKEN_SECRET=
+
 ### Steps to run this project:
 
 1. start express
