@@ -20,9 +20,9 @@ const LoginForm: React.FC = () => {
     const navigate = useNavigate();
 
     const [Login, { loading }] = useMutation<Login, LoginVariables>(LOGIN, {
-        onCompleted: ({ login }) => {
-            if (login.accessToken) {
-                setAuthHandler({ ok: true, accessToken: login.accessToken });
+        onCompleted: ({ Login }) => {
+            if (Login.accessToken) {
+                setAuthHandler({ ok: true, accessToken: Login.accessToken });
                 navigate('/', { replace: true });
             }
         },

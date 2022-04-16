@@ -1,12 +1,14 @@
-import { Box } from '@chakra-ui/react';
+import { Box, Button } from '@chakra-ui/react';
 // import { motion } from 'framer-motion';
-import { useLocation } from 'react-router-dom';
+import { FaArrowLeft } from 'react-icons/fa';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { MoviePoster, MovieSrc, MovieTrailer } from './Movie';
 import { TvPoster, TvSrc, TvTrailer } from './TV';
 import EpisodeList from './TV/EpisodeList';
 
 const MediaContent: React.FC = () => {
     const location = useLocation();
+    const navigate = useNavigate();
 
     // const Animation = motion.div;
 
@@ -29,8 +31,12 @@ const MediaContent: React.FC = () => {
     //         setToggleTrailer(false);
     //     }
     // }, [location]);
+
     return (
         <Box height={'60vh'} width={'100%'}>
+            <Button leftIcon={<FaArrowLeft />} variant="outline" onClick={() => navigate(-1)} mb={3} size={'sm'}>
+                Navigate back
+            </Button>
             {isTV ? (
                 isVideo || isTrailer ? (
                     isVideo ? (

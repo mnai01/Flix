@@ -33,6 +33,7 @@ export interface FindTVByTMDB_FindTVByTMDB_videos_results {
   site: string;
   key: string;
   published_at: string;
+  type: string;
 }
 
 export interface FindTVByTMDB_FindTVByTMDB_videos {

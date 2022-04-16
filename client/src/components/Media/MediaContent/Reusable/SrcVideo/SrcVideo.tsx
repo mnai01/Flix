@@ -1,20 +1,30 @@
 import { useMutation } from '@apollo/client';
-import { Center, Heading, Skeleton, Spinner } from '@chakra-ui/react';
-import { useState } from 'react';
+import { Button, Center, Heading, Skeleton, Spinner } from '@chakra-ui/react';
+import { useEffect, useState } from 'react';
 import { AddToWatched, AddToWatchedVariables } from '../../../../../apollo/generated/AddToWatched';
 import { ADD_WATCHED } from '../../../../../apollo/mutations';
 
 interface SrcVideoProps {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     data?: any;
+    tmdbLink?: string;
+    imdbLink?: string;
     loading: boolean;
-    link: string;
+    link?: string;
     imdb?: string | null;
     isTV: boolean;
 }
 
-const SrcVideo: React.FC<SrcVideoProps> = ({ data, link, imdb, isTV }) => {
+const SrcVideo: React.FC<SrcVideoProps> = ({ data, link, tmdbLink, imdbLink, isTV }) => {
     const [iframeLoading, setIframeLoading] = useState(true);
+    const [source, setSource] = useState<any>([]);
+
+    useEffect(() => {
+        setSource([
+            { title: 'Source 1', disabled: true, link: tmdbLink },
+            { title: 'Source 2', disabled: false, link: imdbLink },
+        ]);
+    }, [imdbLink, tmdbLink]);
 
     const [addWatched] = useMutation<AddToWatched, AddToWatchedVariables>(ADD_WATCHED);
 
@@ -25,28 +35,49 @@ const SrcVideo: React.FC<SrcVideoProps> = ({ data, link, imdb, isTV }) => {
         setIframeLoading(false);
     };
 
+    const handleButtonSwitch = () => {
+        setSource(
+            source.map((i: any) => {
+                return { ...i, disabled: !i.disabled };
+            }),
+        );
+        setIframeLoading(true);
+    };
+
     return (
         <>
-            {data && imdb && iframeLoading && (
+            {data && data.imdb_id && iframeLoading && (
                 <Center h={'100%'}>
                     <Skeleton width="100%" height={'100%'} />
                     <Spinner size="xl" position={'absolute'} />
                 </Center>
             )}
 
-            {data && imdb ? (
+            {data && data.imdb_id && source.length === 2 ? (
                 <iframe
                     allow="fullscreen"
                     onLoad={() => handleVideoLoad()}
                     onError={() => setIframeLoading(false)}
                     style={{ width: '100%', height: '100%', display: iframeLoading ? 'none' : 'block' }}
-                    src={link}
+                    src={
+                        source.filter((i: any) => {
+                            return i.disabled;
+                        })[0].link
+                    }
                 />
             ) : (
                 <Center height={'100%'}>
                     <Heading>No Movie Found</Heading>
                 </Center>
             )}
+            {source.length > 0 &&
+                source.map((i: any) => {
+                    return (
+                        <Button key={i.title} disabled={i.disabled} onClick={handleButtonSwitch} mr={5} mt={3}>
+                            {i.title}
+                        </Button>
+                    );
+                })}
         </>
     );
 };

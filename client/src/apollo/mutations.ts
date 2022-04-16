@@ -2,7 +2,7 @@ import { gql } from '@apollo/client';
 
 export const LOGIN = gql`
     mutation Login($password: String!, $email: String!) {
-        login(password: $password, email: $email) {
+        Login(password: $password, email: $email) {
             accessToken
         }
     }
@@ -10,6 +10,6 @@ export const LOGIN = gql`
 
 export const ADD_WATCHED = gql`
     mutation AddToWatched($type: String!, $tmdb: String!, $posterPath: String!) {
-        addToWatched(type: $type, tmdb: $tmdb, poster_path: $posterPath)
+        AddToWatched(type: $type, tmdb: $tmdb, poster_path: $posterPath)
     }
 `;

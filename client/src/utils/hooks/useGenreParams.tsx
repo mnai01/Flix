@@ -38,7 +38,7 @@ export const useGenreParams = () => {
         if (genre && !loading && type && !data[type]?.find((i) => i.name === genre.replace(/\b\w/g, (c) => c.toUpperCase()))) {
             navigate('/NotFound');
         }
-    }, [genre, loading, genreApiData, type]);
+    }, [genre, type]);
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const parseGenreButtonData: MenuItemProps[] | undefined = data[type]?.map((i: any) => {
