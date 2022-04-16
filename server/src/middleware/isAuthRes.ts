@@ -20,7 +20,6 @@ export const isAuthRes = (req: Request, res: Response, next: NextFunction) => {
         // Add payload to context so the resolver using isAuth has access to the verified userID information
         res = payload as any;
     } catch (err) {
-        console.log(err);
         throw new Error('Not Authenticated');
     }
     next();

@@ -1,5 +1,16 @@
 import { BaseEntity, Column, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
-import { Field, Int, ObjectType } from 'type-graphql';
+import { Field, Int, ObjectType, registerEnumType } from 'type-graphql';
+
+export enum UserRole {
+    ADMIN = 'admin',
+    FREE = 'free',
+    PREMIUM = 'premium',
+}
+
+registerEnumType(UserRole, {
+    name: 'UserRole',
+    description: 'User Roles',
+});
 
 // BaseEntity gives us more functionality like User.save
 @ObjectType()
@@ -24,6 +35,10 @@ export class User extends BaseEntity {
     @Field(() => [WatchedMovies], { nullable: true })
     @OneToMany(() => WatchedMovies, (movie) => movie.user, { cascade: true })
     watchedMovies: WatchedMovies[];
+
+    @Field(() => UserRole)
+    @Column({ type: 'enum', enum: UserRole, default: UserRole.FREE })
+    role: string;
 }
 
 // BaseEntity gives us more functionality like User.save

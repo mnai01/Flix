@@ -6,6 +6,5 @@ export const getGenres = async (req: any, res: any) => {
         res.send(genres.data);
     } catch (err) {
         res.send({ ok: false });
-        console.log({ ok: false });
     }
 };
