@@ -1,7 +1,7 @@
 /* eslint-disable no-undef */
 
 import { User } from '../entity/User';
-import { sign } from 'jsonwebtoken';
+import { Secret, sign } from 'jsonwebtoken';
 
 // ! to prevent error and set that we know it will be defined and not "undefined"
 export const createAccessToken = (user: User) => {
@@ -9,6 +9,6 @@ export const createAccessToken = (user: User) => {
 };
 
 // ! to prevent error and set that we know it will be defined and not "undefined"
-export const createRefreshToken = (user: User) => {
-    return sign({ userId: user.id, tokenVersion: user.tokenVersion }, process.env.REFRESH_TOKEN_SECRET!, { expiresIn: '7d' });
+export const createRefreshToken = (user: User, secret?: Secret) => {
+    return sign({ userId: user.id, tokenVersion: user.tokenVersion }, secret ? secret : process.env.REFRESH_TOKEN_SECRET!, { expiresIn: '7d' });
 };

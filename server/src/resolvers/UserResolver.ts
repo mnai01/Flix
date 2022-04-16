@@ -6,6 +6,9 @@ import { createAccessToken, createRefreshToken } from '../helpers/refreshTokens'
 import { isAuthContext } from '../middleware/isAuthContext';
 import { getConnection } from 'typeorm';
 import { sendRefreshToken } from '../helpers/sendTokens';
+import client from '../redisClient';
+import { createRegisterToken } from '../helpers/registerToken';
+import { verify } from 'jsonwebtoken';
 
 // import { TopRatedMovies } from '../typeDefs/TMDB/TopRatedMovies';
 // import { MovieListResultObject } from '../typeDefs/TMDB/Reusable/MovieListResultObject';
@@ -32,26 +35,36 @@ export class UserResolver {
     // this includes resolver information like res,req,payload and next function
     @Query(() => String)
     @UseMiddleware(isAuthContext)
-    bye(@Ctx() { payload }: MyContext) {
+    User(@Ctx() { payload }: MyContext) {
         return `your user id is :${payload?.userId}`;
     }
 
     @Query(() => [User])
-    users() {
-        return User.find();
+    @UseMiddleware(isAuthContext)
+    async Users(@Ctx() { payload }: MyContext) {
+        const user = await User.findOne({ where: { id: payload?.userId } });
+        if (!user) {
+            throw new Error('could not find user');
+        }
+
+        if (user.role !== 'admin') {
+            throw new Error('You do not have permission to run this, admin will be notified');
+        } else {
+            return User.find();
+        }
     }
 
     // Ability to revoke token for user
     // dont actually expose this,
     // instead make a function someone can call or like a forgot password or something that you can call internal if someone gets hacked
     @Mutation(() => Boolean)
-    async revokeRefreshTokensForUser(@Arg('userId', () => Int) userId: number) {
+    async RevokeRefreshTokensForUser(@Arg('userId', () => Int) userId: number) {
         await getConnection().getRepository(User).increment({ id: userId }, 'tokenVersion', 1);
         return true;
     }
 
     @Mutation(() => Boolean)
-    async banUserFromCreatingRefreshToken(@Arg('email') email: string) {
+    async BanUserFromCreatingRefreshToken(@Arg('email') email: string) {
         const user = await User.findOne({ where: { email } });
         if (!user) {
             throw new Error('could not find user');
@@ -93,9 +106,58 @@ export class UserResolver {
         return { accessToken: createAccessToken(user) };
     }
 
+    @Query(() => String! || null || Boolean)
+    async validateRegisterToken(@Arg('token') token: string): Promise<string | null | boolean> {
+        let payload: any = null;
+        payload = verify(token, process.env.REGISTER_TOKEN_SECRET!);
+
+        const user = await User.findOne({ where: { id: payload?.userId } });
+        // Check if user exists
+        if (!user) {
+            throw new Error('could not find user');
+        }
+
+        if (user.role !== 'admin' || user.tokenVersion === 0) {
+            throw new Error('You do not have permission to run this, admin will be notified');
+        }
+
+        try {
+            // hacky fix for ERROR: Cannot return null for non-nullable field Query.validateRegisterToken
+            const temp = await client.get(token);
+            const key = temp ? temp : false;
+            return key;
+        } catch (err) {
+            return false;
+        }
+    }
+
+    @Query(() => String! || Boolean)
+    @UseMiddleware(isAuthContext)
+    async GetRegisterToken(@Ctx() { payload }: MyContext): Promise<string | null | boolean> {
+        const user = await User.findOne({ where: { id: payload?.userId } });
+        // Check if user exists
+        if (!user) {
+            throw new Error('could not find user');
+        }
+
+        if (user.role !== 'admin' || user.tokenVersion === 0) {
+            throw new Error('You do not have permission to run this, admin will be notified');
+        }
+        try {
+            const registerToken = createRegisterToken(payload?.userId!);
+
+            //here key will expire after 24 hours
+            client.SETEX(registerToken, 10, payload?.userId!);
+
+            return registerToken;
+        } catch (err) {
+            return false;
+        }
+    }
+
     // this is what the mutations returns
     @Mutation(() => Boolean)
-    async register(@Arg('email') email: string, @Arg('password') password: string) {
+    async Register(@Arg('email') email: string, @Arg('password') password: string) {
         try {
             // ADD SECRET HEY
             // Hash password
@@ -111,7 +173,7 @@ export class UserResolver {
 
     @UseMiddleware(isAuthContext)
     @Mutation(() => Boolean)
-    async addToWatched(@Ctx() { payload }: MyContext, @Arg('tmdb') tmdb: string, @Arg('type') type: string, @Arg('poster_path') poster_path: string) {
+    async AddToWatched(@Ctx() { payload }: MyContext, @Arg('tmdb') tmdb: string, @Arg('type') type: string, @Arg('poster_path') poster_path: string) {
         // Get user
         const user = await User.findOne({ where: { id: payload?.userId } });
         // Check if user exists

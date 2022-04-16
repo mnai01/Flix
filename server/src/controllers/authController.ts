@@ -17,7 +17,6 @@ export const postRefreshToken = async (req: any, res: any) => {
         // eslint-disable-next-line no-undef
         payload = verify(token, process.env.REFRESH_TOKEN_SECRET!);
     } catch (err) {
-        console.log({ err });
         return res.send({ ok: false, accessToken: '', msg: 'Verified Failed' });
     }
     // at this point it had been verified that the token is successfully checked and we can send back an access token
@@ -27,6 +26,7 @@ export const postRefreshToken = async (req: any, res: any) => {
     if (!user) return res.send({ ok: false, accessToken: '', msg: 'No User Found' });
 
     if (user.tokenVersion === 0) {
+        sendRefreshToken(res, createRefreshToken(user, "WRONG_TOKEN_NAME_TO_PREVENT_EXTRA_DB_CALL_SINCE_THEY'RE_BANNED_ANKnfdlnhfksjdnfkjdsnfjdlsnf894309r32"));
         return res.send({ ok: false, accessToken: '', msg: 'You are banned' });
     }
 
