@@ -38,7 +38,7 @@ const AuthProvider: React.FC = ({ children }) => {
         if (data) {
             setAuth({ auth: data.ok, loading: false, accessToken: data.accessToken });
         } else {
-            setAuth({ auth: false, loading: false, accessToken: 'data.accessToken' });
+            setAuth({ auth: false, loading: false, accessToken: '' });
         }
     };
 
@@ -51,6 +51,9 @@ const AuthProvider: React.FC = ({ children }) => {
         checkAuth().catch((err) => {
             setAuthHandler();
         });
+        return () => {
+            setAuthHandler();
+        };
     }, []);
 
     return <AuthContext.Provider value={{ accessToken: isAuth.accessToken, isAuth, setAuthHandler }}>{children}</AuthContext.Provider>;

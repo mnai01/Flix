@@ -30,8 +30,6 @@ const MediaCarousel: React.FC<MediaCarouselProps> = ({ data, loading, height }) 
     //     }
     // });
 
-    // console.log(newItems);
-
     return (
         <Swiper
             style={{ width: '100%', height: `${height ? height + 'vh' : 'auto'}` }}

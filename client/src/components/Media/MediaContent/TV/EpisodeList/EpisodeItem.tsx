@@ -1,4 +1,4 @@
-import { Flex, Heading, Image, Text, useTheme } from '@chakra-ui/react';
+import { Flex, Heading, Image, Text, useColorMode, useTheme } from '@chakra-ui/react';
 import { useNavigate } from 'react-router-dom';
 import { FindEpisodeByTMDB_FindEpisodeByTMDB_episodes } from '../../../../../apollo/generated/FindEpisodeByTMDB';
 import { useSelectedMedia } from '../../../../Providers/SelectedMediaProvider';
@@ -12,12 +12,13 @@ const EpisodeItem: React.FC<EpisodeItemProps> = ({ episode }) => {
 
     const theme = useTheme();
     const navigate = useNavigate();
+    const { colorMode } = useColorMode();
 
     return (
         <Flex
             my={2}
             p={2}
-            bgColor={theme.colors.gray[700]}
+            bgColor={colorMode === 'dark' ? theme.colors.gray[700] : ''}
             borderRadius={3}
             onClick={() => navigate(`/tv/${tmdb}/video/${episode.season_number}/${episode.episode_number}`)}>
             <Image

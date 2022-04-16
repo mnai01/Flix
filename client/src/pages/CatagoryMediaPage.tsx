@@ -14,11 +14,11 @@ const CatagoryMediaPage = () => {
     // and it hardcodes page # to 1 since the state value of pageNumber is not reliable due to component not being rerendered for each category
     useEffect(() => {
         if (type === 'tv' && genre?.id) {
-            setQuery({ queryReference: GET_TV_BY_GENRE, variables: { withGenres: genre.id, page: 1 } });
+            setQuery({ queryReference: GET_TV_BY_GENRE, variables: { withGenres: genre.id } });
         } else if (type === 'movies' && genre?.id) {
-            setQuery({ queryReference: GET_MOVIES_BY_GENRE, variables: { withGenres: genre.id, page: 1 } });
+            setQuery({ queryReference: GET_MOVIES_BY_GENRE, variables: { withGenres: genre.id } });
         } else if (type === 'home' && genre?.name === 'Top Trending') {
-            setQuery({ queryReference: GET_TRENDING, variables: { page: 1 } });
+            setQuery({ queryReference: GET_TRENDING });
         }
     }, [type, genre]);
 

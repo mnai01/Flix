@@ -8,7 +8,7 @@
 // ====================================================
 
 export interface AddToWatched {
-  addToWatched: boolean;
+  AddToWatched: boolean;
 }
 
 export interface AddToWatchedVariables {

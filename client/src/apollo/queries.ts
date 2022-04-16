@@ -1,11 +1,5 @@
 import { gql } from '@apollo/client';
 
-export const BYE = gql`
-    query Bye {
-        bye
-    }
-`;
-
 export const SEARCH_VIDEOS_QUERY = gql`
     query SearchVideos($region: Country, $query: String!, $includeAdult: Boolean) {
         SearchVideos(region: $region, query: $query, include_adult: $includeAdult) {
@@ -98,6 +92,7 @@ export const GET_MOVIE_FROM_TMDB = gql`
                     key
                     site
                     id
+                    type
                 }
             }
             similar {
@@ -150,6 +145,7 @@ export const GET_TV_FROM_TMDB = gql`
                     site
                     key
                     published_at
+                    type
                 }
             }
             external_ids {

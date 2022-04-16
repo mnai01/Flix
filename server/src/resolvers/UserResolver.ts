@@ -79,7 +79,7 @@ export class UserResolver {
     // async function called login
     // with parameters email, password and return type
     // Ctx stand for context. this is reference to the context information being passed in. Gives us access to the context
-    async login(@Arg('email') email: string, @Arg('password') password: string, @Ctx() { res }: MyContext): Promise<LoginResponse> {
+    async Login(@Arg('email') email: string, @Arg('password') password: string, @Ctx() { res }: MyContext): Promise<LoginResponse> {
         // Get user
         const user = await User.findOne({ where: { email } });
         // Check if user exists
@@ -107,7 +107,7 @@ export class UserResolver {
     }
 
     @Query(() => String! || null || Boolean)
-    async validateRegisterToken(@Arg('token') token: string): Promise<string | null | boolean> {
+    async ValidateRegisterToken(@Arg('token') token: string): Promise<string | null | boolean> {
         let payload: any = null;
         payload = verify(token, process.env.REGISTER_TOKEN_SECRET!);
 

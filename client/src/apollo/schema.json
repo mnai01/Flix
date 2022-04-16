@@ -16,7 +16,7 @@
         "specifiedByUrl": null,
         "fields": [
           {
-            "name": "bye",
+            "name": "User",
             "description": null,
             "args": [],
             "type": {
@@ -32,7 +32,7 @@
             "deprecationReason": null
           },
           {
-            "name": "users",
+            "name": "Users",
             "description": null,
             "args": [],
             "type": {
@@ -50,6 +50,55 @@
                     "ofType": null
                   }
                 }
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "ValidateRegisterToken",
+            "description": null,
+            "args": [
+              {
+                "name": "token",
+                "description": null,
+                "type": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "String",
+                    "ofType": null
+                  }
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              }
+            ],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "GetRegisterToken",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
               }
             },
             "isDeprecated": false,
@@ -903,6 +952,22 @@
             },
             "isDeprecated": false,
             "deprecationReason": null
+          },
+          {
+            "name": "role",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "ENUM",
+                "name": "UserRole",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
           }
         ],
         "inputFields": null,
@@ -1033,6 +1098,36 @@
         "inputFields": null,
         "interfaces": null,
         "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "ENUM",
+        "name": "UserRole",
+        "description": "User Roles",
+        "specifiedByUrl": null,
+        "fields": null,
+        "inputFields": null,
+        "interfaces": null,
+        "enumValues": [
+          {
+            "name": "ADMIN",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "FREE",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "PREMIUM",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
         "possibleTypes": null
       },
       {
@@ -7925,7 +8020,7 @@
         "specifiedByUrl": null,
         "fields": [
           {
-            "name": "revokeRefreshTokensForUser",
+            "name": "RevokeRefreshTokensForUser",
             "description": null,
             "args": [
               {
@@ -7958,7 +8053,7 @@
             "deprecationReason": null
           },
           {
-            "name": "banUserFromCreatingRefreshToken",
+            "name": "BanUserFromCreatingRefreshToken",
             "description": null,
             "args": [
               {
@@ -7991,7 +8086,7 @@
             "deprecationReason": null
           },
           {
-            "name": "login",
+            "name": "Login",
             "description": null,
             "args": [
               {
@@ -8040,7 +8135,7 @@
             "deprecationReason": null
           },
           {
-            "name": "register",
+            "name": "Register",
             "description": null,
             "args": [
               {
@@ -8089,7 +8184,7 @@
             "deprecationReason": null
           },
           {
-            "name": "addToWatched",
+            "name": "AddToWatched",
             "description": null,
             "args": [
               {

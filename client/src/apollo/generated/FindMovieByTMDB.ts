@@ -19,6 +19,7 @@ export interface FindMovieByTMDB_FindMovieByTMDB_videos_results {
   key: string;
   site: string;
   id: string;
+  type: string;
 }
 
 export interface FindMovieByTMDB_FindMovieByTMDB_videos {

@@ -1,7 +1,8 @@
+/* eslint-disable @typescript-eslint/no-empty-function */
 /* eslint-disable no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { useLazyQuery, useQuery } from '@apollo/client';
+import { useQuery } from '@apollo/client';
 import { useEffect, useState } from 'react';
 import { useGenreParams } from './useGenreParams';
 import useInfiniteScroll from './useInfiniteScroll';
@@ -19,35 +20,36 @@ export const useCustomLazyQuery = (query: any, variables: any, dependecies: any 
 
     // Modulized query that uses media data (specifically for discoverTV and discoverMovie
     // api which has an alias of Media
-    const [lazy, { data, loading, error }] = useLazyQuery(query, {
+    const { data, loading, error, fetchMore, refetch } = useQuery(query, {
+        variables: { page: pageObj.page, ...variables },
         fetchPolicy: 'no-cache',
         onCompleted: (data) => {
             setDiscover((prevState: any) => {
                 return prevState?.page >= 1 ? { ...prevState, results: [...prevState.results, ...data.Media.results] } : { ...data.Media };
             });
-            setPageObj((prev: PageObject) => {
-                return {
-                    page: prev.page + 1,
-                    totalPages: data && data?.Media ? data.Media?.total_pages : 1,
-                };
-            });
         },
     });
 
     useEffect(() => {
-        lazy({ variables: { ...variables, page: 1 } });
-        setPageObj({ page: 1, totalPages: 1 });
+        setPageObj({ page: 1, totalPages: 0 });
+        refetch();
         return () => {
             setDiscover({});
         };
-    }, [...dependecies, genre, type, loadingGenre]);
+    }, [...dependecies, genre, type]);
 
-    const fetchItems = () => {
-        lazy({ variables: { ...variables, page: pageObj.page } });
+    const fetchy = () => {
+        fetchMore({ variables: { ...variables, page: pageObj.page } });
+        setPageObj((prev: PageObject) => {
+            return {
+                page: prev.page + 1,
+                totalPages: data && data?.Media ? data.Media?.total_pages : 1,
+            };
+        });
     };
 
     // eslint-disable-next-line @typescript-eslint/no-empty-function
-    const [lastElementRef] = useInfiniteScroll(pageObj.page !== pageObj.totalPages ? fetchItems : () => {}, loading);
+    const [lastElementRef] = useInfiniteScroll(pageObj.page !== pageObj.totalPages ? fetchy : () => {}, loading);
 
     return {
         data: discover,
