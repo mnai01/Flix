@@ -24,8 +24,11 @@ export const useCustomLazyQuery = (query: any, variables: any, dependecies: any 
         variables: { page: pageObj.page, ...variables },
         fetchPolicy: 'no-cache',
         onCompleted: (data) => {
+            console.log(data);
             setDiscover((prevState: any) => {
-                return prevState?.page >= 1 ? { ...prevState, results: [...prevState.results, ...data.Media.results] } : { ...data.Media };
+                return prevState?.page >= 1
+                    ? { ...prevState, results: data && data.Media ? [...prevState.results, ...data.Media.results] : [...prevState.results] }
+                    : { ...data?.Media };
             });
         },
     });
