@@ -1,6 +1,7 @@
 import { Center, Flex, Skeleton, Spinner } from '@chakra-ui/react';
 import { lazy, Suspense } from 'react';
 import { Route, Routes } from 'react-router';
+import CustomAlert from '../../components/Alert/Alert';
 import PageWrapper from '../../components/Layout/PageWrapper';
 import Sidebar from '../../components/Layout/Sidebar';
 import { AutoSuggestionProvider } from '../../components/Providers/AutoSuggestionProvider';
@@ -23,6 +24,7 @@ const PageRoutes = () => {
                     <Flex width={'100%'}>
                         <Sidebar />
                         <PageWrapper>
+                            <CustomAlert />
                             <Suspense
                                 fallback={
                                     <Center h={'100vh'}>
