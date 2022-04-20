@@ -231,3 +231,9 @@ export const GET_WATCHED_MOVIES = gql`
         }
     }
 `;
+
+export const VALIDATE_REGISTER_TOKEN = gql`
+    query ValidateRegisterToken($token: String!) {
+        ValidateRegisterToken(token: $token)
+    }
+`;
