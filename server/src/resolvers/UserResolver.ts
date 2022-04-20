@@ -109,7 +109,12 @@ export class UserResolver {
     @Query(() => String! || null || Boolean)
     async ValidateRegisterToken(@Arg('token') token: string): Promise<string | null | boolean> {
         let payload: any = null;
-        payload = verify(token, process.env.REGISTER_TOKEN_SECRET!);
+
+        try {
+            payload = verify(token, process.env.REGISTER_TOKEN_SECRET!);
+        } catch (err) {
+            throw new Error(err);
+        }
 
         const user = await User.findOne({ where: { id: payload?.userId } });
         // Check if user exists
@@ -147,9 +152,9 @@ export class UserResolver {
             const registerToken = createRegisterToken(payload?.userId!);
 
             //here key will expire after 24 hours
-            client.SETEX(registerToken, 10, payload?.userId!);
+            client.SETEX(registerToken, 24 * 60 * 60, payload?.userId!);
 
-            return registerToken;
+            return `http://localhost:3000/register?token=${registerToken}`;
         } catch (err) {
             return false;
         }
@@ -157,14 +162,16 @@ export class UserResolver {
 
     // this is what the mutations returns
     @Mutation(() => Boolean)
-    async Register(@Arg('email') email: string, @Arg('password') password: string) {
+    async Register(@Arg('email') email: string, @Arg('password') password: string, @Arg('token') token: string) {
         try {
+            client.DEL(token);
             // ADD SECRET HEY
             // Hash password
             const hashedPassword = await hash(password, 12);
 
             // Insert it into DB
             await User.insert({ email, password: hashedPassword });
+
             return true;
         } catch (err) {
             return false;
