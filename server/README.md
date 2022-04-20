@@ -58,6 +58,28 @@ REGISTER_TOKEN_SECRET=
 Be sure to add the correct db host in the ormconfig.json
 `"host": "localhost"`
 
+#### Install redis server
+
+Using windows subsystem for linux
+
+Ubuntu 20.04.4 LTS (Found in microsoft store)
+
+$ sudo apt-add-repository ppa:redislabs/redis
+
+$ sudo apt-get update
+
+$ sudo apt-get upgrade
+
+$ sudo apt-get install redis-server
+
+#### Start redis
+
+$ sudo service redis-server start
+
+$ sudo service redis-server stop
+
+$ sudo service redis-server restart
+
 #### When running docker
 
 Be sure to add the correct db host in the ormconfig.json
