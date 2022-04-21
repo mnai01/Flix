@@ -33,6 +33,7 @@ services:
             - ./server/.env
         depends_on:
             - db
+            - redis
         ports:
             - 4000:4000
         volumes:
@@ -53,6 +54,13 @@ services:
             - '80:80'
         mem_limit: 156m
 
+    redis:
+        image: redis:6.2-alpine
+        restart: always
+        volumes:
+            - redis:/var/lib/redis/data
+        ports:
+            - 6379:6379
     # pgadmin:
     #     image: dpage/pgadmin4
     #     container_name: pgadmin4_container
@@ -67,4 +75,5 @@ services:
 
 volumes:
     postgres_data:
+    redis:
     # pgadmin-data:

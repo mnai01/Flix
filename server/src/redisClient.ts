@@ -1,9 +1,11 @@
 import { createClient } from 'redis';
 
-const client = createClient();
+// Add { socket: { host: 'redis', port: 6379 } } for docker
+// Remove { socket: { host: 'redis', port: 6379 } } for docker and start server with WSL see readme
+const client = createClient({ socket: { host: 'redis', port: 6379 } });
 (async () => {
     await client.connect();
-    client.on('error', (err) => console.log('Redis Client Error', err));
+    client.on('error', (err: any) => console.log('Redis Client Error', err));
     client.on('connect', function () {
         console.log('Connected!');
     });

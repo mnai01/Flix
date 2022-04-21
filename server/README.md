@@ -31,6 +31,8 @@ REGISTER_TOKEN_SECRET=
 
 # Required ormconfig.json
 
+To run seeding change the function name so it re-runs
+
 ```
 {
     "type": "postgres",
@@ -64,21 +66,21 @@ Using windows subsystem for linux
 
 Ubuntu 20.04.4 LTS (Found in microsoft store)
 
-$ sudo apt-add-repository ppa:redislabs/redis
+sudo apt-add-repository ppa:redislabs/redis
 
-$ sudo apt-get update
+sudo apt-get update
 
-$ sudo apt-get upgrade
+sudo apt-get upgrade
 
-$ sudo apt-get install redis-server
+sudo apt-get install redis-server
 
 #### Start redis
 
-$ sudo service redis-server start
+sudo service redis-server start
 
-$ sudo service redis-server stop
+sudo service redis-server stop
 
-$ sudo service redis-server restart
+sudo service redis-server restart
 
 #### When running docker
 
@@ -88,3 +90,11 @@ Be sure to add the correct db host in the ormconfig.json
 docker build -t server ./
 
 docker run -it -p 4000:4000 server
+
+#### Run command in specific image
+
+docker exec -i flix_api_1 npm run generate
+
+#### Mirgate with docker
+
+The generated migration file needs to be ran 1st before the seed. I havent figured out if theres a specific way to do it yet but for now just remove seed file then add it back after initional migrate command

@@ -1,7 +1,7 @@
 {
     "name": "server",
     "version": "0.0.1",
-    "description": "Awesome project developed with TypeORM.",
+    "description": "Flix backend",
     "devDependencies": {
         "@types/cookie-parser": "^1.4.2",
         "@types/cors": "^2.8.12",
@@ -37,6 +37,11 @@
     "scripts": {
         "start": "ts-node src/index.ts",
         "dev": "nodemon --exec ts-node src/index.ts",
-        "typeorm": "node --require ts-node/register ./node_modules/typeorm/cli.js"
+        "seed": "ts-node ./src/seed/seeding.ts",
+        "migrate": "ts-node ./node_modules/typeorm/cli.js migration:run",
+        "revert": "ts-node ./node_modules/typeorm/cli.js migration:revert",
+        "generate": "ts-node ./node_modules/typeorm/cli.js migration:generate -n FlixMigration",
+        "generate-dry": "ts-node ./node_modules/typeorm/cli.js migration:generate -n migration -p --dr",
+        "make-migration": "npx typeorm migration:create -n migration"
     }
 }
