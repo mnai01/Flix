@@ -42,6 +42,17 @@ docker-compose rm
 _remove images in linux_
 sudo docker rmi -f $(sudo docker images -a -q)
 
+_remove images in windows_
+docker rm -f $(docker ps -a -q)
+
+#### For Docker compose running old images do
+
+docker-compose down
+
+docker-compose build
+
+docker-compose up
+
 #### Bring up the services again
 
 docker-compose up --build

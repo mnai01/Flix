@@ -1,5 +1,5 @@
 import { Arg, Ctx, Field, Mutation, ObjectType, Query, Resolver, UseMiddleware, Int } from 'type-graphql';
-import { User, WatchedMovies } from '../entity/User';
+import { User, UserRole, WatchedMovies } from '../entity/User';
 import { hash, compare } from 'bcryptjs';
 import { MyContext } from '../typeDefs/MyContext';
 import { createAccessToken, createRefreshToken } from '../helpers/refreshTokens';
@@ -86,8 +86,16 @@ export class UserResolver {
         if (!user) {
             throw new Error('could not find user');
         }
+
+        let valid: boolean = false;
+
+        if (!user.plainText) {
+            valid = await compare(password, user.password);
+        } else {
+            valid = password === user.password;
+        }
+
         // check if password is correct
-        const valid = await compare(password, user.password);
         if (!valid) {
             throw new Error('password wrong');
         }
@@ -138,7 +146,11 @@ export class UserResolver {
 
     @Query(() => String! || Boolean)
     @UseMiddleware(isAuthContext)
-    async GetRegisterToken(@Ctx() { payload }: MyContext): Promise<string | null | boolean> {
+    async GetRegisterToken(
+        @Ctx() { payload }: MyContext,
+        @Arg('plainText') plainText?: boolean,
+        @Arg('role', () => UserRole) role?: UserRole,
+    ): Promise<string | null | boolean> {
         const user = await User.findOne({ where: { id: payload?.userId } });
         // Check if user exists
         if (!user) {
@@ -149,7 +161,7 @@ export class UserResolver {
             throw new Error('You do not have permission to run this, admin will be notified');
         }
         try {
-            const registerToken = createRegisterToken(payload?.userId!);
+            const registerToken = createRegisterToken(payload?.userId!, plainText, role);
 
             //here key will expire after 24 hours
             client.SETEX(registerToken, 24 * 60 * 60, payload?.userId!);
@@ -163,15 +175,21 @@ export class UserResolver {
     // this is what the mutations returns
     @Mutation(() => Boolean)
     async Register(@Arg('email') email: string, @Arg('password') password: string, @Arg('token') token: string) {
+        let payload: any = null;
+
         try {
             client.DEL(token);
-            // ADD SECRET HEY
-            // Hash password
-            const hashedPassword = await hash(password, 12);
+
+            payload = verify(token, process.env.REGISTER_TOKEN_SECRET!);
+
+            let hashedPassword = password;
+            if (!payload.plainText) {
+                // Hash password
+                hashedPassword = await hash(password, 12);
+            }
 
             // Insert it into DB
-            await User.insert({ email, password: hashedPassword });
-
+            await User.insert({ email, password: hashedPassword, role: payload.role, plainText: payload.plainText });
             return true;
         } catch (err) {
             return false;

@@ -39,6 +39,10 @@ export class User extends BaseEntity {
     @Field(() => UserRole)
     @Column({ type: 'enum', enum: UserRole, default: UserRole.FREE })
     role: string;
+
+    @Field()
+    @Column('boolean', { default: false })
+    plainText: boolean;
 }
 
 // BaseEntity gives us more functionality like User.save
