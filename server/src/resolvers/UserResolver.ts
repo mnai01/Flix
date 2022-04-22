@@ -140,7 +140,7 @@ export class UserResolver {
             const key = temp ? temp : false;
             return key;
         } catch (err) {
-            return false;
+            return err;
         }
     }
 
@@ -168,7 +168,7 @@ export class UserResolver {
 
             return `http://localhost:3000/register?token=${registerToken}`;
         } catch (err) {
-            return false;
+            return err;
         }
     }
 
