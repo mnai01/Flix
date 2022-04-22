@@ -107,4 +107,8 @@ docker exec -i flix_db_1 psql -U postgres
 
 CREATE USER username_here PASSWORD 'password-here!'
 
+#### Check database
 
+\c movie_db
+
+`SELECT \* FROM table_name`
