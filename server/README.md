@@ -98,3 +98,11 @@ docker exec -i flix_api_1 npm run generate
 #### Mirgate with docker
 
 The generated migration file needs to be ran 1st before the seed. I havent figured out if theres a specific way to do it yet but for now just remove seed file then add it back after initional migrate command
+
+#### Change database owner
+
+docker exec -i flix_db_1 psql -U postgres
+
+CREATE USER username_here PASSWORD 'password-here!'
+
+
