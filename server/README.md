@@ -8,6 +8,8 @@ REFRESH_TOKEN_SECRET=
 
 REGISTER_TOKEN_SECRET=
 
+REDIS_PASSWORD= (Same as password in project parent folder .env)
+
 ### Steps to run this project:
 
 1. start express

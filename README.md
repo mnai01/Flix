@@ -13,6 +13,8 @@ Make sure to add all env neccesary
 
 ### Docker-Compose
 
+Add password for redis in .env (see .env.example)
+
 Rebuild compose
 
 For dev build make sure to allocate more resources to client server in docker compose
