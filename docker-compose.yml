@@ -9,7 +9,6 @@ services:
             - 5432:5432
         volumes:
             - postgres_data:/var/lib/postgresql/data
-        mem_limit: 100m
 
     client:
         stdin_open: true
@@ -61,6 +60,8 @@ services:
             - redis:/var/lib/redis/data
         ports:
             - 6379:6379
+        mem_limit: 200m
+
     # pgadmin:
     #     image: dpage/pgadmin4
     #     container_name: pgadmin4_container
