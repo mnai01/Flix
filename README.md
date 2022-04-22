@@ -40,10 +40,20 @@ docker-compose stop
 docker-compose rm
 
 _remove images in linux_
+
 sudo docker rmi -f $(sudo docker images -a -q)
 
 _remove images in windows_
+
 docker rm -f $(docker ps -a -q)
+
+_remove volumes_
+
+docker volume rm $(docker volume ls -q)
+
+#### Delete specific volume
+
+sudo docker volume rm flix_postgres_data
 
 #### For Docker compose running old images do
 
@@ -56,3 +66,9 @@ docker-compose up
 #### Bring up the services again
 
 docker-compose up --build
+
+#### Prune docker image and volume
+
+docker image prune
+
+docker volume prune

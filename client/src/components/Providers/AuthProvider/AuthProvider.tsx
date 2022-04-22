@@ -45,7 +45,7 @@ const AuthProvider: React.FC = ({ children }) => {
     useEffect(() => {
         // Check auth on page load
         const checkAuth = async () => {
-            const data: fetchReturn = await (await fetch('http://localhost:4000/api/auth/refresh_token', { method: 'POST', credentials: 'include' })).json();
+            const data: fetchReturn = await (await fetch('http://localhost:4000/rest/auth/refresh_token', { method: 'POST', credentials: 'include' })).json();
             setAuthHandler(data);
         };
         checkAuth().catch((err) => {

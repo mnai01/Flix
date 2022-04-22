@@ -56,7 +56,7 @@ const AuthorizedApolloProvider: React.FC = ({ children }) => {
             }
         },
         fetchAccessToken: async () => {
-            return fetch('http://localhost:4000/api/auth/refresh_token', {
+            return fetch('http://localhost:4000/rest/auth/refresh_token', {
                 method: 'POST',
                 credentials: 'include',
             });
