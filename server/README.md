@@ -105,7 +105,30 @@ The generated migration file needs to be ran 1st before the seed. I havent figur
 
 docker exec -i flix_db_1 psql -U postgres
 
-CREATE USER username_here PASSWORD 'password-here!'
+`CREATE USER username_here PASSWORD 'password-here!'`
+
+`ALTER DATABASE movie_db OWNER TO user_name;`
+
+`GRANT CONNECT ON DATABASE movie_db TO user_name;`
+
+`GRANT ALL PRIVILEGES ON DATABASE movie_db TO user_name;`
+
+_This one might not be required_
+
+`GRANT SELECT, INSERT, UPDATE, DELETE ON ALL TABLES IN SCHEMA public TO user_name;`
+
+_MAKE SURE TO CONNECT TO SPECIFIC DATABASE FIRST_
+
+`GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA public TO user_name;`
+
+`GRANT ALL ON ALL SEQUENCES IN SCHEMA public TO user_name`
+
+
+_Shows when password required ("trust" means no password is needed, "md5" means need MD5 password)_
+
+sudo docker exec -i flix-db-1 cat /var/lib/postgresql/data/pg_hba.conf
+
+
 
 #### Check database
 
