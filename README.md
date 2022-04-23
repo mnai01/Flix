@@ -65,7 +65,7 @@ docker-compose build
 
 docker-compose up
 
-#### Bring up the services again
+#### Bring up the services again (Can do this when not wanting downtime but also updating containers)
 
 docker-compose up --build
 
@@ -74,3 +74,19 @@ docker-compose up --build
 docker image prune
 
 docker volume prune
+
+#### View docker Stats
+
+docker stats
+
+#### Docker remove extra data (do this when images are running)
+
+docker system prune
+
+docker image prune
+
+docker volume prune
+
+docker builder prune (prunes build cache)
+
+docker system df will also tell you how much space the local volumes are taking
