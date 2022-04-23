@@ -20,7 +20,16 @@ const CustomAlert: React.FC = () => {
             },
         );
 
+    const notify_tv = () =>
+        toast.info(<Center textAlign={'center'}>TV shows are now available for viewing, sorry for the delay 😊 </Center>, {
+            position: toast.POSITION.BOTTOM_LEFT,
+            theme: colorMode === 'dark' ? `colored` : 'light',
+            autoClose: 8000,
+            style: { width: '200%' },
+        });
+
     useEffect(() => {
+        notify_tv();
         notify();
     }, []);
 
