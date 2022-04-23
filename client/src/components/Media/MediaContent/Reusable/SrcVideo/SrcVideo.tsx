@@ -10,12 +10,11 @@ interface SrcVideoProps {
     tmdbLink?: string;
     imdbLink?: string;
     loading: boolean;
-    link?: string;
-    imdb?: string | null;
     isTV: boolean;
+    imdb?: string | null;
 }
 
-const SrcVideo: React.FC<SrcVideoProps> = ({ data, link, tmdbLink, imdbLink, isTV }) => {
+const SrcVideo: React.FC<SrcVideoProps> = ({ data, imdb, tmdbLink, imdbLink, isTV }) => {
     const [iframeLoading, setIframeLoading] = useState(true);
     const [source, setSource] = useState<any>([]);
 
@@ -46,14 +45,14 @@ const SrcVideo: React.FC<SrcVideoProps> = ({ data, link, tmdbLink, imdbLink, isT
 
     return (
         <>
-            {data && data.imdb_id && iframeLoading && (
+            {data && imdb && iframeLoading && (
                 <Center h={'100%'}>
                     <Skeleton width="100%" height={'100%'} />
                     <Spinner size="xl" position={'absolute'} />
                 </Center>
             )}
 
-            {data && data.imdb_id && source.length === 2 ? (
+            {data && imdb && source.length === 2 ? (
                 <iframe
                     allow="fullscreen"
                     onLoad={() => handleVideoLoad()}
@@ -67,7 +66,7 @@ const SrcVideo: React.FC<SrcVideoProps> = ({ data, link, tmdbLink, imdbLink, isT
                 />
             ) : (
                 <Center height={'100%'}>
-                    <Heading>No Movie Found</Heading>
+                    <Heading>No Media Found</Heading>
                 </Center>
             )}
             {source.length > 0 &&

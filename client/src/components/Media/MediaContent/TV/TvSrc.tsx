@@ -18,9 +18,10 @@ const TvSrc: React.FC = () => {
             <SrcVideo
                 data={data?.FindTVByTMDB}
                 loading={loading}
-                link={`${process.env.REACT_APP_SOURCE}${data?.FindTVByTMDB.external_ids.imdb_id}/${s}-${e}`}
-                imdb={data?.FindTVByTMDB.external_ids.imdb_id}
+                imdbLink={`${process.env.REACT_APP_SOURCE}${data?.FindTVByTMDB.external_ids.imdb_id}/${s}-${e}`}
+                tmdbLink={`${process.env.REACT_APP_SOURCE1}tv?id=${data?.FindTVByTMDB.id}&s=${s}&e=${e}`}
                 isTV={isTV}
+                imdb={data?.FindTVByTMDB.external_ids.imdb_id}
             />
             <Similar medias={data?.FindTVByTMDB.similar.results} loading={loading} horizontal />
         </>

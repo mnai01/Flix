@@ -18,6 +18,7 @@ const MovieSrc: React.FC = () => {
                 imdbLink={`${process.env.REACT_APP_SOURCE}${data?.FindMovieByTMDB.imdb_id}`}
                 tmdbLink={`${process.env.REACT_APP_SOURCE1}movie?id=${data?.FindMovieByTMDB.id}`}
                 isTV={isTV}
+                imdb={data?.FindMovieByTMDB.imdb_id}
             />
             <Similar medias={data?.FindMovieByTMDB.similar.results} loading={loading} horizontal />
         </>
