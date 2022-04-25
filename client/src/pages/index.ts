@@ -8,3 +8,4 @@ export { default as CatagoryMediaPage } from './CatagoryMediaPage';
 export { default as NotFound } from './NotFound';
 export { default as MediaContentPage } from './MediaContentPage';
 export { default as SearchPage } from './SearchPage';
+export { default as UpdatesPage } from './UpdatesPage';

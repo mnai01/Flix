@@ -61,7 +61,7 @@ const Poster: React.FC<SelectedMediaProps> = ({
                         height={'fit-content'}
                         top={0}
                         bottom={0}
-                        width={'35%'}>
+                        width={{ base: '100%', lg: '35%', xl: '35%' }}>
                         <Heading variant={'h2'} size={'xl'} fontWeight={700} mb={2}>
                             {title && title.toUpperCase()}
                         </Heading>
@@ -116,6 +116,7 @@ const Poster: React.FC<SelectedMediaProps> = ({
                         position={'absolute'}
                         top={0}
                         objectFit={'cover'}
+                        objectPosition={'top'}
                         overflow={'hidden'}
                         width={'100%'}
                         height={'100%'}
