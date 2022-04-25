@@ -13,6 +13,7 @@ const AutoSuggestion = () => {
                 variant={'filled'}
                 placeholder="Search"
                 onChange={(e) => {
+                    if (e.target.value === '') navigate('/');
                     if (pathname !== '/search') navigate('/search');
                     autoSuggestResults({ variables: { query: e.target.value, includeAdult: false, region: 'UnitedStates' } });
                 }}
