@@ -48,8 +48,8 @@ const LoginForm: React.FC = () => {
                 <Center w="100%" h="100vh">
                     <Box maxW="sm" alignSelf="center">
                         <VStack align="flex-start" spacing="12px">
-                            <ChakraInput registerName={'email'} placeHolder="email" requiredMsg={'Please Enter Email'} />
-                            <ChakraInput registerName={'password'} placeHolder="password" requiredMsg={'Please Enter Password'} />
+                            <ChakraInput registerName={'email'} placeHolder="email" requiredMsg={'Please Enter Email'} type="text" />
+                            <ChakraInput registerName={'password'} placeHolder="password" requiredMsg={'Please Enter Password'} type="password" />
                             <Button mt={4} width="sm" type="submit" isLoading={loading}>
                                 Log In
                             </Button>
