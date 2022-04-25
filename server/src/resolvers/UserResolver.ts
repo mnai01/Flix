@@ -173,14 +173,27 @@ export class UserResolver {
     }
 
     // this is what the mutations returns
-    @Mutation(() => Boolean)
+    @Mutation(() => String)
     async Register(@Arg('email') email: string, @Arg('password') password: string, @Arg('token') token: string) {
         let payload: any = null;
 
         try {
-            client.DEL(token);
-
             payload = verify(token, process.env.REGISTER_TOKEN_SECRET!);
+
+            // check if token exists
+            const temp = await client.get(token);
+            const key = temp ? temp : false;
+            if (!key) {
+                throw new Error('Bad registration token');
+            }
+
+            const user = await User.findOne({ where: { email } });
+
+            if (user) {
+                throw new Error('User already exists');
+            }
+
+            client.DEL(token);
 
             let hashedPassword = password;
             if (!payload.plainText) {
@@ -192,7 +205,7 @@ export class UserResolver {
             await User.insert({ email, password: hashedPassword, role: payload.role, plainText: payload.plainText });
             return true;
         } catch (err) {
-            return false;
+            return err;
         }
     }
 

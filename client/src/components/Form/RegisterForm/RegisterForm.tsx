@@ -21,10 +21,10 @@ const RegisterForm = () => {
         onCompleted: () => {
             navigate('/', { replace: true });
         },
-        onError: () => {
+        onError: (err) => {
             toast({
                 title: 'Error',
-                description: 'There is an error registering',
+                description: err.message ? err.message : 'There is an error registering',
                 status: 'error',
                 duration: 3000,
                 isClosable: true,
