@@ -14,6 +14,18 @@ const Timeline: React.FC = () => {
             cardTitle: 'Added Feature',
             cardSubtitle: 'Responsive mode for mobile added',
         },
+        {
+            // 4/26/22 @ 12:00pm
+            title: '1.1.1-beta',
+            cardTitle: 'UI now more responsive',
+            cardSubtitle: 'Fixed responsive view errors',
+        },
+        {
+            // 4/26/22 @ 12:16pm
+            title: '1.1.2-beta',
+            cardTitle: 'Removed ads',
+            cardSubtitle: 'As this is a free platform all ads have been removed. If youre still having issues with ads please notify the admin',
+        },
     ];
 
     return (
