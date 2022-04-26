@@ -1,7 +1,7 @@
-import { Box, Flex, Heading, Skeleton } from '@chakra-ui/react';
+import { Box, Flex, Heading, Skeleton, Text } from '@chakra-ui/react';
 import { IoIosArrowForward } from 'react-icons/io';
 import { useNavigate } from 'react-router-dom';
-import SwiperCore, { Navigation, Pagination } from 'swiper';
+import SwiperCore, { Lazy, Navigation, Pagination, Scrollbar } from 'swiper';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { MediaCard } from '../';
 import { SearchVideos_SearchVideos_results } from '../../../apollo/generated/SearchVideos';
@@ -19,7 +19,7 @@ interface MediaListProps {
     navigateTo?: string;
 }
 
-SwiperCore.use([Navigation, Pagination]);
+SwiperCore.use([Navigation, Pagination, Scrollbar, Lazy]);
 
 const MediaList: React.FC<MediaListProps> = ({ medias, loading, horizontal = false, title, navigateTo, lastElementRef }) => {
     const navigate = useNavigate();
@@ -29,16 +29,19 @@ const MediaList: React.FC<MediaListProps> = ({ medias, loading, horizontal = fal
                 .fill(0)
                 .map((_, i) => (
                     <SwiperSlide key={i} style={{ width: 'auto' }}>
-                        <Box pr={3}>
-                            <Skeleton width={'185px'} height="278px" />
+                        <Box
+                            pr={3}
+                            width={{ base: '130px', sm: '130px', md: '154px', lg: '185px' }}
+                            height={{ base: '177px', sm: '200px', md: '227px', lg: '268px' }}>
+                            <Skeleton width="100%" height={'100%'} />
                         </Box>
                     </SwiperSlide>
                 ))
         ) : medias && medias.length > 0 ? (
             medias.map((i: SearchVideos_SearchVideos_results) => (
                 <SwiperSlide key={i.id} style={{ width: 'auto' }}>
-                    <Box pr={3}>
-                        <MediaCard media={i} width={185} />
+                    <Box pr={3} width={{ base: '130px', sm: '130px', md: '154px', lg: '185px' }}>
+                        <MediaCard media={i} skeletonHeight={{ base: '177px', sm: '200px', md: '227px', lg: '268px' }} />
                     </Box>
                 </SwiperSlide>
             ))
@@ -50,11 +53,19 @@ const MediaList: React.FC<MediaListProps> = ({ medias, loading, horizontal = fal
 
     const childrenVertical =
         loading && !medias ? (
-            Array(20)
+            Array(35)
                 .fill(0)
                 .map((_, i) => (
-                    <Box pr={1.5} pb={1.5} key={i} width="185px" height="278px">
-                        <Skeleton width="100%" height={'100%'} />
+                    <Box
+                        pr={1.5}
+                        pb={1.5}
+                        key={i}
+                        width={{ base: '130px', sm: '130px', md: '154px', lg: '185px' }}
+                        height={{ base: '177px', sm: '200px', md: '227px', lg: '268px' }}
+                        m="auto"
+                        mb={5}>
+                        <Skeleton width="100%" height={'100%'} mb={'4px'} />
+                        <Skeleton height={'18px'} />
                     </Box>
                 ))
         ) : medias && medias.length > 0 ? (
@@ -62,15 +73,15 @@ const MediaList: React.FC<MediaListProps> = ({ medias, loading, horizontal = fal
                 // make last item contain a ref so we can tell if we are at the bottom of the list
                 if (medias.length === index + 1 && lastElementRef) {
                     return (
-                        <Box pr={1.5} pb={1.5} key={i.id} style={{ width: '185px' }} ref={lastElementRef}>
-                            <MediaCard media={i} />
+                        <Box pr={1.5} pb={1.5} key={i.id} width={{ base: '130px', sm: '130px', md: '154px', lg: '185px' }} ref={lastElementRef} m="auto" mb={5}>
+                            <MediaCard media={i} skeletonHeight={{ base: '177px', sm: '200px', md: '227px', lg: '268px' }} />
                         </Box>
                     );
                 }
 
                 return (
-                    <Box pr={1.5} pb={1.5} key={i.id} style={{ width: '185px' }}>
-                        <MediaCard media={i} />
+                    <Box pr={1.5} pb={1.5} key={i.id} width={{ base: '130px', sm: '130px', md: '154px', lg: '185px' }} m="auto" mb={5}>
+                        <MediaCard media={i} label skeletonHeight={{ base: '177px', sm: '200px', md: '227px', lg: '268px' }} />
                     </Box>
                 );
             })
@@ -85,11 +96,19 @@ const MediaList: React.FC<MediaListProps> = ({ medias, loading, horizontal = fal
     const skeletonVerticalLoadExtra =
         loading &&
         medias &&
-        Array(20)
+        Array(30)
             .fill(0)
             .map((_, i) => (
-                <Box pr={1.5} pb={1.5} key={i} width="185px" height="278px">
-                    <Skeleton width="100%" height={'100%'} />
+                <Box
+                    pr={1.5}
+                    pb={1.5}
+                    key={i}
+                    width={{ base: '130px', sm: '130px', md: '154px', lg: '185px' }}
+                    height={{ base: '177px', sm: '200px', md: '227px', lg: '268px' }}
+                    m="auto"
+                    mb={5}>
+                    <Skeleton width="100%" height={'100%'} mb={'4px'} />
+                    <Skeleton height={'18px'} />
                 </Box>
             ));
 
@@ -98,27 +117,34 @@ const MediaList: React.FC<MediaListProps> = ({ medias, loading, horizontal = fal
             {title && (
                 <Box pb={2.5}>
                     <Heading size={'sm'} display={'flex'} onClick={() => (navigateTo ? navigate(navigateTo) : {})} cursor={'pointer'}>
-                        {title}
+                        {title}{' '}
+                        <Text as={'i'} fontSize={'xs'} my="auto" ml={2} opacity={0.5} fontWeight={500}>
+                            Drag to scroll
+                        </Text>
                         {navigateTo && <IoIosArrowForward style={{ marginLeft: '5px', marginTop: 'auto' }} />}
                     </Heading>
                 </Box>
             )}
             {horizontal ? (
-                <Swiper
-                    // onReachEnd={() => console.log('end')}
-                    style={{ width: '100%' }}
-                    slidesPerGroup={1}
-                    grabCursor={true}
-                    spaceBetween={2}
-                    centeredSlides={false}
-                    slidesPerView={'auto'}
-                    loop={medias && medias.length <= 9 ? false : true}
-                    loopedSlides={0}
-                    pagination={false}
-                    initialSlide={0}
-                    observer={true}>
-                    {childrenSwiper}
-                </Swiper>
+                <>
+                    <Swiper
+                        // onReachEnd={() => console.log('end')}
+                        style={{ width: '100%' }}
+                        slidesPerGroup={1}
+                        grabCursor={true}
+                        spaceBetween={2}
+                        centeredSlides={false}
+                        slidesPerView={'auto'}
+                        // loop={medias && medias.length <= 9 ? false : true}
+                        loopedSlides={0}
+                        pagination={false}
+                        initialSlide={0}
+                        observer={true}
+                        scrollbar={true}
+                        lazy={true}>
+                        {childrenSwiper}
+                    </Swiper>
+                </>
             ) : (
                 <Flex wrap={horizontal ? 'nowrap' : 'wrap'} overflowX={horizontal ? 'scroll' : 'hidden'}>
                     {childrenVertical}

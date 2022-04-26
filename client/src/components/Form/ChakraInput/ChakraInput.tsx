@@ -26,6 +26,8 @@ const ChakraInput: React.FC<ChakraInput> = ({ label, id, placeHolder, registerNa
         <FormControl isInvalid={errors[registerName]}>
             {label && <FormLabel>{label}</FormLabel>}
             <Input
+                zIndex={5}
+                variant={'filled'}
                 type={type}
                 id={id ? id : registerName}
                 placeholder={placeHolder}

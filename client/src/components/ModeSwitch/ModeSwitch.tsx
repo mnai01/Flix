@@ -5,12 +5,11 @@ const ModeSwitch = () => {
     const { colorMode, toggleColorMode } = useColorMode();
 
     return (
-        <Flex align={['center']} gap={3}>
+        <Flex align={['center']} gap={3} onClick={toggleColorMode} cursor={'pointer'}>
             <Box my={'auto'}>{colorMode === 'light' ? <FaMoon color="grey" /> : <FaSun color="orange" />}</Box>
             <Text fontSize="sm" as="b">
-                Toggle {colorMode === 'dark' ? 'light' : 'dark'}
+                Click to toggle {colorMode === 'dark' ? 'light' : 'dark'}
             </Text>
-            <Switch size="md" onChange={toggleColorMode} defaultChecked />
         </Flex>
     );
 };

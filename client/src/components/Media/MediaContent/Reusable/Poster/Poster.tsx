@@ -54,14 +54,14 @@ const Poster: React.FC<SelectedMediaProps> = ({
                 <>
                     <Box
                         zIndex={1}
-                        padding={50}
+                        padding={{ sm: 25, md: 50, lg: 50 }}
                         position={'absolute'}
                         style={{ color: '#FFFFFF' }}
                         margin={'auto'}
                         height={'fit-content'}
                         top={0}
                         bottom={0}
-                        width={{ base: '100%', lg: '35%', xl: '35%' }}>
+                        width={{ base: '100%', lg: '100%', xl: '75%' }}>
                         <Heading variant={'h2'} size={'xl'} fontWeight={700} mb={2}>
                             {title && title.toUpperCase()}
                         </Heading>
@@ -89,7 +89,7 @@ const Poster: React.FC<SelectedMediaProps> = ({
                             </Flex>
                         )}
                         {overview && (
-                            <Text fontWeight={500} mb={25} width={'50vw'}>
+                            <Text fontWeight={500} mb={25} width={{ md: '100%', lg: '100%' }} noOfLines={5}>
                                 {overview}
                             </Text>
                         )}

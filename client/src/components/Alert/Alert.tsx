@@ -16,7 +16,7 @@ const CustomAlert: React.FC = () => {
                 position: toast.POSITION.BOTTOM_LEFT,
                 theme: colorMode === 'dark' ? `dark` : 'colored',
                 autoClose: 8000,
-                style: { width: '200%' },
+                style: { width: '100%' },
             },
         );
 
@@ -25,7 +25,7 @@ const CustomAlert: React.FC = () => {
             position: toast.POSITION.BOTTOM_LEFT,
             theme: colorMode === 'dark' ? `colored` : 'light',
             autoClose: 8000,
-            style: { width: '200%' },
+            style: { width: '100%' },
         });
 
     useEffect(() => {
