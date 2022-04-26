@@ -1,5 +1,5 @@
 import { CloseIcon } from '@chakra-ui/icons';
-import { Box, Drawer, DrawerContent, DrawerHeader, DrawerOverlay, Flex, Heading, IconButton, Menu, MenuButton, useDisclosure } from '@chakra-ui/react';
+import { Box, Drawer, DrawerContent, DrawerHeader, DrawerOverlay, Flex, Heading, IconButton, Image, Menu, MenuButton, useDisclosure } from '@chakra-ui/react';
 import { GiHamburgerMenu } from 'react-icons/gi';
 import AutoSuggestion from '../../AutoSuggestion';
 import Sidebar from '../Sidebar';

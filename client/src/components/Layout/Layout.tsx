@@ -11,7 +11,7 @@ const Layout: React.FC = ({ children }) => {
             {isLessThan768 ? (
                 <>
                     <Header />
-                    {children}
+                    <PageWrapper mobile={isLessThan768}>{children}</PageWrapper>
                 </>
             ) : (
                 <Flex width={'100%'}>

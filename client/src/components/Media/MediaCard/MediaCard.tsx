@@ -1,15 +1,19 @@
-import { Box, Image, Skeleton } from '@chakra-ui/react';
+import { Box, Image, Skeleton, Text } from '@chakra-ui/react';
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 interface MediaProps {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     media: any;
-    width?: number;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    width?: any;
+    label?: boolean;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    skeletonHeight?: any;
 }
 
-const MediaCard: React.FC<MediaProps> = ({ media, width }) => {
-    const { id, poster_path, title, type } = media;
+const MediaCard: React.FC<MediaProps> = ({ media, width, label, skeletonHeight }) => {
+    const { id, poster_path, title, type, name } = media;
     const navigate = useNavigate();
     const typeOfMedia = type ? type : title ? 'movie' : 'tv';
     const [load, setLoad] = useState(false);
@@ -17,20 +21,31 @@ const MediaCard: React.FC<MediaProps> = ({ media, width }) => {
     return (
         <>
             {media && (
-                <Box onClick={() => navigate(`/${typeOfMedia}/${id}`)} height="278px" width={width ? `${width}px` : '100%'}>
+                <Box onClick={() => navigate(`/${typeOfMedia}/${id}`)} height="auto" width={width ? `${width}` : '100%'}>
                     <Image
                         as="img"
                         height={'100%'}
                         borderRadius="md"
-                        src={`https://image.tmdb.org/t/p/w154/${poster_path}`}
-                        fallbackSrc="https://via.placeholder.com/150"
+                        src={`https://image.tmdb.org/t/p/w185/${poster_path}`}
+                        fallbackSrc="https://via.placeholder.com/185x278"
                         // htmlWidth="185px"
                         // htmlHeight="278px"
                         onLoad={() => setLoad(true)}
                         onError={() => setLoad(true)}
                         display={load ? 'block' : 'none'}
                     />
-                    {!load && <Skeleton width="100%" height={'100%'} />}
+
+                    {!load ? (
+                        <>
+                            <Skeleton height={skeletonHeight} mb={'4px'} /> <Skeleton height={'18px'} />
+                        </>
+                    ) : (
+                        label && (
+                            <Text noOfLines={1} fontWeight={500} fontSize={'sm'} mt={1}>
+                                {title ? title : name}
+                            </Text>
+                        )
+                    )}
                 </Box>
             )}
         </>
