@@ -63,7 +63,7 @@ const SrcVideo: React.FC<SrcVideoProps> = ({ data, imdb, tmdbLink, imdbLink, isT
                             return i.disabled;
                         })[0].link
                     }
-                    sandbox="allow-scripts allow-same-origin"
+                    // sandbox="allow-scripts allow-same-origin"
                 />
             ) : (
                 <Center height={'100%'}>
