@@ -17,6 +17,7 @@
         "@types/react-dom": "^17.0.11",
         "apollo": "^2.33.9",
         "apollo-link-token-refresh": "^0.4.0",
+        "env-cmd": "^10.1.0",
         "eslint-plugin-prettier": "^4.0.0",
         "framer-motion": "^6.2.8",
         "jwt-decode": "^3.1.2",
@@ -52,10 +53,10 @@
     },
     "scripts": {
         "start": "react-scripts start",
-        "build": "react-scripts build",
+        "build": "env-cmd -e production react-scripts build",
         "test": "react-scripts test",
         "eject": "react-scripts eject",
-        "dev": "react-scripts start",
+        "dev": "env-cmd -e development react-scripts start",
         "lint": "eslint",
         "download-schema": "apollo service:download --endpoint=http://localhost:4000/graphql src/apollo/schema.json",
         "codegen": "npm run download-schema && apollo codegen:generate --target=typescript --tagName=gql --includes=src/apollo/*.ts --localSchemaFile=src/apollo/schema.json --outputFlat src/apollo/generated"

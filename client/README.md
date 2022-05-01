@@ -1,4 +1,4 @@
-## Fill in example.env
+## Fill in .env && env-cmdrc
 
 REACT_APP_SOURCE=
 
