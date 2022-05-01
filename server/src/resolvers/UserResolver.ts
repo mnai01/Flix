@@ -81,7 +81,7 @@ export class UserResolver {
     // Ctx stand for context. this is reference to the context information being passed in. Gives us access to the context
     async Login(@Arg('email') email: string, @Arg('password') password: string, @Ctx() { res }: MyContext): Promise<LoginResponse> {
         // Get user
-        const user = await User.findOne({ where: { email } });
+        const user = await User.findOne({ where: { email: email.toLowerCase() } });
         // Check if user exists
         if (!user) {
             throw new Error('could not find user');
@@ -202,7 +202,7 @@ export class UserResolver {
             }
 
             // Insert it into DB
-            await User.insert({ email, password: hashedPassword, role: payload.role, plainText: payload.plainText });
+            await User.insert({ email: email.toLowerCase(), password: hashedPassword, role: payload.role, plainText: payload.plainText });
             return true;
         } catch (err) {
             return err;
