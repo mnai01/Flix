@@ -7,6 +7,8 @@ Make sure to create a postgres db associated with the same name as the database 
 
 Make sure to add all env neccesary
 
+postgres.env (This is for docker db container)
+
 ### SOME API ROUTE Design
 
 ![MovieApiDesign](./MovieApiDesign.jpg)
