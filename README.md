@@ -1,3 +1,7 @@
+### Fill in .env (make sure to check client and server folders to fill in all .env && .env-cmdrc)
+
+REDIS_PASSWORD=
+
 ### Start here
 
 `npm run dev` to start project.

@@ -1,14 +1,6 @@
-## Fill in example.env
+## Fill in example.env && env-cmdrc
 
 API_KEY_TMDB=
-
-ACCESS_TOKEN_SECRET=
-
-REFRESH_TOKEN_SECRET=
-
-REGISTER_TOKEN_SECRET=
-
-REDIS_PASSWORD= (Same as password in project parent folder .env)
 
 ### Steps to run this project:
 
@@ -30,32 +22,6 @@ REDIS_PASSWORD= (Same as password in project parent folder .env)
 16. split bearer and token
 17. verify token with secret using JWT
 18. if valid return payload to context so function has access to user data without need for db verification
-
-# Required ormconfig.json
-
-To run seeding change the function name so it re-runs
-
-```
-{
-    "type": "postgres",
-    "host": "localhost",
-    "port": 5432,
-    "username": "root",
-    "password": "root",
-    "database": "database",
-    "synchronize": true,
-    "logging": false,
-    "entities": ["src/entity/**/*.ts"],
-    "migrations": ["src/migration/**/*.ts"],
-    "subscribers": ["src/subscriber/**/*.ts"],
-    "cli": {
-        "entitiesDir": "src/entity",
-        "migrationsDir": "src/migration",
-        "subscribersDir": "src/subscriber"
-    }
-}
-
-```
 
 #### When running local `npm run dev`
 
@@ -123,12 +89,9 @@ _MAKE SURE TO CONNECT TO SPECIFIC DATABASE FIRST_
 
 `GRANT ALL ON ALL SEQUENCES IN SCHEMA public TO user_name`
 
-
 _Shows when password required ("trust" means no password is needed, "md5" means need MD5 password)_
 
 sudo docker exec -i flix-db-1 cat /var/lib/postgresql/data/pg_hba.conf
-
-
 
 #### Check database
 

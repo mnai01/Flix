@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
 import { ApolloClient, ApolloLink, ApolloProvider, HttpLink, InMemoryCache, Observable } from '@apollo/client';
 import { TokenRefreshLink } from 'apollo-link-token-refresh';
 import jwtDecode from 'jwt-decode';
@@ -56,7 +57,7 @@ const AuthorizedApolloProvider: React.FC = ({ children }) => {
             }
         },
         fetchAccessToken: async () => {
-            return fetch('http://localhost:4000/rest/auth/refresh_token', {
+            return fetch(process.env.REACT_APP_API_REFRESH!, {
                 method: 'POST',
                 credentials: 'include',
             });
@@ -75,7 +76,7 @@ const AuthorizedApolloProvider: React.FC = ({ children }) => {
             tokenRefreshLink,
             authMiddleware,
             new HttpLink({
-                uri: 'http://localhost:4000/graphql',
+                uri: process.env.REACT_APP_API_GRAPHQL!,
                 credentials: 'include',
             }),
         ]),
