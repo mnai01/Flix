@@ -187,7 +187,7 @@ export class UserResolver {
                 throw new Error('Bad registration token');
             }
 
-            const user = await User.findOne({ where: { email } });
+            const user = await User.findOne({ where: { email: email.toLowerCase() } });
 
             if (user) {
                 throw new Error('User already exists');
