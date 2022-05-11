@@ -31,6 +31,10 @@ REDIS_PASSWORD= (Same as password in project parent folder .env)
 17. verify token with secret using JWT
 18. if valid return payload to context so function has access to user data without need for db verification
 
+### Steps to create a db in PostgreSQL
+
+CREATE DATABASE name
+
 # Required ormconfig.json
 
 To run seeding change the function name so it re-runs
@@ -123,12 +127,9 @@ _MAKE SURE TO CONNECT TO SPECIFIC DATABASE FIRST_
 
 `GRANT ALL ON ALL SEQUENCES IN SCHEMA public TO user_name`
 
-
 _Shows when password required ("trust" means no password is needed, "md5" means need MD5 password)_
 
 sudo docker exec -i flix-db-1 cat /var/lib/postgresql/data/pg_hba.conf
-
-
 
 #### Check database
 
