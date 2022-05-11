@@ -1,3 +1,7 @@
+### Fill in .env (make sure to check client and server folders to fill in all .env && .env-cmdrc)
+
+REDIS_PASSWORD=
+
 ### Start here
 
 `npm run dev` to start project.
@@ -6,6 +10,8 @@ Make sure to run `npm i` in this root, client and server folder
 Make sure to create a postgres db associated with the same name as the database listed in the ormconfig.json file which you created in the server folder
 
 Make sure to add all env neccesary
+
+postgres.env (This is for docker db container)
 
 ### SOME API ROUTE Design
 

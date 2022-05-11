@@ -1,14 +1,6 @@
-## Fill in example.env
+## Fill in example.env && env-cmdrc
 
 API_KEY_TMDB=
-
-ACCESS_TOKEN_SECRET=
-
-REFRESH_TOKEN_SECRET=
-
-REGISTER_TOKEN_SECRET=
-
-REDIS_PASSWORD= (Same as password in project parent folder .env)
 
 ### Steps to run this project:
 
@@ -30,36 +22,6 @@ REDIS_PASSWORD= (Same as password in project parent folder .env)
 16. split bearer and token
 17. verify token with secret using JWT
 18. if valid return payload to context so function has access to user data without need for db verification
-
-### Steps to create a db in PostgreSQL
-
-CREATE DATABASE name
-
-# Required ormconfig.json
-
-To run seeding change the function name so it re-runs
-
-```
-{
-    "type": "postgres",
-    "host": "localhost",
-    "port": 5432,
-    "username": "root",
-    "password": "root",
-    "database": "database",
-    "synchronize": true,
-    "logging": false,
-    "entities": ["src/entity/**/*.ts"],
-    "migrations": ["src/migration/**/*.ts"],
-    "subscribers": ["src/subscriber/**/*.ts"],
-    "cli": {
-        "entitiesDir": "src/entity",
-        "migrationsDir": "src/migration",
-        "subscribersDir": "src/subscriber"
-    }
-}
-
-```
 
 #### When running local `npm run dev`
 

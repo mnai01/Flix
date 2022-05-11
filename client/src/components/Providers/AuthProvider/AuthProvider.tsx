@@ -45,7 +45,8 @@ const AuthProvider: React.FC = ({ children }) => {
     useEffect(() => {
         // Check auth on page load
         const checkAuth = async () => {
-            const data: fetchReturn = await (await fetch('http://localhost:4000/rest/auth/refresh_token', { method: 'POST', credentials: 'include' })).json();
+            // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+            const data: fetchReturn = await (await fetch(process.env.REACT_APP_API_REFRESH!, { method: 'POST', credentials: 'include' })).json();
             setAuthHandler(data);
         };
         checkAuth().catch((err) => {
