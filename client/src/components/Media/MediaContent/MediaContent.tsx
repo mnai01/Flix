@@ -33,7 +33,7 @@ const MediaContent: React.FC = () => {
     // }, [location]);
 
     return (
-        <Box height={'60vh'} width={'100%'}>
+        <Box height={'60vh'} width={'100%'} mt={'20px'}>
             <Button leftIcon={<FaArrowLeft />} variant="outline" onClick={() => navigate(-1)} mb={3} size={'sm'}>
                 Navigate back
             </Button>

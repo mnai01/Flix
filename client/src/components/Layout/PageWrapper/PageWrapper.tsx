@@ -6,7 +6,7 @@ interface PageWrapperProps {
 
 const PageWrapper: React.FC<PageWrapperProps> = ({ children, mobile }) => {
     return (
-        <Container width={'100%'} maxW={'100%'} minWidth={0} minHeight={0} pr={mobile ? 4 : 0} mt={'20px'}>
+        <Container width={'100%'} maxW={'100%'} minWidth={0} minHeight={0} pr={mobile ? 4 : 0}>
             {children}
         </Container>
     );
