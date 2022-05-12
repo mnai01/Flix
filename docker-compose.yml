@@ -9,6 +9,8 @@ services:
             - 5432:5432
         volumes:
             - postgres_data:/var/lib/postgresql/data
+        mem_limit: 100m
+
 
     client:
         stdin_open: true
@@ -20,9 +22,7 @@ services:
         volumes:
             - /app/node_modules
             - ./client:/app
-        mem_limit: 256m
-        mem_reservation: 100M
-        cpus: 0.5
+        mem_limit: 100M
 
     api:
         build:
@@ -38,7 +38,7 @@ services:
         volumes:
             - /app/node_modules
             - ./server:/app
-        mem_limit: 512m
+        mem_limit: 756m
         mem_reservation: 256M
 
     nginx:
@@ -63,7 +63,7 @@ services:
             - redis:/var/lib/redis/data
         ports:
             - 6379:6379
-        mem_limit: 200m
+        mem_limit: 100m
 
     # pgadmin:
     #     image: dpage/pgadmin4
