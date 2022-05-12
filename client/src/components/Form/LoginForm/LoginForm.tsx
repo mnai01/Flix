@@ -69,8 +69,8 @@ const LoginForm: React.FC = () => {
         <form onSubmit={methods.handleSubmit(onSubmit)} style={{ height: '100%' }}>
             <FormProvider {...methods}>
                 <Center w="100%" h="100%">
-                    <Box maxW="sm" alignSelf="center" p={50} backgroundColor="#222834" borderRadius="15px" w={'100%'} boxShadow="lg">
-                        <VStack align="flex-start" spacing="12px">
+                    <Box maxW="sm" p={50} backgroundColor="#222834" borderRadius="15px" w={'100%'} boxShadow="lg">
+                        <VStack spacing="12px">
                             <Popover isOpen={isOpen} onOpen={onOpen} onClose={onClose} placement="right" closeOnBlur={false}>
                                 <PopoverTrigger>
                                     {/* Chakra m="auto" wouldnt work so this is workaround */}
@@ -88,7 +88,7 @@ const LoginForm: React.FC = () => {
                                     </PopoverBody>
                                 </PopoverContent>
                             </Popover>
-                            <Heading alignSelf="center" padding="15px" letterSpacing="widest">
+                            <Heading padding="15px" letterSpacing="widest">
                                 Login
                             </Heading>
                             <ChakraInput registerName={'email'} placeHolder="Please enter your Email Address" requiredMsg={'Please Enter Email'} type="text" />
@@ -104,7 +104,7 @@ const LoginForm: React.FC = () => {
                                     Log In
                                 </Button>
                             </Box>
-                            <Box alignSelf="center" color="#737373">
+                            <Box color="#737373">
                                 New to Catch a Flix?
                                 <br />
                             </Box>
