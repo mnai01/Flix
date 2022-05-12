@@ -1,6 +1,6 @@
 import { Center, Spinner } from '@chakra-ui/react';
 import { lazy, Suspense } from 'react';
-import { Route, Routes } from 'react-router';
+import { Navigate, Route, Routes } from 'react-router';
 import CustomAlert from '../../components/Alert/Alert';
 import Layout from '../../components/Layout';
 import { AutoSuggestionProvider } from '../../components/Providers/AutoSuggestionProvider';
@@ -12,7 +12,6 @@ const MoviesPage = lazy(() => import('../MoviesPage'));
 const CatagoryMediaPage = lazy(() => import('../CatagoryMediaPage'));
 const HomePage = lazy(() => import('../HomePage'));
 const MediaContentPage = lazy(() => import('../MediaContentPage'));
-const NotFound = lazy(() => import('../NotFound'));
 const SearchPage = lazy(() => import('../SearchPage'));
 const UpdatesPage = lazy(() => import('../UpdatesPage'));
 
@@ -30,7 +29,7 @@ const PageRoutes = () => {
                                 </Center>
                             }>
                             <Routes>
-                                <Route path="*" element={<NotFound />} />
+                                <Route path="*" element={<Navigate to="/" />} />
                                 <Route path="/" element={<HomePage />} />
                                 <Route path="/movies" element={<MoviesPage />} />
                                 <Route path="/tv" element={<TVsPage />} />
