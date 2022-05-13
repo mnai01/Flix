@@ -3,6 +3,7 @@ import {
     Box,
     Button,
     Center,
+    Heading,
     Image,
     Popover,
     PopoverArrow,
@@ -65,11 +66,11 @@ const LoginForm: React.FC = () => {
         Login({ variables: { email: data.email, password: data.password } });
     };
     return (
-        <form onSubmit={methods.handleSubmit(onSubmit)}>
+        <form onSubmit={methods.handleSubmit(onSubmit)} style={{ height: '100%' }}>
             <FormProvider {...methods}>
-                <Center w="100%" h="100vh">
-                    <Box maxW="sm" alignSelf="center">
-                        <VStack align="flex-start" spacing="12px">
+                <Center w="100%" h="100%">
+                    <Box maxW="sm" p={50} backgroundColor="#222834" borderRadius="15px" w={'100%'} boxShadow="lg">
+                        <VStack spacing="12px">
                             <Popover isOpen={isOpen} onOpen={onOpen} onClose={onClose} placement="right" closeOnBlur={false}>
                                 <PopoverTrigger>
                                     {/* Chakra m="auto" wouldnt work so this is workaround */}
@@ -87,11 +88,32 @@ const LoginForm: React.FC = () => {
                                     </PopoverBody>
                                 </PopoverContent>
                             </Popover>
-                            <ChakraInput registerName={'email'} placeHolder="email" requiredMsg={'Please Enter Email'} type="text" />
-                            <ChakraInput registerName={'password'} placeHolder="password" requiredMsg={'Please Enter Password'} type="password" />
-                            <Button mt={4} width="sm" type="submit" isLoading={loading}>
-                                Log In
-                            </Button>
+                            <Heading padding="15px" letterSpacing="widest">
+                                Login
+                            </Heading>
+                            <ChakraInput registerName={'email'} placeHolder="Please enter your Email Address" requiredMsg={'Please Enter Email'} type="text" />
+                            <ChakraInput
+                                registerName={'password'}
+                                placeHolder="Please enter your Password"
+                                requiredMsg={'Please Enter Password'}
+                                type="password"
+                                my={2}
+                            />
+                            <Box width="100%">
+                                <Button type="submit" width="100%" my={1} isLoading={loading}>
+                                    Log In
+                                </Button>
+                            </Box>
+                            {/* <Box color="#737373">
+                                New to Catch a Flix?
+                                <br />
+                            </Box>
+                            <Box alignSelf="center" mt={0}>
+                                <Link color="white" fontWeight="bold" href="#">
+                                    Sign up{' '}
+                                </Link>
+                                with us!
+                            </Box> */} */}
                         </VStack>
                     </Box>
                 </Center>

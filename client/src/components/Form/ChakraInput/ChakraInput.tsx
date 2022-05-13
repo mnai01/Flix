@@ -16,9 +16,10 @@ interface ChakraInput {
     minLength?: RHFLengthValidation;
     maxLength?: RHFLengthValidation;
     type?: string;
+    my?: number;
 }
 
-const ChakraInput: React.FC<ChakraInput> = ({ label, id, placeHolder, registerName, requiredMsg, minLength, maxLength, type }) => {
+const ChakraInput: React.FC<ChakraInput> = ({ label, id, placeHolder, registerName, requiredMsg, minLength, maxLength, type, my = 1 }) => {
     const { register, formState } = useFormContext();
     const { errors } = formState;
 
@@ -36,6 +37,9 @@ const ChakraInput: React.FC<ChakraInput> = ({ label, id, placeHolder, registerNa
                     minLength: minLength,
                     maxLength: maxLength,
                 })}
+                w="100%"
+                alignItems="center"
+                my={my}
             />
             <FormErrorMessage>{errors[registerName] && errors[registerName].message}</FormErrorMessage>
         </FormControl>
