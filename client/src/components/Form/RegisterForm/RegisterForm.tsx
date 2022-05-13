@@ -51,7 +51,6 @@ const RegisterForm = () => {
                                 type="password"
                                 minLength={{ value: 6, message: 'Password must be 6+ characters long' }}
                             />
-                            <i>We do not support email / password reset for security reasons, do not forget your email or password!</i>
                             <Button mt={4} width="sm" type="submit" isLoading={loading}>
                                 Register
                             </Button>

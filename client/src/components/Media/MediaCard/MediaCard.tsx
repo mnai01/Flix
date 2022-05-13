@@ -21,7 +21,7 @@ const MediaCard: React.FC<MediaProps> = ({ media, width, label, skeletonHeight }
     return (
         <>
             {media && (
-                <Box onClick={() => navigate(`/${typeOfMedia}/${id}`)} height="auto" width={width ? `${width}` : '100%'}>
+                <Box onClick={() => navigate(`/${typeOfMedia}/${id}`)} height="auto" width={width ? `${width}` : '100%'} cursor={'pointer'}>
                     <Image
                         as="img"
                         height={'100%'}
