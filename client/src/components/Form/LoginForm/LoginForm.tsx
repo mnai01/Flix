@@ -80,10 +80,10 @@ const LoginForm: React.FC = () => {
                                     <PopoverArrow />
                                     <PopoverCloseButton />
                                     <PopoverBody>
-                                        Im a friendly alpacha, click
+                                        Im a friendly alpacha, click{' '}
                                         <Text cursor={'pointer'} as="u" color="blue" display={'inline'} onClick={() => play()}>
                                             here
-                                        </Text>
+                                        </Text>{' '}
                                         to hear what I sound like.
                                     </PopoverBody>
                                 </PopoverContent>
@@ -104,11 +104,11 @@ const LoginForm: React.FC = () => {
                                     Log In
                                 </Button>
                             </Box>
-                            <Box alignSelf="center" color="#737373">
+                            {/* <Box alignSelf="center" color="#737373">
                                 New to Catch a Flix?
                                 <br />
                             </Box>
-                            {/* <Box alignSelf="center" mt={0}>
+                            <Box alignSelf="center" mt={0}>
                                 <Link color="white" fontWeight="bold" href="#">
                                     Sign up{' '}
                                 </Link>
