@@ -113,7 +113,7 @@ const LoginForm: React.FC = () => {
                                     Sign up{' '}
                                 </Link>
                                 with us!
-                            </Box> */} */}
+                            </Box> */}
                         </VStack>
                     </Box>
                 </Center>
