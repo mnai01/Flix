@@ -12,6 +12,7 @@ import {
     PopoverContent,
     PopoverTrigger,
     Text,
+    useColorMode,
     useDisclosure,
     useToast,
     VStack,
@@ -36,6 +37,7 @@ interface FormSubmitValues {
 }
 
 const LoginForm: React.FC = () => {
+    const { colorMode } = useColorMode();
     const toast = useToast();
     const methods = useForm<FormSubmitValues>();
     const { setAuthHandler } = useAuth();
@@ -69,7 +71,7 @@ const LoginForm: React.FC = () => {
         <form onSubmit={methods.handleSubmit(onSubmit)} style={{ height: '100%' }}>
             <FormProvider {...methods}>
                 <Center w="100%" h="100%">
-                    <Box maxW="sm" p={50} backgroundColor="#222834" borderRadius="15px" w={'100%'} boxShadow="lg">
+                    <Box maxW="sm" p={50} backgroundColor={colorMode === 'dark' ? '#222834' : '#dbe7f8'} borderRadius="15px" w={'100%'} boxShadow="lg">
                         <VStack spacing="12px">
                             <Popover isOpen={isOpen} onOpen={onOpen} onClose={onClose} placement="right" closeOnBlur={false}>
                                 <PopoverTrigger>
@@ -91,14 +93,8 @@ const LoginForm: React.FC = () => {
                             <Heading padding="15px" letterSpacing="widest">
                                 Login
                             </Heading>
-                            <ChakraInput registerName={'email'} placeHolder="Please enter your Email Address" requiredMsg={'Please Enter Email'} type="text" />
-                            <ChakraInput
-                                registerName={'password'}
-                                placeHolder="Please enter your Password"
-                                requiredMsg={'Please Enter Password'}
-                                type="password"
-                                my={2}
-                            />
+                            <ChakraInput registerName={'email'} placeHolder="Email Address" requiredMsg={'Please Enter Email'} type="text" />
+                            <ChakraInput registerName={'password'} placeHolder="Password" requiredMsg={'Please Enter Password'} type="password" my={2} />
                             <Box width="100%">
                                 <Button type="submit" width="100%" my={1} isLoading={loading}>
                                     Log In
