@@ -76,7 +76,7 @@ export class MediaResolver {
                 with_genres,
                 'with_release_type': with_release_type.join('|'),
                 with_original_language,
-                'vote_count.gte': vote_countGte,
+                'vote_count.gte': vote_countGte ? vote_countGte : 10,
                 'vote_average.gte': vote_averageGte,
             },
         });
@@ -97,7 +97,7 @@ export class MediaResolver {
                 watch_region,
                 with_status,
                 with_original_language,
-                'vote_count.gte': vote_countGte,
+                'vote_count.gte': vote_countGte ? vote_countGte : 10,
                 'vote_average.gte': vote_averageGte,
             },
         });
