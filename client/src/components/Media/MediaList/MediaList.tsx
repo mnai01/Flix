@@ -14,6 +14,7 @@ interface MediaListProps {
     loading?: boolean;
     horizontal?: boolean;
     title?: string;
+    label?: boolean;
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     lastElementRef?: any;
     navigateTo?: string;
@@ -21,7 +22,7 @@ interface MediaListProps {
 
 SwiperCore.use([Navigation, Pagination, Scrollbar, Lazy]);
 
-const MediaList: React.FC<MediaListProps> = ({ medias, loading, horizontal = false, title, navigateTo, lastElementRef }) => {
+const MediaList: React.FC<MediaListProps> = ({ medias, loading, horizontal = false, title, navigateTo, lastElementRef, label = false }) => {
     const navigate = useNavigate();
     const childrenSwiper =
         loading && !medias ? (
@@ -41,7 +42,7 @@ const MediaList: React.FC<MediaListProps> = ({ medias, loading, horizontal = fal
             medias.map((i: SearchVideos_SearchVideos_results) => (
                 <SwiperSlide key={i.id} style={{ width: 'auto' }}>
                     <Box pr={3} width={{ base: '130px', sm: '130px', md: '154px', lg: '185px' }}>
-                        <MediaCard media={i} skeletonHeight={{ base: '177px', sm: '200px', md: '227px', lg: '268px' }} />
+                        <MediaCard media={i} label={label} skeletonHeight={{ base: '177px', sm: '200px', md: '227px', lg: '268px' }} />
                     </Box>
                 </SwiperSlide>
             ))
@@ -74,14 +75,14 @@ const MediaList: React.FC<MediaListProps> = ({ medias, loading, horizontal = fal
                 if (medias.length === index + 1 && lastElementRef) {
                     return (
                         <Box pr={1.5} pb={1.5} key={i.id} width={{ base: '130px', sm: '130px', md: '154px', lg: '185px' }} ref={lastElementRef} m="auto" mb={5}>
-                            <MediaCard media={i} skeletonHeight={{ base: '177px', sm: '200px', md: '227px', lg: '268px' }} />
+                            <MediaCard media={i} label={label} skeletonHeight={{ base: '177px', sm: '200px', md: '227px', lg: '268px' }} />
                         </Box>
                     );
                 }
 
                 return (
                     <Box pr={1.5} pb={1.5} key={i.id} width={{ base: '130px', sm: '130px', md: '154px', lg: '185px' }} m="auto" mb={5}>
-                        <MediaCard media={i} label skeletonHeight={{ base: '177px', sm: '200px', md: '227px', lg: '268px' }} />
+                        <MediaCard media={i} label={label} skeletonHeight={{ base: '177px', sm: '200px', md: '227px', lg: '268px' }} />
                     </Box>
                 );
             })
@@ -99,15 +100,8 @@ const MediaList: React.FC<MediaListProps> = ({ medias, loading, horizontal = fal
         Array(30)
             .fill(0)
             .map((_, i) => (
-                <Box
-                    pr={1.5}
-                    pb={1.5}
-                    key={i}
-                    width={{ base: '130px', sm: '130px', md: '154px', lg: '185px' }}
-                    height={{ base: '177px', sm: '200px', md: '227px', lg: '268px' }}
-                    m="auto"
-                    mb={5}>
-                    <Skeleton width="100%" height={'100%'} mb={'4px'} />
+                <Box pr={1.5} pb={1.5} key={i} width={{ base: '130px', sm: '130px', md: '154px', lg: '185px' }} m="auto" mb={5}>
+                    <Skeleton width="100%" height={{ base: '177px', sm: '200px', md: '227px', lg: '268px' }} mb={'4px'} />
                     <Skeleton height={'18px'} />
                 </Box>
             ));

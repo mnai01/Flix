@@ -39,12 +39,12 @@ const MediaCard: React.FC<MediaProps> = ({ media, width, label, skeletonHeight }
                         <>
                             <Skeleton height={skeletonHeight} mb={'4px'} /> <Skeleton height={'18px'} />
                         </>
+                    ) : label ? (
+                        <Text noOfLines={1} fontWeight={500} fontSize={'sm'} mt={1}>
+                            {title ? title : name}
+                        </Text>
                     ) : (
-                        label && (
-                            <Text noOfLines={1} fontWeight={500} fontSize={'sm'} mt={1}>
-                                {title ? title : name}
-                            </Text>
-                        )
+                        label !== false && <Skeleton height={'18px'} mt={1} />
                     )}
                 </Box>
             )}
