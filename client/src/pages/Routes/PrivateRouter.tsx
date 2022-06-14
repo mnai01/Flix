@@ -21,7 +21,7 @@ const PageRoutes = () => {
             <GenreProvider>
                 <WatchedMediaProvider>
                     <Layout>
-                        <CustomAlert />
+                        {/* <CustomAlert /> */}
                         <Suspense
                             fallback={
                                 <Center h={'100vh'}>
