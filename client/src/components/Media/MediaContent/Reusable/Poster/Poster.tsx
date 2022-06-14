@@ -80,7 +80,13 @@ const Poster: React.FC<SelectedMediaProps> = ({
                                     // eslint-disable-next-line @typescript-eslint/no-explicit-any
                                     genres?.map((genre: any) => {
                                         return (
-                                            <Tag size={'md'} key={genre.id} variant="outline" colorScheme="blue">
+                                            <Tag
+                                                size={'md'}
+                                                cursor={'pointer'}
+                                                key={genre.id}
+                                                variant="outline"
+                                                colorScheme="blue"
+                                                onClick={() => navigate(`/movies/category/${genre.name}`)}>
                                                 {genre.name}
                                             </Tag>
                                         );
