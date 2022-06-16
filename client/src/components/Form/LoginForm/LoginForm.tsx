@@ -5,6 +5,7 @@ import {
     Center,
     Heading,
     Image,
+    Link,
     Popover,
     PopoverArrow,
     PopoverBody,
@@ -19,7 +20,7 @@ import {
 } from '@chakra-ui/react';
 import React from 'react';
 import { FormProvider, SubmitHandler, useForm } from 'react-hook-form';
-import { useNavigate } from 'react-router-dom';
+import { Link as RouteLink, useNavigate } from 'react-router-dom';
 // eslint-disable-next-line import/no-named-as-default
 import useSound from 'use-sound';
 import { Login, LoginVariables } from '../../../apollo/generated/Login';
@@ -105,7 +106,7 @@ const LoginForm: React.FC = () => {
                                 <br />
                             </Box>
                             <Box alignSelf="center" mt={0}>
-                                <Link color="white" fontWeight="bold" href="#">
+                                <Link as={RouteLink} color="white" fontWeight="bold" to={'register'}>
                                     Sign up{' '}
                                 </Link>
                                 with us!

@@ -8,11 +8,13 @@
 // ====================================================
 
 export interface Register {
-  Register: boolean;
+  Register: string;
 }
 
 export interface RegisterVariables {
   token: string;
-  email: string;
   password: string;
+  email: string;
+  lastName: string;
+  firstName: string;
 }

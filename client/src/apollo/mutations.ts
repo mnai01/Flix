@@ -15,7 +15,7 @@ export const ADD_WATCHED = gql`
 `;
 
 export const REGISTER = gql`
-    mutation Register($token: String!, $email: String!, $password: String!) {
-        Register(token: $token, email: $email, password: $password)
+    mutation Register($token: String!, $password: String!, $email: String!, $lastName: String!, $firstName: String!) {
+        Register(token: $token, password: $password, email: $email, lastName: $lastName, firstName: $firstName)
     }
 `;
