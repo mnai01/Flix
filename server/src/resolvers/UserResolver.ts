@@ -150,6 +150,7 @@ export class UserResolver {
         @Ctx() { payload }: MyContext,
         @Arg('plainText') plainText?: boolean,
         @Arg('role', () => UserRole) role?: UserRole,
+        @Arg('validDays', () => Int, { nullable: true }) validDays?: number,
     ): Promise<string | null | boolean> {
         const user = await User.findOne({ where: { id: payload?.userId } });
         // Check if user exists
@@ -161,10 +162,10 @@ export class UserResolver {
             throw new Error('You do not have permission to run this, admin will be notified');
         }
         try {
-            const registerToken = createRegisterToken(payload?.userId!, plainText, role);
+            const registerToken = createRegisterToken({ userId: payload?.userId!, plainText, role, validDays });
 
-            //here key will expire after 24 hours
-            client.SETEX(registerToken, 24 * 60 * 60, payload?.userId!);
+            // here key will expire after 1 day or set days
+            client.SETEX(registerToken, validDays ? validDays * 24 * 60 * 60 : 1 * 24 * 60 * 60, payload?.userId!);
 
             return `http://localhost:3000/register?token=${registerToken}`;
         } catch (err) {
@@ -174,7 +175,13 @@ export class UserResolver {
 
     // this is what the mutations returns
     @Mutation(() => String)
-    async Register(@Arg('email') email: string, @Arg('password') password: string, @Arg('token') token: string) {
+    async Register(
+        @Arg('firstName') firstName: string,
+        @Arg('lastName') lastName: string,
+        @Arg('email') email: string,
+        @Arg('password') password: string,
+        @Arg('token') token: string,
+    ) {
         let payload: any = null;
 
         try {
@@ -193,7 +200,10 @@ export class UserResolver {
                 throw new Error('User already exists');
             }
 
-            client.DEL(token);
+            // 1 day links get deleted right after registration
+            if (payload.validDays === 1) {
+                client.DEL(token);
+            }
 
             let hashedPassword = password;
             if (!payload.plainText) {
@@ -202,7 +212,7 @@ export class UserResolver {
             }
 
             // Insert it into DB
-            await User.insert({ email: email.toLowerCase(), password: hashedPassword, role: payload.role, plainText: payload.plainText });
+            await User.insert({ firstName, lastName, email: email.toLowerCase(), password: hashedPassword, role: payload.role, plainText: payload.plainText });
             return true;
         } catch (err) {
             return err;

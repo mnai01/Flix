@@ -22,6 +22,14 @@ export class User extends BaseEntity {
     id: number;
 
     @Field()
+    @Column('text', { default: 'NA' })
+    firstName: string;
+
+    @Field()
+    @Column('text', { default: 'NA' })
+    lastName: string;
+
+    @Field()
     @Column('text')
     email: string;
 

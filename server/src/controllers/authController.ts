@@ -3,6 +3,36 @@ import { User } from '../entity/User';
 import { createAccessToken, createRefreshToken } from '../helpers/refreshTokens';
 import { sendRefreshToken } from '../helpers/sendTokens';
 
+// GET ACCESS TOKEN
+// LOGIN WITH POSTMAN
+
+// URL
+// http://localhost:4000/graphql
+
+// QUERY
+// mutation Login($password: String!, $email: String!) {
+//   Login(password: $password, email: $email) {
+//     accessToken
+//   }
+// }
+
+// BODY
+// {
+//     "password": "test",
+//     "email": "test"
+// }
+
+// GET REFRESH TOKEN SENT IN COOKIES BUT REFRESH TOKEN GIVEN TO YOU
+// POSTMAN
+
+// URL
+// http://localhost:4000/rest/auth/refresh_token
+
+// HEADER KEY
+// Authorization
+
+// HEADER VALUE bearer access_token
+
 // refresh JWT token
 // Read refresh cookie
 // since we are using cookieParser middleware it should automatically parse cookies from header and put it in the cookie req

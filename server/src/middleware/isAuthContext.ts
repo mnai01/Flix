@@ -21,7 +21,7 @@ export const isAuthContext: MiddlewareFn<MyContext> = ({ context }, next) => {
         // Add payload to context so the resolver using isAuth has access to the verified userID information
         context.payload = payload as any;
     } catch (err) {
-        throw new Error('Not Authenticated catch');
+        throw new Error('Not Authenticated');
     }
 
     // Returns the resolver and goes to the next middleware

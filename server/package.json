@@ -5,7 +5,7 @@
     "devDependencies": {
         "@types/cookie-parser": "^1.4.2",
         "@types/cors": "^2.8.12",
-        "@types/node": "^17.0.10",
+        "@types/node": "^17.0.45",
         "@typescript-eslint/eslint-plugin": "^5.10.0",
         "@typescript-eslint/parser": "^5.10.0",
         "class-validator": "^0.13.2",
@@ -39,9 +39,9 @@
         "start": "env-cmd -e production ts-node src/index.ts",
         "dev": "env-cmd -e development nodemon --exec ts-node src/index.ts",
         "seed": "ts-node ./src/seed/seeding.ts",
-        "migrate": "ts-node ./node_modules/typeorm/cli.js migration:run",
+        "migrate": "env-cmd -e development ts-node ./node_modules/typeorm/cli.js migration:run",
         "revert": "ts-node ./node_modules/typeorm/cli.js migration:revert",
-        "generate": "ts-node ./node_modules/typeorm/cli.js migration:generate -n FlixMigration",
+        "generate": "env-cmd -e development ts-node ./node_modules/typeorm/cli.js migration:generate -n FlixMigration",
         "generate-dry": "ts-node ./node_modules/typeorm/cli.js migration:generate -n migration -p --dr",
         "make-migration": "npx typeorm migration:create -n migration"
     }
