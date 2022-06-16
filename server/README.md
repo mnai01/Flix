@@ -50,6 +50,14 @@ sudo service redis-server stop
 
 sudo service redis-server restart
 
+#### Open redis-cli in docker redis image
+
+sudo docker exec -i flix-redis-1 redis-cli
+
+auth PASSWORD
+
+KEYS \*
+
 #### When running docker
 
 Be sure to add the correct db host in the ormconfig.json
