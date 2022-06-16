@@ -96,3 +96,7 @@ docker volume prune
 docker builder prune (prunes build cache)
 
 docker system df will also tell you how much space the local volumes are taking
+
+#### Resources
+
+[Cloudflare Setup](https://www.youtube.com/watch?v=cI17WMKtntA&t=203s)
