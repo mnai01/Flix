@@ -20,8 +20,8 @@ const SrcVideo: React.FC<SrcVideoProps> = ({ data, imdb, tmdbLink, imdbLink, isT
 
     useEffect(() => {
         setSource([
-            { title: 'Source 1', disabled: true, link: tmdbLink },
-            { title: 'Source 2', disabled: false, link: imdbLink },
+            // { title: 'Source 1', disabled: true, link: tmdbLink },
+            { title: 'Source 1', disabled: true, link: imdbLink },
         ]);
     }, [imdbLink, tmdbLink]);
 
