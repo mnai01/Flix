@@ -1,5 +1,5 @@
 import { useQuery } from '@apollo/client';
-import { Select } from '@chakra-ui/react';
+import { Heading, Select } from '@chakra-ui/react';
 import { useState } from 'react';
 import EpisodeItem from './EpisodeItem';
 import { FindEpisodeByTMDB, FindEpisodeByTMDB_FindEpisodeByTMDB_episodes, FindEpisodeByTMDBVariables } from '../../../../../apollo/generated/FindEpisodeByTMDB';
@@ -29,7 +29,9 @@ const EpisodeList = () => {
 
     return (
         <>
-            <h1>EpisodeList</h1>
+            <Heading variant={'h2'} size={'md'} py={2}>
+                EpisodeList
+            </Heading>
             <Select
                 onChange={(i) => {
                     if (i.target.value === '0') {
