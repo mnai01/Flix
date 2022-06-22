@@ -52,7 +52,7 @@ const SrcVideo: React.FC<SrcVideoProps> = ({ data, imdb, tmdbLink, imdbLink, isT
                 </Center>
             )}
 
-            {data && imdb && source.length === 2 ? (
+            {data && imdb && source.length === 1 ? (
                 <iframe
                     allow="fullscreen"
                     onLoad={() => handleVideoLoad()}
