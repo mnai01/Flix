@@ -19,7 +19,7 @@ const TvSrc: React.FC = () => {
                 data={data?.FindTVByTMDB}
                 loading={loading}
                 imdbLink={`${process.env.REACT_APP_SOURCE}${data?.FindTVByTMDB.external_ids.imdb_id}/${s}-${e}`}
-                tmdbLink={`${process.env.REACT_APP_SOURCE1}tv?id=${data?.FindTVByTMDB.id}&s=${s}&e=${e}`}
+                tmdbLink={`${process.env.REACT_APP_SOURCE1}tv?id=${data?.FindTVByTMDB.external_ids.imdb_id}&s=${s}&e=${e}`}
                 isTV={isTV}
                 imdb={data?.FindTVByTMDB.external_ids.imdb_id}
             />
