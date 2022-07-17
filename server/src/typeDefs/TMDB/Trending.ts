@@ -2,7 +2,7 @@ import { ArgsType, Field, ObjectType, Int, Float, registerEnumType } from 'type-
 import { Country } from './Countries';
 
 enum MediaType {
-    all = 'movie|tv',
+    all = 'all',
     movie = 'movie',
     tv = 'tv',
 }
