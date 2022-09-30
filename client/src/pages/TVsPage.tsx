@@ -4,6 +4,7 @@ import React from 'react';
 import { DiscoverTV, DiscoverTVVariables } from '../apollo/generated/DiscoverTV';
 import { DiscoverTVSortBy } from '../apollo/generated/globalTypes';
 import { GET_TV_BY_GENRE } from '../apollo/queries';
+import { PageContentWrapper } from '../components/Layout/PageWrapper';
 import { MediaList } from '../components/Media';
 import { useWatchedMedia } from '../components/Providers/WatchedMediaProvider';
 
@@ -27,23 +28,25 @@ const TVsPage: React.FC = () => {
     });
 
     return (
-        <Flex direction={'column'} width={'100%'} height={'100%'}>
-            <Box mb={2}>
-                <MediaList medias={data?.Media?.results} loading={loading} horizontal title={'Top Trending'} />
-            </Box>
-            <Box mb={2}>
-                <MediaList medias={bestByRating?.Media.results} loading={loadingByRating} horizontal title={'Top Rated Shows'} />
-            </Box>
-            <Box mb={2}>
-                <MediaList
-                    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-                    medias={watchedMedia?.WatchedMovies.filter((media: any) => media.type === 'tv')}
-                    loading={loadingWatched}
-                    title={'Recently Watched'}
-                    horizontal
-                />
-            </Box>
-        </Flex>
+        <PageContentWrapper>
+            <Flex direction={'column'} width={'100%'} height={'100%'}>
+                <Box mb={2}>
+                    <MediaList medias={data?.Media?.results} loading={loading} horizontal title={'Top Trending'} />
+                </Box>
+                <Box mb={2}>
+                    <MediaList medias={bestByRating?.Media.results} loading={loadingByRating} horizontal title={'Top Rated Shows'} />
+                </Box>
+                <Box mb={2}>
+                    <MediaList
+                        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                        medias={watchedMedia?.WatchedMovies.filter((media: any) => media.type === 'tv')}
+                        loading={loadingWatched}
+                        title={'Recently Watched'}
+                        horizontal
+                    />
+                </Box>
+            </Flex>
+        </PageContentWrapper>
     );
 };
 

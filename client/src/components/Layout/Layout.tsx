@@ -1,6 +1,6 @@
 import { Flex, useMediaQuery } from '@chakra-ui/react';
 import Header from './Header';
-import PageWrapper from './PageWrapper';
+import { PageWrapper } from './PageWrapper';
 import Sidebar from './Sidebar';
 
 const Layout: React.FC = ({ children }) => {

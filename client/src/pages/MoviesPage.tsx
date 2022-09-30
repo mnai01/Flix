@@ -3,6 +3,7 @@ import { Box, Flex } from '@chakra-ui/react';
 import { DiscoverMovies, DiscoverMoviesVariables } from '../apollo/generated/DiscoverMovies';
 import { DiscoverMovieSortBy } from '../apollo/generated/globalTypes';
 import { GET_MOVIES_BY_GENRE } from '../apollo/queries';
+import { PageContentWrapper } from '../components/Layout/PageWrapper';
 import { MediaList } from '../components/Media';
 import { useWatchedMedia } from '../components/Providers/WatchedMediaProvider';
 
@@ -26,23 +27,25 @@ const MoviesPage: React.FC = () => {
     });
 
     return (
-        <Flex direction={'column'} width={'100%'} height={'100%'}>
-            <Box mb={2}>
-                <MediaList medias={data?.Media?.results} loading={loading} title={'Top Trending'} horizontal />
-            </Box>
-            <Box mb={2}>
-                <MediaList medias={bestByRating?.Media.results} loading={loadingByRating} title={'Top Rated Movies'} horizontal />
-            </Box>
-            <Box mb={2}>
-                <MediaList
-                    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-                    medias={watchedMedia?.WatchedMovies.filter((media: any) => media.type === 'movie')}
-                    loading={loadingWatched}
-                    title={'Recently Watched'}
-                    horizontal
-                />
-            </Box>
-        </Flex>
+        <PageContentWrapper>
+            <Flex direction={'column'} width={'100%'} height={'100%'}>
+                <Box mb={2}>
+                    <MediaList medias={data?.Media?.results} loading={loading} title={'Top Trending'} horizontal />
+                </Box>
+                <Box mb={2}>
+                    <MediaList medias={bestByRating?.Media.results} loading={loadingByRating} title={'Top Rated Movies'} horizontal />
+                </Box>
+                <Box mb={2}>
+                    <MediaList
+                        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                        medias={watchedMedia?.WatchedMovies.filter((media: any) => media.type === 'movie')}
+                        loading={loadingWatched}
+                        title={'Recently Watched'}
+                        horizontal
+                    />
+                </Box>
+            </Flex>
+        </PageContentWrapper>
     );
 };
 
