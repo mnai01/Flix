@@ -56,6 +56,8 @@ export const postRefreshToken = async (req: any, res: any) => {
     if (!user) return res.send({ ok: false, accessToken: '', msg: 'No User Found' });
 
     if (user.tokenVersion === 0) {
+        // The reason for this is to prevent it from going back through User.findOne.
+        // This is achieved by invalidating the token making it so next time a loging attempt happens it errors out on payload verify
         sendRefreshToken(res, createRefreshToken(user, "WRONG_TOKEN_NAME_TO_PREVENT_EXTRA_DB_CALL_SINCE_THEY'RE_BANNED_ANKnfdlnhfksjdnfkjdsnfjdlsnf894309r32"));
         return res.send({ ok: false, accessToken: '', msg: 'You are banned' });
     }
