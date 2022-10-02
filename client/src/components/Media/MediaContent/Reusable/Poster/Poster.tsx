@@ -136,7 +136,6 @@ const Poster: React.FC<SelectedMediaProps> = ({
                         display={load ? 'block' : 'none'}
                     />
                     <div
-                        onLoad={() => setLoad(true)}
                         style={{
                             display: load ? 'block' : 'none',
                             height: '100%',
