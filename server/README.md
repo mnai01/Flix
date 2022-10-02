@@ -101,6 +101,10 @@ _Shows when password required ("trust" means no password is needed, "md5" means 
 
 sudo docker exec -i flix-db-1 cat /var/lib/postgresql/data/pg_hba.conf
 
+_GRANT PERMISSION TO ALTER TABLES BY MAKING USER A MEMBER OF ADMIN (POSTGRES) IMPORTANT FOR MIGRATIONS_ 
+
+`GRANT postgres to USER;`
+
 #### Check database
 
 \c movie_db
