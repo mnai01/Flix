@@ -107,7 +107,7 @@ docker volume prune
 
 docker builder prune (prunes build cache)
 
-docker system df will also tell you how much space the local volumes are taking
+docker system df (will also tell you how much space the local volumes are taking)
 
 #### Resources
 
