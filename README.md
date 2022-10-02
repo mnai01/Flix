@@ -75,6 +75,18 @@ docker-compose up
 
 docker-compose up --build
 
+## Running Docker without building frontend (Takes the longest)
+
+Navigate to Dockerfile in client folder and comment out 
+
+sometimes if ur node_modules is already installed you dont need to do npm i (thats what takes the longest)
+
+`RUN npm i`
+
+`RUN npm run build`
+
+prevents the frontend from installing packages and running build with are very timely and not needed if no changes were apples. This process is very intense and can crash our server sometimes
+
 #### Prune docker image and volume
 
 docker image prune
@@ -95,7 +107,7 @@ docker volume prune
 
 docker builder prune (prunes build cache)
 
-docker system df will also tell you how much space the local volumes are taking
+docker system df (will also tell you how much space the local volumes are taking)
 
 #### Resources
 
