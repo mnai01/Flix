@@ -14,9 +14,19 @@ interface SrcVideoProps {
     imdb?: string | null;
 }
 
+interface SetSourceProps {
+    title: string;
+    disabled: boolean;
+    link?: string;
+}
+
 const SrcVideo: React.FC<SrcVideoProps> = ({ data, imdb, tmdbLink, imdbLink, isTV }) => {
     const [iframeLoading, setIframeLoading] = useState(true);
-    const [source, setSource] = useState<any>([]);
+    const [source, setSource] = useState<SetSourceProps[]>([]);
+
+    const activeLink = source?.filter((i: SetSourceProps) => {
+        return i.disabled;
+    })[0]?.link;
 
     useEffect(() => {
         setSource([
@@ -36,7 +46,7 @@ const SrcVideo: React.FC<SrcVideoProps> = ({ data, imdb, tmdbLink, imdbLink, isT
 
     const handleButtonSwitch = () => {
         setSource(
-            source.map((i: any) => {
+            source.map((i: SetSourceProps) => {
                 return { ...i, disabled: !i.disabled };
             }),
         );
@@ -52,17 +62,13 @@ const SrcVideo: React.FC<SrcVideoProps> = ({ data, imdb, tmdbLink, imdbLink, isT
                 </Center>
             )}
 
-            {data && imdb && source.length === 1 ? (
+            {data && imdb && source.length === 1 && activeLink ? (
                 <iframe
                     allow="fullscreen"
                     onLoad={() => handleVideoLoad()}
                     onError={() => setIframeLoading(false)}
                     style={{ width: '100%', height: '100%', display: iframeLoading ? 'none' : 'block' }}
-                    src={
-                        source.filter((i: any) => {
-                            return i.disabled;
-                        })[0].link
-                    }
+                    src={activeLink}
                     // sandbox="allow-scripts allow-same-origin"
                 />
             ) : (
@@ -71,7 +77,7 @@ const SrcVideo: React.FC<SrcVideoProps> = ({ data, imdb, tmdbLink, imdbLink, isT
                 </Center>
             )}
             {source.length > 0 &&
-                source.map((i: any) => {
+                source.map((i: SetSourceProps) => {
                     return (
                         <Button key={i.title} disabled={i.disabled} onClick={handleButtonSwitch} mr={5} mt={3}>
                             {i.title}
