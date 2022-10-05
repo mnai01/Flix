@@ -35,6 +35,8 @@ export class UserResolver {
     // this includes resolver information like res,req,payload and next function
     @Query(() => String)
     @UseMiddleware(isAuthContext)
+    //Ctx only returns res, req as shown in our context in the index.ts file but we attach payload to the context
+    // in the isAuthContext middleware which is why its available
     User(@Ctx() { payload }: MyContext) {
         return `your user id is :${payload?.userId}`;
     }
