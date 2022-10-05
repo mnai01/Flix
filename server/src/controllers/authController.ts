@@ -36,7 +36,7 @@ import { sendRefreshToken } from '../helpers/sendTokens';
 // refresh JWT token
 // Read refresh cookie
 // since we are using cookieParser middleware it should automatically parse cookies from header and put it in the cookie req
-// Making a seperate route helps with security purposes where the token only gets sent when refreshing
+// Making a seperate route helps with security purposes where the token only gets sent when refreshing and not in every GQL query
 export const postRefreshToken = async (req: any, res: any) => {
     const token = req.cookies.jid;
     if (!token) return res.send({ ok: false, accessToken: '' });
