@@ -11,10 +11,12 @@ const Layout: React.FC = ({ children }) => {
             {isLessThan768 ? (
                 <>
                     <Header />
-                    <PageWrapper mobile={isLessThan768}>{children}</PageWrapper>
+                    <PageWrapper mobile={isLessThan768} height={90}>
+                        {children}
+                    </PageWrapper>
                 </>
             ) : (
-                <Flex width={'100%'}>
+                <Flex width={'100%'} height={'100%'}>
                     <Sidebar />
                     <PageWrapper>{children}</PageWrapper>
                 </Flex>

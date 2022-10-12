@@ -47,13 +47,24 @@ const Sidebar = () => {
 
     return (
         // other sites use 240px
-        <Flex direction="column" flexBasis={'220px'} flexGrow={0} flexShrink={0} height="fit-content" justify="space-around" p={1}>
+        <Flex
+            direction="column"
+            flex={'1 0 auto'}
+            width={isLessThan768 ? '100%' : '225px'}
+            // 90% height because on mobile the header is 10%
+            height={isLessThan768 ? '90%' : '100%'}
+            p={1}>
             {!isLessThan768 && <AutoSuggestion />}
             <Box p={3}>
                 <ModeSwitch />
             </Box>
             <SidebarSection title={'Navigation'} items={NavigationMenu} />
-            <SidebarSection title={type === 'tv' ? 'TV Categories' : type === 'movies' ? 'Movie Categories' : 'Categories'} items={data} loading={loading} />
+            <SidebarSection
+                overflowY={'auto'}
+                title={type === 'tv' ? 'TV Categories' : type === 'movies' ? 'Movie Categories' : 'Categories'}
+                items={data}
+                loading={loading}
+            />
         </Flex>
     );
 };

@@ -9,7 +9,7 @@ const Header: React.FC = () => {
 
     return (
         <>
-            <Flex alignItems={'center'}>
+            <Flex alignItems={'center'} height={'10%'}>
                 <Box flex={1} p={1}>
                     <Menu>
                         <MenuButton as={IconButton} aria-label="Options" icon={<GiHamburgerMenu />} variant="outline" onClick={onOpen} />

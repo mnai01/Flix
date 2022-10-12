@@ -35,32 +35,36 @@ const MediaContent: React.FC = () => {
     // }, [location]);
 
     return (
-        <Box height={'60vh'} width={'100%'} mt={isLessThan768 ? 0 : '20px'}>
-            <Button leftIcon={<FaArrowLeft />} variant="outline" onClick={() => navigate(-1)} mb={3} size={'sm'}>
+        <Box height={'100%'} width={'100%'} mt={isLessThan768 ? 0 : '20px'} mb={5} display={'flex'} flexDirection={'column'}>
+            <Button leftIcon={<FaArrowLeft />} variant="outline" onClick={() => navigate(-1)} mb={3} size={'sm'} height={'2rem'} width={'10rem'}>
                 Navigate back
             </Button>
-            {isTV ? (
-                isVideo || isTrailer ? (
-                    isVideo ? (
-                        <TvSrc />
+            <Box height={'60%'}>
+                {isTV ? (
+                    isVideo || isTrailer ? (
+                        isVideo ? (
+                            <TvSrc />
+                        ) : (
+                            <TvTrailer />
+                        )
                     ) : (
-                        <TvTrailer />
+                        <Box flex={1} height={'100%'}>
+                            <TvPoster />
+                            <EpisodeList />
+                        </Box>
+                    )
+                ) : isVideo || isTrailer ? (
+                    isVideo ? (
+                        <MovieSrc />
+                    ) : (
+                        <MovieTrailer />
                     )
                 ) : (
-                    <>
-                        <TvPoster />
-                        <EpisodeList />
-                    </>
-                )
-            ) : isVideo || isTrailer ? (
-                isVideo ? (
-                    <MovieSrc />
-                ) : (
-                    <MovieTrailer />
-                )
-            ) : (
-                <MoviePoster />
-            )}
+                    <Box flex={1} height={'100%'}>
+                        <MoviePoster />
+                    </Box>
+                )}
+            </Box>
         </Box>
     );
 };

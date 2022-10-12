@@ -44,9 +44,9 @@ import { MediaResolver } from './resolvers/MediaResolver';
             app,
             cors: { credentials: true, origin: [...origins] },
         });
-    } catch(err) {
+    } catch (err) {
         console.log(err);
-    };
+    }
     app.listen(4000, () => {
         console.log('express server started');
     });

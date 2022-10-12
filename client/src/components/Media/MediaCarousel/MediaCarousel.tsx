@@ -32,7 +32,7 @@ const MediaCarousel: React.FC<MediaCarouselProps> = ({ data, loading, height }) 
 
     return (
         <Swiper
-            style={{ width: '100%', height: `${height ? height + 'vh' : 'auto'}` }}
+            style={{ width: '100%', height: '100%' }}
             slidesPerGroup={1}
             autoplay={{
                 delay: 5000,
