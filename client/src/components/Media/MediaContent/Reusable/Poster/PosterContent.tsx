@@ -1,4 +1,4 @@
-import { Button, Flex, Heading, Tag, Text, useColorMode, useTheme } from '@chakra-ui/react';
+import { Box, Button, Flex, Heading, Tag, Text, useColorMode, useTheme } from '@chakra-ui/react';
 import { useNavigate } from 'react-router-dom';
 import StarRatings from 'react-star-ratings';
 import { convertMinsToHrsMins } from '../../../../../utils/helper/ConvertMinutes';
@@ -23,16 +23,16 @@ interface PosterContentObject {
 
 const PosterContent: React.FC<PosterContentObject> = ({ posterContent }) => {
     const { title, runtime, runtimeNative, release_date, genres, vote_average, nav_src, nav_trailer, overview, remove_src = false } = posterContent;
-
     const { colorMode } = useColorMode();
     const navigate = useNavigate();
     const theme = useTheme();
+    const contentItemPadding = { base: 1, sm: 2, md: 3, lg: 4 };
     return (
-        <>
+        <Box p={{ base: 5, sm: 5, md: 10, lg: 10 }} height={'100%'}>
             <Heading variant={'h2'} size={'xl'} fontWeight={700} mb={2}>
                 {title && title.toUpperCase()}
             </Heading>
-            <Flex mb={25} gap={15}>
+            <Flex mb={contentItemPadding} gap={15}>
                 {runtime && (
                     <>
                         <Text fontWeight={500}>{runtimeNative ? runtimeNative + ' Seasons' : convertMinsToHrsMins(runtime)}</Text> <Text>|</Text>
@@ -42,7 +42,7 @@ const PosterContent: React.FC<PosterContentObject> = ({ posterContent }) => {
                 {release_date && <Text fontWeight={500}>{release_date}</Text>}
             </Flex>
             {genres && (
-                <Flex mb={25} flexWrap={'wrap'} gap={2}>
+                <Flex mb={contentItemPadding} flexWrap={'wrap'} gap={2}>
                     {
                         // eslint-disable-next-line @typescript-eslint/no-explicit-any
                         genres?.map((genre: any) => {
@@ -62,11 +62,11 @@ const PosterContent: React.FC<PosterContentObject> = ({ posterContent }) => {
                 </Flex>
             )}
             {overview && (
-                <Text fontWeight={500} mb={25} width={{ md: '100%', lg: '100%' }} noOfLines={5}>
+                <Text fontWeight={500} mb={contentItemPadding} width={{ md: '100%', lg: '100%' }} maxHeight={'25%'} noOfLines={5} overflowY={'auto'}>
                     {overview}
                 </Text>
             )}
-            <Flex justifyContent={'space-between'} mb={25}>
+            <Flex justifyContent={'space-between'} mb={contentItemPadding}>
                 {!remove_src && (
                     <Button width={'45%'} onClick={() => navigate(nav_src)}>
                         Play Movie
@@ -84,7 +84,7 @@ const PosterContent: React.FC<PosterContentObject> = ({ posterContent }) => {
                     starRatedColor={colorMode === 'dark' ? theme.colors.yellow[400] : theme.colors.yellow[400]}
                 />
             )}
-        </>
+        </Box>
     );
 };
 

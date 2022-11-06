@@ -48,7 +48,7 @@ const MediaContent: React.FC = () => {
                             <TvTrailer />
                         )
                     ) : (
-                        <Box flex={1} height={'100%'}>
+                        <Box height={'100%'}>
                             <TvPoster />
                             <EpisodeList />
                         </Box>
@@ -60,7 +60,7 @@ const MediaContent: React.FC = () => {
                         <MovieTrailer />
                     )
                 ) : (
-                    <Box flex={1} height={'100%'}>
+                    <Box height={'100%'}>
                         <MoviePoster />
                     </Box>
                 )}
