@@ -1,6 +1,8 @@
-#Flix
+# Flix
 
 Fullstack web application to search and view media information
+
+#### System Design (Click image for better quality)
 
 ![MovieSystemDesign](./SystemDesign.png)
 
