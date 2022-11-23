@@ -2,7 +2,7 @@
 
 Fullstack web application to search and view media information
 
-![MovieSystemDesign](./Flix.jpg)
+![MovieSystemDesign](./SystemDesign.png)
 
 ### Fill in .env (make sure to check client and server folders to fill in all .env && .env-cmdrc)
 
