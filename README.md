@@ -1,3 +1,9 @@
+#Flix
+
+Fullstack web application to search and view media information
+
+![MovieSystemDesign](./Flix.jpg)
+
 ### Fill in .env (make sure to check client and server folders to fill in all .env && .env-cmdrc)
 
 REDIS_PASSWORD=
@@ -13,7 +19,7 @@ Make sure to add all env neccesary
 
 postgres.env (This is for docker db container)
 
-### SOME API ROUTE Design
+### Auth API ROUTE Design
 
 ![MovieApiDesign](./MovieApiDesign.jpg)
 
