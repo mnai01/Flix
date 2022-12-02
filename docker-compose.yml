@@ -29,6 +29,7 @@ services:
             context: ./server
         env_file:
             - ./server/.env
+            - ./redis.env
         depends_on:
             - db
             - redis
