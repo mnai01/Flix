@@ -25,6 +25,12 @@ API_KEY_TMDB=
 
 #### When running local `npm run dev`
 
+Install Postgres
+
+Create database
+
+Run `CREATE DATABASE movie_db`
+
 Be sure to add the correct db host in the ormconfig.json
 `"host": "localhost"`
 
@@ -101,7 +107,7 @@ _Shows when password required ("trust" means no password is needed, "md5" means 
 
 sudo docker exec -i flix-db-1 cat /var/lib/postgresql/data/pg_hba.conf
 
-_GRANT PERMISSION TO ALTER TABLES BY MAKING USER A MEMBER OF ADMIN (POSTGRES) IMPORTANT FOR MIGRATIONS_ 
+_GRANT PERMISSION TO ALTER TABLES BY MAKING USER A MEMBER OF ADMIN (POSTGRES) IMPORTANT FOR MIGRATIONS_
 
 `GRANT postgres to USER;`
 

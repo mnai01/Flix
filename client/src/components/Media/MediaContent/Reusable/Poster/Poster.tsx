@@ -35,9 +35,7 @@ const Poster: React.FC<SelectedMediaProps> = (posterProps) => {
                 <Skeleton width={'100%'} height={'100%'} />
             ) : (
                 <Box zIndex={0} position={'absolute'} style={{ color: '#FFFFFF' }} margin={'auto'} top={0} bottom={0} p={0} width={'100%'} height={'100%'}>
-                    <Box p={{ sm: 25, md: 50, lg: 50 }}>
-                        <PosterContent posterContent={posterContent} />
-                    </Box>
+                    <PosterContent posterContent={posterContent} />
                     <div
                         style={{
                             zIndex: -1,
