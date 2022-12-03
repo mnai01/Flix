@@ -10,7 +10,17 @@ Fullstack web application to search and view media information
 
 ![MovieSystemDesign](./SystemDesign.png)
 
-### Fill in .env (make sure to check client and server folders to fill in all .env)
+### Run on Local host or Docker
+
+**_Fill in .env (make sure to check client and server folders to fill in all .env)_**
+
+Update postgres.env hostname to docker container name (db) or localhost to run locally
+
+Update redis.env Host to be docker container name (redis) or localhost to run locally
+
+For docker update the nginx config with the correct IP or Website name
+
+Update links in frontend env to point to the proper GQL and Auth links
 
 **Nginx**
 
