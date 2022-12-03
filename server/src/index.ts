@@ -1,4 +1,4 @@
-import 'dotenv/config';
+import dotenv from 'dotenv';
 import 'reflect-metadata';
 import { ApolloServer } from 'apollo-server-express';
 import { UserResolver } from './resolvers/UserResolver';
@@ -10,6 +10,7 @@ import express from 'express';
 import authRouter from './routes/auth';
 // import moivesRouter from './routes/movies';
 import { MediaResolver } from './resolvers/MediaResolver';
+import path from 'path';
 
 (async () => {
     const origins = ['https://studio.apollographql.com', 'http://localhost:3000'];
@@ -24,6 +25,13 @@ import { MediaResolver } from './resolvers/MediaResolver';
     // app.get('/', (_req, res) => res.send('hello'));
     // app.use('/rest/movies', moivesRouter);
     app.use('/rest/auth', authRouter);
+
+    // loads env from other directory for develop
+    // this is done in prod through docker so a local version of npm start wont work with env
+    if (process.env.NODE_ENV?.includes('development')) {
+        dotenv.config({ path: path.resolve(__dirname, '../postgres.env') });
+        dotenv.config({ path: path.resolve(__dirname, '../redis.env') });
+    }
 
     try {
         await createConnection();
