@@ -57,7 +57,7 @@ services:
         image: redis:6.2-alpine
         env_file:
             - ./redis.env
-        command: --requirepass ${REDIS_PASSWORD}
+        command: /bin/sh -c "redis-server --requirepass $$REDIS_PASSWORD"
         restart: always
         volumes:
             - redis:/var/lib/redis/data
