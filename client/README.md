@@ -4,6 +4,10 @@ REACT_APP_SOURCE=
 
 REACT_APP_SOURCE1=
 
+REACT_APP_API_REFRESH=http://{Website_or_IP_address_here}:4000/rest/auth/refresh_tokenrefresh_token
+
+REACT_APP_API_GRAPHQL=http://{Website_or_IP_address_here}:4000/graphql
+
 ## Running Docker
 
 docker build -t client ./

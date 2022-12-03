@@ -1,6 +1,10 @@
-## Fill in example.env && env-cmdrc
+## Fill in example.env
 
 API_KEY_TMDB=
+ACCESS_TOKEN_SECRET=
+REFRESH_TOKEN_SECRET=
+REGISTER_TOKEN_SECRET=
+NODE_ENV=
 
 ### Steps to run this project:
 
@@ -33,6 +37,10 @@ Run `CREATE DATABASE movie_db`
 
 Be sure to add the correct db host in the ormconfig.json
 `"host": "localhost"`
+
+#### Updating Networks json data
+
+run `node ./updateNetworkJSON` to get a json list of the updated networks. To get a JSON with updated network IDs download it from here `https://files.tmdb.org/p/exports/tv_network_ids_${month}_${day}_${year}.json.gz` replace tv_network.json with downloaded json and run node script again
 
 #### Install redis server
 

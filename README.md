@@ -10,9 +10,21 @@ Fullstack web application to search and view media information
 
 ![MovieSystemDesign](./SystemDesign.png)
 
-### Fill in .env (make sure to check client and server folders to fill in all .env && .env-cmdrc)
+### Fill in .env (make sure to check client and server folders to fill in all .env)
 
 REDIS_PASSWORD=
+
+REDIS_HOST=redis <-- docker container name OR localhost for running locally
+
+POSTGRES_USER=
+
+POSTGRES_PASSWORD=
+
+POSTGRES_DB=
+
+POSTGRES_PORT=
+
+POSTGRES_HOST=db <-- docker container name OR localhost for running locally
 
 ### Start here
 
@@ -89,7 +101,7 @@ docker-compose up --build
 
 ## Running Docker without building frontend (Takes the longest)
 
-Navigate to Dockerfile in client folder and comment out 
+Navigate to Dockerfile in client folder and comment out
 
 sometimes if ur node_modules is already installed you dont need to do npm i (thats what takes the longest)
 
