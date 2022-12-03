@@ -25,9 +25,10 @@
         "bcryptjs": "^2.4.3",
         "cookie-parser": "^1.4.6",
         "dotenv": "^14.2.0",
-        "env-cmd": "^10.1.0",
         "express": "^4.17.2",
+        "fs": "0.0.1-security",
         "graphql": "^15.3.0",
+        "https": "^1.0.0",
         "jsonwebtoken": "^8.5.1",
         "pg": "^8.4.0",
         "redis": "^4.0.6",
@@ -36,12 +37,12 @@
         "typeorm": "0.2.41"
     },
     "scripts": {
-        "start": "env-cmd -e production ts-node src/index.ts",
-        "dev": "env-cmd -e development nodemon --exec ts-node src/index.ts",
+        "start": "ts-node src/index.ts",
+        "dev": "nodemon --exec ts-node src/index.ts",
         "seed": "ts-node ./src/seed/seeding.ts",
-        "migrate": "env-cmd -e development ts-node ./node_modules/typeorm/cli.js migration:run",
+        "migrate": "ts-node ./node_modules/typeorm/cli.js migration:run",
         "revert": "ts-node ./node_modules/typeorm/cli.js migration:revert",
-        "generate": "env-cmd -e development ts-node ./node_modules/typeorm/cli.js migration:generate -n FlixMigration",
+        "generate": "ts-node ./node_modules/typeorm/cli.js migration:generate -n FlixMigration",
         "generate-dry": "ts-node ./node_modules/typeorm/cli.js migration:generate -n migration -p --dr",
         "make-migration": "npx typeorm migration:create -n migration"
     }
