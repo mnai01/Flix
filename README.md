@@ -12,19 +12,9 @@ Fullstack web application to search and view media information
 
 ### Fill in .env (make sure to check client and server folders to fill in all .env)
 
-REDIS_PASSWORD=
+**Nginx**
 
-REDIS_HOST=redis <-- docker container name OR localhost for running locally
-
-POSTGRES_USER=
-
-POSTGRES_PASSWORD=
-
-POSTGRES_DB=
-
-POSTGRES_PORT=
-
-POSTGRES_HOST=db <-- docker container name OR localhost for running locally
+In the nginx folder update "websitename.com" to your site name where you will be accessing it by
 
 ### Start here
 

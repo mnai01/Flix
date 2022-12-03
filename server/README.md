@@ -6,6 +6,24 @@ REFRESH_TOKEN_SECRET=
 REGISTER_TOKEN_SECRET=
 NODE_ENV=
 
+## Fill in redis.env
+
+REDIS_PASSWORD=
+
+REDIS_HOST=redis <-- docker container name OR localhost for running locally
+
+## Fill in postgres.env
+
+POSTGRES_USER=
+
+POSTGRES_PASSWORD=
+
+POSTGRES_DB=
+
+POSTGRES_PORT=
+
+POSTGRES_HOST=db <-- docker container name OR localhost for running locally
+
 ### Steps to run this project:
 
 1. start express

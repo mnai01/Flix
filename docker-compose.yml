@@ -4,7 +4,7 @@ services:
     db:
         image: postgres:latest
         env_file:
-            - ./postgres.env
+            - ./server/postgres.env
         ports:
             - 5432:5432
         volumes:
@@ -29,7 +29,8 @@ services:
             context: ./server
         env_file:
             - ./server/.env
-            - ./redis.env
+            - ./server/redis.env
+            - ./server/postgres.env
         depends_on:
             - db
             - redis
@@ -56,7 +57,7 @@ services:
     redis:
         image: redis:6.2-alpine
         env_file:
-            - ./redis.env
+            - ./server/redis.env
         command: /bin/sh -c "redis-server --requirepass $$REDIS_PASSWORD"
         restart: always
         volumes:
