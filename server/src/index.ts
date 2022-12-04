@@ -43,6 +43,7 @@ import path from 'path';
             // lets you access whatever u return in the gql resolver.
             // basically every graphql function can get access to this info
             context: ({ res, req }) => ({ res, req }),
+            cache: 'bounded',
         });
         // Always call await server.start() before calling server.applyMiddleware and starting your HTTP server.
         // This allows you to react to Apollo Server startup failures by crashing your process instead of starting to serve traffic.
