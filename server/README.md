@@ -30,6 +30,12 @@ POSTGRES_PORT=
 
 POSTGRES_HOST=db <-- docker container name OR localhost for running locally
 
+### Generate / Migrate
+
+Once your containers are up make sure to generate and migrate typeorm for the API container so it builds the correct postgres tables
+
+Make sure to change the function name of the migration if you want to run it multiple times. For example if you want to add multiple profiles with seeding, after each insert the function name needs to change or the migration wont run it again
+
 ### Steps to run this project:
 
 1. start express
@@ -92,7 +98,7 @@ sudo service redis-server restart
 
 sudo docker exec -i flix-redis-1 redis-cli
 
-auth PASSWORD
+AUTH PASSWORD
 
 KEYS \*
 
