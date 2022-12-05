@@ -17,7 +17,7 @@ const MediaContent: React.FC = () => {
     // const [toggleMovie, setToggleMovie] = useState(false);
     // const [toggleTrailer, setToggleTrailer] = useState(false);
 
-    const isVideo = location.pathname.split('/')[3] === 'video';
+    const isVideo = false;
     const isTrailer = location.pathname.split('/')[3] === 'trailer';
     const isTV = location.pathname.split('/')[1] === 'tv';
     // useEffect(() => {
@@ -50,7 +50,7 @@ const MediaContent: React.FC = () => {
                     ) : (
                         <Box height={'100%'}>
                             <TvPoster />
-                            <EpisodeList />
+                            {/* <EpisodeList /> */}
                         </Box>
                     )
                 ) : isVideo || isTrailer ? (

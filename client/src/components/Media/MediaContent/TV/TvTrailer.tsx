@@ -3,11 +3,12 @@ import { useSelectedMedia } from '../../../Providers/SelectedMediaProvider';
 import { Similar, Trailer } from '../Reusable';
 
 interface TvTrailerProps {
-    data?: FindTVByTMDB;
+    data: FindTVByTMDB;
     loading: boolean;
+    isTV: boolean;
 }
 const TvTrailer: React.FC = () => {
-    const { data, loading }: TvTrailerProps = useSelectedMedia();
+    const { data, loading, isTV }: TvTrailerProps = useSelectedMedia();
     const mediaData = data?.FindTVByTMDB;
 
     const trailers = mediaData?.videos.results?.filter((i: FindTVByTMDB_FindTVByTMDB_videos_results) => {
@@ -20,7 +21,7 @@ const TvTrailer: React.FC = () => {
 
     return (
         <>
-            <Trailer trailers={trailers} />
+            <Trailer trailers={trailers} isTV={isTV} data={mediaData} />
             <Similar medias={mediaData?.similar.results} loading={loading} horizontal />
         </>
     );

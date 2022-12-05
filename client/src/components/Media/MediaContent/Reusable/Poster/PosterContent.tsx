@@ -22,7 +22,7 @@ interface PosterContentObject {
 }
 
 const PosterContent: React.FC<PosterContentObject> = ({ posterContent }) => {
-    const { title, runtime, runtimeNative, release_date, genres, vote_average, nav_src, nav_trailer, overview, remove_src = false } = posterContent;
+    const { title, runtime, runtimeNative, release_date, genres, vote_average, nav_src, nav_trailer, overview, remove_src = true } = posterContent;
     const { colorMode } = useColorMode();
     const navigate = useNavigate();
     const theme = useTheme();
