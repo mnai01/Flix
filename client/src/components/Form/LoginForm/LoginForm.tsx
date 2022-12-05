@@ -53,7 +53,7 @@ const LoginForm: React.FC = () => {
                 navigate('/', { replace: true });
             }
         },
-        onError: () => {
+        onError: (err) => {
             setAuthHandler({ ok: false, accessToken: '' });
             toast({
                 title: 'Error',
@@ -68,6 +68,11 @@ const LoginForm: React.FC = () => {
     const onSubmit: SubmitHandler<FormSubmitValues> = async (data: FormSubmitValues) => {
         Login({ variables: { email: data.email, password: data.password } });
     };
+
+    const onGuestLogin: SubmitHandler<FormSubmitValues> = async (data: FormSubmitValues) => {
+        Login({ variables: { email: data.email, password: data.password } });
+    };
+
     return (
         <form onSubmit={methods.handleSubmit(onSubmit)} style={{ height: '100%' }}>
             <FormProvider {...methods}>
@@ -83,7 +88,7 @@ const LoginForm: React.FC = () => {
                                     <PopoverArrow />
                                     <PopoverCloseButton />
                                     <PopoverBody>
-                                        Im a friendly alpacha, click{' '}
+                                        Im a friendly alpaca, click{' '}
                                         <Text cursor={'pointer'} as="u" color="blue" display={'inline'} onClick={() => play()}>
                                             here
                                         </Text>{' '}
@@ -101,16 +106,26 @@ const LoginForm: React.FC = () => {
                                     Log In
                                 </Button>
                             </Box>
-                            {/* <Box color="#737373">
-                                New to Catch a Flix?
+                            <Box width="100%">
+                                <Button
+                                    width="100%"
+                                    my={1}
+                                    isLoading={loading}
+                                    onClick={() => onGuestLogin({ email: 'test@test', password: 'test' })}
+                                    variant="outline">
+                                    Guest Login
+                                </Button>
+                            </Box>
+                            <Box color="#737373">
+                                New to Catch a trailer?
                                 <br />
                             </Box>
                             <Box alignSelf="center" mt={0}>
-                                <Link as={RouteLink} color="white" fontWeight="bold" to={'register'}>
+                                <Link as={RouteLink} color="white" fontWeight="bold" to={'register?token='}>
                                     Sign up{' '}
                                 </Link>
                                 with us!
-                            </Box> */}
+                            </Box>
                         </VStack>
                     </Box>
                 </Center>
