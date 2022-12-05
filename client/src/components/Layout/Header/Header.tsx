@@ -23,7 +23,7 @@ const Header: React.FC = () => {
                     <DrawerHeader>
                         <Box display={'flex'} justifyContent={'center'} alignItems={'center'}>
                             <Heading variant={'h2'} size={'lg'} flex={1}>
-                                Cachafelix
+                                CatchaTrailer
                             </Heading>
                             <IconButton aria-label="Close Sidebar" variant="outline" onClick={onClose}>
                                 <CloseIcon />
