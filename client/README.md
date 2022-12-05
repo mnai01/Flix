@@ -8,6 +8,10 @@ REACT_APP_API_REFRESH=http://{Website_or_IP_address_here}:4000/rest/auth/refresh
 
 REACT_APP_API_GRAPHQL=http://{Website_or_IP_address_here}:4000/graphql
 
+when setting for docker make sure to add remove :4000 and place /api
+
+ex. www.website.com/api/graphql
+
 ## Running Docker
 
 docker build -t client ./

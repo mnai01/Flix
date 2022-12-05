@@ -1,3 +1,9 @@
+## Update Cors origin with your website name or ip address
+
+index.ts
+
+`const origins = ['https://studio.apollographql.com', 'http://{UPDATE_THIS}'];`
+
 ## Fill in example.env
 
 API_KEY_TMDB=
@@ -113,11 +119,11 @@ docker exec -i flix_db_1 psql -U postgres
 
 `CREATE USER username_here PASSWORD 'password-here!'`
 
-`ALTER DATABASE movie_db OWNER TO user_name;`
+`ALTER DATABASE movie_db OWNER TO dummy;`
 
-`GRANT CONNECT ON DATABASE movie_db TO user_name;`
+`GRANT CONNECT ON DATABASE movie_db TO dummy;`
 
-`GRANT ALL PRIVILEGES ON DATABASE movie_db TO user_name;`
+`GRANT ALL PRIVILEGES ON DATABASE movie_db TO dummy;`
 
 _This one might not be required_
 
@@ -135,7 +141,7 @@ sudo docker exec -i flix-db-1 cat /var/lib/postgresql/data/pg_hba.conf
 
 _GRANT PERMISSION TO ALTER TABLES BY MAKING USER A MEMBER OF ADMIN (POSTGRES) IMPORTANT FOR MIGRATIONS_
 
-`GRANT postgres to USER;`
+`GRANT postgres to dummy;`
 
 #### Check database
 
