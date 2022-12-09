@@ -133,6 +133,24 @@ docker builder prune (prunes build cache)
 
 docker system df (will also tell you how much space the local volumes are taking)
 
-#### Resources
+## Cloudflare Setup
 
-[Cloudflare Setup](https://www.youtube.com/watch?v=cI17WMKtntA&t=203s)
+**Once site is running with a domian make sure you have a DNS record with www, for example**	
+
+- A record
+- Host name www
+- Data / Value (Server IP)
+
+Now you should have access to www.catchatrailer.com
+
+**To set up with cloudflare CDN and HTTPS add your app url to cloudflare**
+
+Add cloudflares name server to your domian host (google domians)
+
+On the side bar select SSL/TLS
+
+Select Edge Certificates
+
+Toggle "Always Use HTTPS"
+
+
