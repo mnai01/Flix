@@ -141,11 +141,15 @@ docker system df (will also tell you how much space the local volumes are taking
 - Host name www
 - Data / Value (Server IP)
 
+to do this you can sign into cloudflare, navigate to DNS and add it in the "DNS management for" section
+
+if www still doesnt work, with cloudflare you can go to Rules -> Page Rules and add a rule to redirect all www requests
+
 Now you should have access to www.catchatrailer.com
 
 **To set up with cloudflare CDN and HTTPS add your app url to cloudflare**
 
-Add cloudflares name server to your domian host (google domians)
+Add cloudflares name server to your domian host (google domians) in custom name servers section
 
 On the side bar select SSL/TLS
 
